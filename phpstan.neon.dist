@@ -1,0 +1,14 @@
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+    level: 6
+    paths:
+        - src/
+        - tests/
+        - .php-cs-fixer.dist.php
+        - rector.php
+
+    checkMissingIterableValueType: false
+
+    tmpDir: .build/phpstan/
