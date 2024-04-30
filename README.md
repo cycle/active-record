@@ -44,6 +44,27 @@ The preferred way to install this package is through [Composer](https://getcompo
 composer require cycle/active-record
 ```
 
-After package install you need to register bootloader / service-provider in your application.
+After package install you need to, optionally, register bootloader / service-provider in your application.
 
-<br>
+> [!NOTE]  
+> If you are installing the package on the Yii 3 or Spiral Framework with the [spiral-packages/discoverer](https://github.com/spiral-packages/discoverer) package, then you don't need to register bootloader by yourself. It will be registered automatically.
+> If you are using Laravel, then you don't need to register bootloader by yourself. It will be registered automatically.
+
+### → Spiral Framework without `spiral-packages/discoverer`
+
+Update Bootloader list in your application configuration:
+
+```php
+protected const LOAD = [
+    // ...
+    \Cycle\ActiveRecord\Boot\CycleActiveRecordBootloader::class,
+];
+```
+
+### → Other Frameworks
+
+This package uses PSR-11 compatible container to resolve dependencies. After container initialization you need to pass container instance to the static facade:
+
+```php
+\Cycle\ActiveRecord\StaticOrigin::setContainer($container);
+```
