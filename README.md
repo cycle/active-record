@@ -50,7 +50,7 @@ After package install you need to, optionally, register bootloader / service-pro
 > If you are installing the package on the Yii 3 or Spiral Framework with the [spiral-packages/discoverer](https://github.com/spiral-packages/discoverer) package, then you don't need to register bootloader by yourself. It will be registered automatically.
 
 > [!NOTE]
-> If you are using Laravel, then you don't need to register bootloader by yourself. It will be registered automatically.
+> If you are using Laravel, then you don't need to register service-provider by yourself. It will be registered automatically.
 
 ### → Spiral Framework without `spiral-packages/discoverer`
 
