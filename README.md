@@ -23,3 +23,27 @@
 # Active Record Implementation for Cycle ORM
 
 Active Record Pattern implementation for Cycle ORM. This package provides a simple way to work with your database records using Active Record pattern.
+
+## 🚩 Prerequisites
+
+Before you begin, ensure your development environment meets the following requirements:
+
+- **PHP Version:** 8.2 or higher
+- One of the Cycle ORM adapters:
+  - [`spiral/cycle-bridge`](https://github.com/spiral/cycle-bridge) official Cycle ORM adapter for the [Spiral Framework](https://github.com/spiral/framework)
+  - [`yiisoft/yii-cycle`](https://github.com/yiisoft/yii-cycle) — official Cycle ORM adapter for the [Yii 3](https://www.yiiframework.com)
+  - [`wayofdev/laravel-cycle-orm-adapter`](https://github.com/wayofdev/laravel-cycle-orm-adapter) —package managed by [@wayofdev](https://github.com/wayofdev) for the [Laravel](https://laravel.com) 10.x or higher.
+
+<br>
+
+## 💿 Installation
+
+The preferred way to install this package is through [Composer](https://getcomposer.org/).
+
+```bash
+composer require cycle/active-record
+```
+
+After package install you need to register bootloader / service-provider in your application.
+
+<br>
