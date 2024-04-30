@@ -12,9 +12,9 @@
 
 <div align="center">
 
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fcycle%2Factive-record%2Fbadge&style=flat-square)](https://github.com/cycle/active-record/actions)
-[![Software License](https://img.shields.io/github/license/cycle/active-record.svg?style=flat-square&color=blue)](LICENSE.md)
-[![Commits since latest release](https://img.shields.io/github/commits-since/cycle/active-record/latest?style=flat-square)](https://github.com/cycle/active-record)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fwayofdev%2Factive-record%2Fbadge&style=flat-square&label=github%20actions)](https://github.com/wayofdev/active-record/actions)
+[![Software License](https://img.shields.io/github/license/wayofdev/active-record.svg?style=flat-square&color=blue)](LICENSE.md)
+[![Commits since latest release](https://img.shields.io/github/commits-since/wayofdev/active-record/latest?style=flat-square)](https://github.com/wayofdev/active-record)
 [![Discord](https://img.shields.io/discord/538114875570913290?style=flat-square&logo=discord&labelColor=7289d9&logoColor=white&color=39456d)](https://discord.gg/spiralphp)
 [![Twitter](https://img.shields.io/badge/-Follow-black?style=flat-square&logo=X)](https://x.com/intent/follow?screen_name=SpiralPHP)
 
