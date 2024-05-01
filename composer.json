@@ -30,7 +30,8 @@
     },
     "require": {
         "php": "^8.2",
-        "cycle/orm": "^2.7"
+        "cycle/orm": "^2.7",
+        "psr/container": "^2.0"
     },
     "require-dev": {
         "buggregator/trap": "^1.5",
