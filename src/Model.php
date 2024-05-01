@@ -26,6 +26,17 @@ abstract class Model
     }
 
     /**
+     * Finds a single record based on the given scope.
+     *
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    final public static function findAll(array $scope): iterable
+    {
+        return self::getRepository()->findAll($scope);
+    }
+
+    /**
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface
      */
