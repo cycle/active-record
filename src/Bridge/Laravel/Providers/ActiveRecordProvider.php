@@ -11,8 +11,6 @@ class ActiveRecordProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->singleton(Facade::class, function ($app) {
-            return Facade::setContainer($app);
-        });
+        Facade::setContainer($this->app);
     }
 }

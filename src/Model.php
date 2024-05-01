@@ -12,19 +12,22 @@ use Psr\Container\NotFoundExceptionInterface;
 abstract class Model
 {
     /**
+     * Finds a single record based on the given scope.
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
     final public static function findOne(array $scope): ?static
     {
-        return self::getRepository()->findOne($scope);
+        /** @var static|null $entity */
+        $entity = self::getRepository()->findOne($scope);
+
+        return $entity;
     }
 
     /**
-     * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
-     *
-     * @return RepositoryInterface<static>
+     * @throws ContainerExceptionInterface
      */
     private static function getRepository(): RepositoryInterface
     {

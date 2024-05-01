@@ -136,6 +136,14 @@ down: # Stops and removes containers of this project
 	$(DOCKER_COMPOSE) down --remove-orphans --volumes
 .PHONY: down
 
+up-trap:
+	$(DOCKER_COMPOSE) up trap --remove-orphans
+.PHONY: up-trap
+
+down-trap:
+	$(DOCKER_COMPOSE) down trap --remove-orphans --volumes
+.PHONY: down-trap
+
 restart: down up ## Runs down and up commands
 .PHONY: restart
 

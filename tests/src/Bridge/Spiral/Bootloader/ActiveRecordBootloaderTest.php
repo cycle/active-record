@@ -20,7 +20,8 @@ final class ActiveRecordBootloaderTest extends TestCase
     #[Test]
     public function it_gets_container_from_static_origin_class(): void
     {
-        $this->assertTrue($this->getContainer()->has(ORMInterface::class));
-        $this->assertInstanceOf(ORMInterface::class, Facade::getOrm());
+        $this::assertTrue($this->getContainer()->has(ORMInterface::class));
+        // @phpstan-ignore-next-line
+        $this::assertInstanceOf(ORMInterface::class, Facade::getOrm());
     }
 }

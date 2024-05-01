@@ -27,7 +27,7 @@ class DatabaseTestCase extends TestCase
 
         $user = $this->database->table('user')->getSchema();
         assert($user instanceof AbstractTable);
-        $user->bigInteger('id')->primary(true);
+        $user->bigInteger('id')->primary();
         $user->string('name');
         $user->save();
 

@@ -17,6 +17,27 @@ services:
     environment:
       PHIVE_HOME: /app/.phive
 
+  trap:
+    image: wayofdev/php-dev:8.3-cli-alpine-latest
+    container_name: ${COMPOSE_PROJECT_NAME}-trap
+    restart: on-failure
+    networks:
+      - default
+    ports:
+      - '${TRAP_PORT:-9912}:9912'
+      - '${TRAP_UI_PORT:-8000}:8000'
+    volumes:
+      - ./:/app:rw
+      - ~/.composer:/.composer
+    env_file:
+      - .env
+    entrypoint:
+      - /app/vendor/bin/trap
+      - --ui
+      - --port=${TRAP_PORT:-9912}
+      - --sender=server
+      - --sender=console
+
   pgsql:
     image: wayofdev/postgres:15-alpine-latest
     container_name: ${COMPOSE_PROJECT_NAME}-pgsql

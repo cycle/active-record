@@ -19,11 +19,11 @@ final class ModelTest extends DatabaseTestCase
     public function it_finds_one_entity(): void
     {
         $user = User::findOne(['id' => 1]);
-        $this->assertNotNull($user);
-        $this->assertSame('Antony', $user->name);
+        $this::assertNotNull($user);
+        $this::assertSame('Antony', $user->name);
 
         $user = User::findOne(['name' => 'John']);
-        $this->assertNotNull($user);
-        $this->assertSame(2, $user->id);
+        $this::assertNotNull($user);
+        $this::assertSame(2, $user->id);
     }
 }

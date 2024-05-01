@@ -46,8 +46,14 @@ class Facade
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public static function getEntityManager(): EntityManager
+    public static function getEntityManager(): EntityManagerInterface
     {
         return self::$entityManager ??= new EntityManager(self::getOrm());
+    }
+
+    public static function reset(): void
+    {
+        self::$orm = null;
+        self::$container = null;
     }
 }
