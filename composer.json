@@ -53,7 +53,8 @@
         "spiral/logger": "^3.12",
         "spiral/testing": "^2.7",
         "vimeo/psalm": "^5.23",
-        "wayofdev/cs-fixer-config": "^1.2"
+        "wayofdev/cs-fixer-config": "^1.2",
+        "illuminate/support": "^10.48 || ^11.0"
     },
     "suggest": {
         "spiral/cycle-bridge": "Provides integration with Spiral Framework",
