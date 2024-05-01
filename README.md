@@ -46,27 +46,148 @@ composer require cycle/active-record
 
 After package install you need to, optionally, register bootloader / service-provider in your application.
 
+### → Spiral Framework
+
 > [!NOTE]  
-> If you are installing the package on the Yii 3 or Spiral Framework with the [spiral-packages/discoverer](https://github.com/spiral-packages/discoverer) package, then you don't need to register bootloader by yourself. It will be registered automatically.
-
-> [!NOTE]
-> If you are using Laravel, then you don't need to register service-provider by yourself. It will be registered automatically.
-
-### → Spiral Framework without `spiral-packages/discoverer`
+> If you are installing the package on the Spiral Framework with the [spiral-packages/discoverer](https://github.com/spiral-packages/discoverer) package, then you don't need to register bootloader by yourself. It will be registered automatically.
 
 Update Bootloader list in your application configuration:
 
 ```php
 protected const LOAD = [
     // ...
-    \Cycle\ActiveRecord\Boot\CycleActiveRecordBootloader::class,
+    \Cycle\ActiveRecord\Bridge\Spiral\Bootloader\ActiveRecordBootloader::class,
 ];
 ```
 
+### → Laravel
+
+> [!NOTE]
+> If you are using Laravel, then you don't need to register service-provider by yourself. It will be registered automatically.
+
+### → Yii 3
+
+For configuration instructions refer to [yii-cycle installation guide](https://github.com/yiisoft/yii-cycle/blob/master/docs/guide/en/installation.md).
+
 ### → Other Frameworks
 
-This package uses PSR-11 compatible container to resolve dependencies. After container initialization you need to pass container instance to the static facade:
+This package uses [PSR-11](https://www.php-fig.org/psr/psr-11/) compatible `container` to resolve dependencies. After container initialization you need to pass `container` instance to the static facade:
 
 ```php
-\Cycle\ActiveRecord\StaticOrigin::setContainer($container);
+\Cycle\ActiveRecord\Facade::setContainer($container);
 ```
+
+## 📖 Usage
+
+@todo
+
+<br>
+
+## 🧪 Running Tests
+
+### → PHPUnit tests
+
+To run tests, run the following command:
+
+```bash
+make test
+```
+
+### → Mutation tests
+
+To run mutation tests, using [`infection/infection`](https://github.com/infection/infection):
+
+```bash
+make infect
+```
+
+### → Static Analysis
+
+Code quality using PHPStan:
+
+```bash
+make lint-stan
+```
+
+and using Psalm:
+
+```bash
+make lint-psalm
+```
+
+### → Coding Standards Fixing
+
+Fix code using The PHP Coding Standards Fixer (PHP CS Fixer) to follow our standards:
+
+```bash
+make lint-php
+```
+
+### → Lint Yaml files
+
+Lint all yaml files in project:
+
+```bash
+make lint-yaml
+```
+
+### → Lint Markdown files
+
+Lint all yaml files in project:
+
+```bash
+make lint-md
+```
+
+### → Lint GitHub Actions
+
+Lint all yaml files in project:
+
+```bash
+make lint-actions
+```
+
+<br>
+
+## 🔒 Security Policy
+
+This project has a [security policy](.github/SECURITY.md).
+
+<br>
+
+## 🙌 Want to Contribute?
+
+Thank you for considering contributing to the wayofdev community! We are open to all kinds of contributions. If you want to:
+
+- 🤔 [Suggest a feature](https://github.com/wayofdev/active-record/issues/new?assignees=&labels=type%3A+enhancement&projects=&template=2-feature-request.yml&title=%5BFeature%5D%3A+)
+- 🐛 [Report an issue](https://github.com/wayofdev/active-record/issues/new?assignees=&labels=type%3A+documentation%2Ctype%3A+maintenance&projects=&template=1-bug-report.yml&title=%5BBug%5D%3A+)
+- 📖 [Improve documentation](https://github.com/wayofdev/active-record/issues/new?assignees=&labels=type%3A+documentation%2Ctype%3A+maintenance&projects=&template=4-docs-bug-report.yml&title=%5BDocs%5D%3A+)
+- 👨‍💻 Contribute to the code
+
+You are more than welcome. Before contributing, kindly check our [contribution guidelines](.github/CONTRIBUTING.md).
+
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg?style=for-the-badge)](https://conventionalcommits.org)
+
+<br>
+
+## 🫡 Contributors
+
+<a href="https://github.com/wayofdev/active-record/graphs/contributors">
+    <img align="left" src="https://img.shields.io/github/contributors-anon/wayofdev/active-record?style=for-the-badge" alt="Contributors Badge"/>
+</a>
+
+<br>
+<br>
+
+## 🌐 Social Links
+
+- **Twitter:** Follow our organization [@SpiralPHP](https://twitter.com/intent/follow?screen_name=spiralphp).
+- **Discord:** Join our community on [Discord](https://discord.gg/SpiralPHP).
+
+<br>
+
+## ⚖️ License
+
+[![Licence](https://img.shields.io/github/license/wayofdev/active-record?style=for-the-badge&color=blue)](./LICENSE.md)
+
+<br>
