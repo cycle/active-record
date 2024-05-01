@@ -54,11 +54,36 @@ After package install you need to, optionally, register bootloader / service-pro
 Update Bootloader list in your application configuration:
 
 ```php
-protected const LOAD = [
-    // ...
-    \Cycle\ActiveRecord\Bridge\Spiral\Bootloader\ActiveRecordBootloader::class,
-];
+<?php
+
+declare(strict_types=1);
+
+namespace App\Application;
+
+use Spiral\Cycle\Bootloader as CycleBridge;
+use Cycle\ActiveRecord\Bridge\Spiral\Bootloader\ActiveRecordBootloader;
+
+class Kernel extends \Spiral\Framework\Kernel
+{
+    public function defineBootloaders(): array
+    {
+        return [
+            // ...
+        
+            // ORM
+            CycleBridge\SchemaBootloader::class,
+            CycleBridge\CycleOrmBootloader::class,
+            CycleBridge\AnnotatedBootloader::class,
+            
+            // ActiveRecord
+            ActiveRecordBootloader::class,
+            
+            // ...
+        ];
+}
 ```
+
+For more information about bootloaders, refer to the [Spiral Framework documentation](https://spiral.dev/docs/framework-bootloaders/current).
 
 ### → Laravel
 
