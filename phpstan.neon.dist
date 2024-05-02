@@ -8,6 +8,8 @@ parameters:
         - tests/
         - .php-cs-fixer.dist.php
         - rector.php
+    excludePaths:
+        - tests/runtime/
 
     checkMissingIterableValueType: false
 

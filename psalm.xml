@@ -5,7 +5,7 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     cacheDirectory=".build/psalm/"
     errorBaseline="psalm-baseline.xml"
-    errorLevel="1"
+    errorLevel="4"
     findUnusedBaselineEntry="true"
     findUnusedCode="true"
     findUnusedVariablesAndParams="true"
@@ -21,5 +21,8 @@
         <directory name="tests/"/>
         <file name=".php-cs-fixer.dist.php"/>
         <file name="rector.php"/>
+        <ignoreFiles>
+            <directory name="vendor/"/>
+        </ignoreFiles>
     </projectFiles>
 </psalm>

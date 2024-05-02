@@ -1,29 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.23.1@8471a896ccea3526b26d082f4461eeea467f10a4">
-  <file src="src/Bridge/Laravel/Providers/PackageServiceProvider.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[boot]]></code>
-    </PossiblyUnusedMethod>
-    <UndefinedInterfaceMethod>
-      <code><![CDATA[configurationIsCached]]></code>
-    </UndefinedInterfaceMethod>
+<files psalm-version="5.24.0@462c80e31c34e58cc4f750c656be3927e80e550e">
+  <file src="src/Bridge/Laravel/Providers/ActiveRecordProvider.php">
+    <UnusedClass>
+      <code><![CDATA[ActiveRecordProvider]]></code>
+    </UnusedClass>
   </file>
-  <file src="tests/src/Bridge/Laravel/Providers/PackageServiceProviderTest.php">
-    <PossiblyInvalidMethodCall>
-      <code><![CDATA[assertExitCode]]></code>
-    </PossiblyInvalidMethodCall>
+  <file src="src/Bridge/Spiral/Bootloader/ActiveRecordBootloader.php">
     <PossiblyUnusedMethod>
-      <code><![CDATA[it_publishes_configuration]]></code>
+      <code><![CDATA[init]]></code>
     </PossiblyUnusedMethod>
+  </file>
+  <file src="src/Facade.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[setOrm]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="tests/app/Bootloader/SyncTablesBootloader.php">
+    <UnusedClass>
+      <code><![CDATA[SyncTablesBootloader]]></code>
+    </UnusedClass>
+  </file>
+  <file src="tests/app/Entity/Identity.php">
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$createdAt]]></code>
+      <code><![CDATA[$id]]></code>
+    </PossiblyUnusedProperty>
+  </file>
+  <file src="tests/app/Entity/User.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$identity]]></code>
+    </PossiblyUnusedProperty>
   </file>
   <file src="tests/src/Pest.php">
     <InternalMethod>
       <code><![CDATA[in]]></code>
     </InternalMethod>
-  </file>
-  <file src="tests/src/TestCase.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[faker]]></code>
-    </PossiblyUnusedMethod>
   </file>
 </files>
