@@ -11,13 +11,16 @@
 </div>
 
 <div align="center">
-
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fwayofdev%2Factive-record%2Fbadge&style=flat-square&label=github%20actions)](https://github.com/wayofdev/active-record/actions)
-[![Software License](https://img.shields.io/github/license/wayofdev/active-record.svg?style=flat-square&color=blue)](LICENSE.md)
-[![Commits since latest release](https://img.shields.io/github/commits-since/wayofdev/active-record/latest?style=flat-square)](https://github.com/wayofdev/active-record)
-[![Discord](https://img.shields.io/discord/538114875570913290?style=flat-square&logo=discord&labelColor=7289d9&logoColor=white&color=39456d)](https://discord.gg/spiralphp)
-[![Twitter](https://img.shields.io/badge/-Follow-black?style=flat-square&logo=X)](https://x.com/intent/follow?screen_name=SpiralPHP)
-
+<a href="https://github.com/wayofdev/active-record/actions" target="_blank"><img alt="Build Status" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fwayofdev%2Factive-record%2Fbadge&style=flat-square&label=github%20actions"/></a>
+<a href="https://packagist.org/packages/wayofdev/active-record" target="_blank"><img src="https://img.shields.io/packagist/dt/wayofdev/active-record?&style=flat-square" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/wayofdev/active-record" target="_blank"><img src="https://img.shields.io/packagist/v/wayofdev/active-record?&style=flat-square" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/wayofdev/active-record" target="_blank"><img alt="Commits since latest release" src="https://img.shields.io/github/commits-since/wayofdev/active-record/latest?style=flat-square"></a>
+<a href="https://packagist.org/packages/wayofdev/active-record" target="_blank"><img alt="PHP Version Require" src="https://poser.pugx.org/wayofdev/active-record/require/php?style=flat-square"></a>
+<a href="https://app.codecov.io/gh/wayofdev/active-record" target="_blank"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/wayofdev/active-record?style=flat-square&logo=codecov"></a>
+<a href="https://dashboard.stryker-mutator.io/reports/github.com/wayofdev/active-record/master" target="_blank"><img alt="Mutation testing badge" src="https://img.shields.io/endpoint?style=flat-square&label=mutation%20score&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fwayofdev%2Factive-record%2Fmaster"></a>
+<a href=""><img src="https://img.shields.io/badge/phpstan%20level-6%20of%209-yellowgreen?style=flat-square" alt="PHP Stan Level 5 of 9"></a>
+<a href="https://discord.gg/spiralphp" target="_blank"><img alt="Codecov" src="https://img.shields.io/discord/538114875570913290?style=flat-square&logo=discord&labelColor=7289d9&logoColor=white&color=39456d"></a>
+<a href="https://x.com/intent/follow?screen_name=SpiralPHP" target="_blank"><img alt="Follow on Twitter (X)" src="https://img.shields.io/badge/-Follow-black?style=flat-square&logo=X"></a>
 </div>
 
 # Active Record Implementation for Cycle ORM

@@ -1,5 +1,5 @@
 {
-    "name": "cycle/active-record",
+    "name": "wayofdev/active-record",
     "description": "Provides a simple way to work with your database using Active Record pattern and Cycle ORM",
     "license": "MIT",
     "type": "library",
