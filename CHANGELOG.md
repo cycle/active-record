@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.1](https://github.com/wayofdev/active-record/compare/v0.2.0...v0.2.1) (2024-05-02)
+
+
+### Documentation
+
+* update readme ([852affd](https://github.com/wayofdev/active-record/commit/852affda822ce8101819407c40d8d5a7229b96e8))
+* updating badges ([c6aea4c](https://github.com/wayofdev/active-record/commit/c6aea4c3b02a7b494d3620954889eb58c90fdbe9))
+
 ## [0.2.0](https://github.com/wayofdev/active-record/compare/v0.1.0...v0.2.0) (2024-05-02)
 
 
