@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Cycle\App\Entity;
 
-use Cycle\ActiveRecord\Model;
+use Cycle\ActiveRecord\ActiveRecord;
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Relation\BelongsTo;
 
 #[Entity(table: 'user')]
-class User extends Model
+class User extends ActiveRecord
 {
     #[Column(type: 'bigInteger', primary: true, typecast: 'int')]
     public int $id;
