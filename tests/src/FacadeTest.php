@@ -38,6 +38,8 @@ final class FacadeTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      * @throws Exception
@@ -61,6 +63,8 @@ final class FacadeTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      * @throws Exception
@@ -86,6 +90,8 @@ final class FacadeTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      * @throws Exception

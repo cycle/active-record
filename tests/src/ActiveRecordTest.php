@@ -12,6 +12,8 @@ use Psr\Container\NotFoundExceptionInterface;
 final class ActiveRecordTest extends DatabaseTestCase
 {
     /**
+     * @test
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
@@ -28,6 +30,8 @@ final class ActiveRecordTest extends DatabaseTestCase
     }
 
     /**
+     * @test
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
@@ -39,6 +43,8 @@ final class ActiveRecordTest extends DatabaseTestCase
     }
 
     /**
+     * @test
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */

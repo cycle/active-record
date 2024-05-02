@@ -6,8 +6,6 @@ namespace Cycle\Tests;
 
 use Cycle\Database\DatabaseInterface;
 use Cycle\Database\Table;
-use Cycle\ORM\ORMInterface;
-use Cycle\ORM\Select;
 use Throwable;
 
 class DatabaseTestCase extends TestCase
@@ -45,16 +43,5 @@ class DatabaseTestCase extends TestCase
             [1, 'Antony'],
             [2, 'John'],
         ]);
-    }
-
-    /**
-     * @throws Throwable
-     */
-    protected function selectEntity(string $role, bool $cleanHeap = false): Select
-    {
-        $orm = $this->getContainer()->get(ORMInterface::class);
-        $cleanHeap and $orm->getHeap()->clean();
-
-        return new Select($orm, $role);
     }
 }

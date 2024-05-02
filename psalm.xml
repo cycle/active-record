@@ -23,7 +23,6 @@
         <file name="rector.php"/>
         <ignoreFiles>
             <directory name="vendor/"/>
-            <directory name="tests/runtime/"/>
         </ignoreFiles>
     </projectFiles>
 </psalm>
