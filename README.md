@@ -18,7 +18,7 @@
 <a href="https://packagist.org/packages/wayofdev/active-record" target="_blank"><img alt="PHP Version Require" src="https://poser.pugx.org/wayofdev/active-record/require/php?style=flat-square"></a>
 <a href="https://app.codecov.io/gh/wayofdev/active-record" target="_blank"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/wayofdev/active-record?style=flat-square&logo=codecov"></a>
 <a href="https://dashboard.stryker-mutator.io/reports/github.com/wayofdev/active-record/master" target="_blank"><img alt="Mutation testing badge" src="https://img.shields.io/endpoint?style=flat-square&label=mutation%20score&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fwayofdev%2Factive-record%2Fmaster"></a>
-<a href=""><img src="https://img.shields.io/badge/phpstan%20level-6%20of%209-yellowgreen?style=flat-square" alt="PHP Stan Level 5 of 9"></a>
+<a href=""><img src="https://img.shields.io/badge/phpstan%20level-5%20of%209-yellowgreen?style=flat-square" alt="PHP Stan Level 5 of 9"></a>
 <a href="https://discord.gg/spiralphp" target="_blank"><img alt="Codecov" src="https://img.shields.io/discord/538114875570913290?style=flat-square&logo=discord&labelColor=7289d9&logoColor=white&color=39456d"></a>
 <a href="https://x.com/intent/follow?screen_name=SpiralPHP" target="_blank"><img alt="Follow on Twitter (X)" src="https://img.shields.io/badge/-Follow-black?style=flat-square&logo=X"></a>
 </div>
