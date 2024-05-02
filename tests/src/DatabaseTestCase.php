@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace Cycle\Tests;
 
 use Cycle\Database\DatabaseInterface;
-use Cycle\Database\Schema\AbstractTable;
+use Cycle\Database\Table;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\Select;
 use Throwable;
-
-use function assert;
 
 class DatabaseTestCase extends TestCase
 {
@@ -25,23 +23,25 @@ class DatabaseTestCase extends TestCase
 
         $this->database = $this->getContainer()->get(DatabaseInterface::class);
 
-        $user = $this->database->table('user')->getSchema();
-        assert($user instanceof AbstractTable);
+        /** @var Table $userTable */
+        $userTable = $this->database->table('user');
+        $user = $userTable->getSchema();
         $user->bigInteger('id')->primary();
         $user->string('name');
         $user->save();
 
-        $identity = $this->database->table('identity')->getSchema();
-        assert($identity instanceof AbstractTable);
+        /** @var Table $identityTable */
+        $identityTable = $this->database->table('identity');
+        $identity = $identityTable->getSchema();
         $identity->bigPrimary('id');
         $identity->datetime('created_at');
         $identity->save();
 
-        $this->database->table('identity')->insertMultiple(['id', 'created_at'], [
+        $identityTable->insertMultiple(['id', 'created_at'], [
             [1, '12:34:56 12-11-2020'],
             [2, '15:34:56 01-06-2021'],
         ]);
-        $this->database->table('user')->insertMultiple(['id', 'name'], [
+        $userTable->insertMultiple(['id', 'name'], [
             [1, 'Antony'],
             [2, 'John'],
         ]);

@@ -98,9 +98,17 @@
             "indent-size": 4,
             "indent-style": "space"
         },
+        "config-plugin": {
+            "bootstrap": "config/yii-bootstrap.php"
+        },
         "laravel": {
             "providers": [
                 "Cycle\\ActiveRecord\\Bridge\\Laravel\\Providers\\ActiveRecordProvider"
+            ]
+        },
+        "spiral": {
+            "bootloaders": [
+                "Cycle\\ActiveRecord\\Bridge\\Spiral\\Bootloader\\ActiveRecordBootloader"
             ]
         }
     },

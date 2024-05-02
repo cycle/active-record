@@ -382,3 +382,6 @@ jobs:
 
       - name: 🔍 Run static analysis using phpstan
         run: composer stan:ci
+
+      - name: 🔍 Run static analysis using psalm
+        run: composer psalm:ci
