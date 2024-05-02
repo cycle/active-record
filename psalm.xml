@@ -13,7 +13,6 @@
 >
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
-        <pluginClass class="Psalm\LaravelPlugin\Plugin"/>
     </plugins>
 
     <projectFiles>

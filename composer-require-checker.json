@@ -1,3 +1,7 @@
 {
-    "symbol-whitelist": []
+    "symbol-whitelist": [
+        "Illuminate\\Support\\ServiceProvider",
+        "Spiral\\Boot\\Bootloader\\Bootloader",
+        "Spiral\\Cycle\\Bootloader\\CycleOrmBootloader"
+    ]
 }

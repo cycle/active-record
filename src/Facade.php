@@ -34,7 +34,11 @@ class Facade
      */
     public static function getOrm(): ORMInterface
     {
-        self::$orm ??= self::$container?->get(ORMInterface::class);
+        if (null === self::$container) {
+            throw new RuntimeException('The container is not configured.');
+        }
+
+        self::$orm ??= self::$container->get(ORMInterface::class);
         if (null === self::$orm) {
             throw new RuntimeException('The ORM Carrier is not configured.');
         }

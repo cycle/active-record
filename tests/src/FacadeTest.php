@@ -16,9 +16,24 @@ use RuntimeException;
 
 final class FacadeTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        /*
+         * This ensures that the Facade will have a clean,
+         * as ActiveRecordBootloader loads container into Facade by default.
+         */
+        Facade::reset();
+    }
+
     protected function tearDown(): void
     {
         parent::tearDown();
+
+        /*
+         * Each test-case should have a clean state.
+         */
         Facade::reset();
     }
 
@@ -31,10 +46,13 @@ final class FacadeTest extends TestCase
     public function it_gets_orm_from_facade_when_container_has_orm(): void
     {
         $container = $this->createMock(ContainerInterface::class);
-
         $orm = $this->createMock(ORMInterface::class);
-        $container->method('has')->with(ORMInterface::class)->willReturn(true);
-        $container->method('get')->with(ORMInterface::class)->willReturn($orm);
+
+        $container
+            ->expects($this::once())
+            ->method('get')
+            ->with(ORMInterface::class)
+            ->willReturn($orm);
 
         Facade::setContainer($container);
 
@@ -76,10 +94,15 @@ final class FacadeTest extends TestCase
     public function it_gets_entity_manager_from_facade(): void
     {
         $container = $this->createMock(ContainerInterface::class);
-
         $orm = $this->createMock(ORMInterface::class);
-        $container->method('has')->with(ORMInterface::class)->willReturn(true);
-        $container->method('get')->with(ORMInterface::class)->willReturn($orm);
+
+        $container
+            ->expects($this::once())
+            ->method('get')
+            ->with(ORMInterface::class)
+            ->willReturn($orm);
+
+        Facade::setContainer($container);
 
         $entityManager = Facade::getEntityManager();
 

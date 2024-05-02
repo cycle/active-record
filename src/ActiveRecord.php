@@ -9,20 +9,45 @@ use Cycle\ORM\RepositoryInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
-abstract class Model
+abstract class ActiveRecord
 {
+    /**
+     * Finds a single record based on the given primary key.
+     *
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    final public static function findByPK(mixed $primaryKey): ?static
+    {
+        /** @var static|null $entity */
+        $entity = self::getRepository()->findByPK($primaryKey);
+
+        return $entity;
+    }
+
     /**
      * Finds a single record based on the given scope.
      *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    final public static function findOne(array $scope): ?static
+    final public static function findOne(array $scope = []): ?static
     {
         /** @var static|null $entity */
         $entity = self::getRepository()->findOne($scope);
 
         return $entity;
+    }
+
+    /**
+     * Finds a single record based on the given scope.
+     *
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    final public static function findAll(array $scope = []): iterable
+    {
+        return self::getRepository()->findAll($scope);
     }
 
     /**
