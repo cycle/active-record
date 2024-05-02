@@ -18,7 +18,7 @@
 [![Commits since latest release](https://img.shields.io/github/commits-since/wayofdev/active-record/latest?style=flat-square)](https://packagist.org/packages/wayofdev/active-record)
 [![PHP Version Require](https://poser.pugx.org/wayofdev/active-record/require/php?style=flat-square)](https://packagist.org/packages/wayofdev/active-record)
 [![Codecov Coverage](https://img.shields.io/codecov/c/github/wayofdev/active-record?style=flat-square&logo=codecov)](https://app.codecov.io/gh/wayofdev/active-record)
-[![Type Coverage](https://shepherd.dev/github/wayofdev/active-record/coverage.svg?style=flat-square)](https://shepherd.dev/github/wayofdev/active-record)
+[![Type Coverage](https://shepherd.dev/github/wayofdev/active-record/coverage.svg)](https://shepherd.dev/github/wayofdev/active-record)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&label=mutation%20score&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fwayofdev%2Factive-record%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/wayofdev/active-record/master)
 ![PHP Stan Level 5 of 9](https://img.shields.io/badge/phpstan%20level-5%20of%209-yellowgreen?style=flat-square)
 [![Discord](https://img.shields.io/discord/538114875570913290?style=flat-square&logo=discord&labelColor=7289d9&logoColor=white&color=39456d)](https://discord.gg/spiralphp)
