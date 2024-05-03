@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.3.0](https://github.com/wayofdev/active-record/compare/v0.2.1...v0.3.0) (2024-05-03)
+
+
+### Features
+
+* add delete entity method ([8be8e30](https://github.com/wayofdev/active-record/commit/8be8e305e19b5f00ea075273e6ec2eb4d466f8b9))
+* add persist method and tests ([abd9ff1](https://github.com/wayofdev/active-record/commit/abd9ff1d6dd6733d885e61f5513c089302c83065))
+* add remove method ([4d2843c](https://github.com/wayofdev/active-record/commit/4d2843c3685e9f35fe61b784fd62a4b512707cd2))
+* allow to save entities ([ffdd41a](https://github.com/wayofdev/active-record/commit/ffdd41adda638d5dea3516029bcef0c604d9d193))
+
+
+### Documentation
+
+* add basic example ([4e9d2e5](https://github.com/wayofdev/active-record/commit/4e9d2e54444afa2dec5de3e958bbea1bad5217c0))
+* fix type coverage badge ([83f952d](https://github.com/wayofdev/active-record/commit/83f952df2c391633e4873ed82103791244baebe6))
+* update readme description ([ccc72ca](https://github.com/wayofdev/active-record/commit/ccc72cab99284457d00a31988dd2e0a7cae36d7b))
+
 ## [0.2.1](https://github.com/wayofdev/active-record/compare/v0.2.0...v0.2.1) (2024-05-02)
 
 
