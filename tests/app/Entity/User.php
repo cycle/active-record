@@ -9,6 +9,9 @@ use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Relation\BelongsTo;
 
+/**
+ * @extends ActiveRecord<User>
+ */
 #[Entity(table: 'user')]
 class User extends ActiveRecord
 {

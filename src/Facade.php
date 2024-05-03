@@ -58,6 +58,7 @@ class Facade
     public static function reset(): void
     {
         self::$orm = null;
+        self::$entityManager = null;
         self::$container = null;
     }
 }
