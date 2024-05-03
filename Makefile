@@ -285,23 +285,3 @@ test-cc: ## Run project php-unit and pest tests in coverage mode and build repor
 commit:
 	czg commit --config="./.github/.cz.config.js"
 .PHONY: commit
-
-#
-# Documentation
-# Only in case, when `./docs` folder exists and has package.json
-# ------------------------------------------------------------------------------------
-docs-deps-update: ## Check for outdated dependencies and automatically update them using pnpm
-	cd docs && $(NPM_RUNNER) run deps:update
-.PHONY: docs-deps-update
-
-docs-deps-install: ## Install dependencies for documentation using pnpm
-	cd docs && $(NPM_RUNNER) install
-.PHONY: docs-deps-install
-
-docs-up: ## Start documentation server
-	cd docs && $(NPM_RUNNER) dev
-.PHONY: docs-up
-
-docs-build: ## Build documentation
-	cd docs && $(NPM_RUNNER) build
-.PHONY: docs-up

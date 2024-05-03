@@ -116,7 +116,50 @@ This package uses [PSR-11](https://www.php-fig.org/psr/psr-11/) compatible `cont
 
 ## 📖 Usage
 
-@todo
+> [!NOTE]
+> For detailed usage instructions, refer to the [documentation](/docs/README.md).
+
+### → Basic Example
+
+#### Define Entity with ActiveRecord
+
+```php
+use Cycle\ActiveRecord\ActiveRecord;
+use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Entity;
+
+#[Entity(table: 'users')]
+class User extends ActiveRecord
+{
+    #[Column(type: 'primary', typecast: 'int')]
+    private int $id;
+
+    #[Column(type: 'string')]    
+    private string $name;
+
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
+    
+    public function id(): int
+    {
+        return $this->id;
+    }
+    
+    public function name()
+    {
+        return $this->name;
+    }
+}
+```
+
+#### Create a new record
+
+```php
+$user = new User(name: 'John');
+$user->save();
+```
 
 <br>
 
