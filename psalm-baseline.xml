@@ -6,6 +6,7 @@
     </PossiblyUnusedMethod>
     <PossiblyUnusedReturnValue>
       <code><![CDATA[EntityManagerInterface]]></code>
+      <code><![CDATA[EntityManagerInterface]]></code>
     </PossiblyUnusedReturnValue>
   </file>
   <file src="src/Bridge/Laravel/Providers/ActiveRecordProvider.php">
