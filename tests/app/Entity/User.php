@@ -9,13 +9,16 @@ use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Relation\BelongsTo;
 
+/**
+ * @extends ActiveRecord<User>
+ */
 #[Entity(table: 'user')]
 class User extends ActiveRecord
 {
     #[Column(type: 'bigInteger', primary: true, typecast: 'int')]
     public int $id;
 
-    #[Column(type: 'string')]
+    #[Column(type: 'string', unique: true)]
     public string $name;
 
     #[BelongsTo(target: Identity::class, innerKey: 'id', outerKey: 'id', cascade: true, load: 'eager')]
