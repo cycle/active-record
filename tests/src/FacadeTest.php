@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cycle\Tests;
 
+use Cycle\ActiveRecord\Exceptions\ConfigurationException;
 use Cycle\ActiveRecord\Facade;
 use Cycle\ORM\EntityManager;
 use Cycle\ORM\ORMInterface;
@@ -12,7 +13,6 @@ use PHPUnit\Framework\MockObject\Exception;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use RuntimeException;
 
 final class FacadeTest extends TestCase
 {
@@ -35,6 +35,21 @@ final class FacadeTest extends TestCase
          * Each test-case should have a clean state.
          */
         Facade::reset();
+    }
+
+    /**
+     * @test
+     *
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    #[Test]
+    public function it_fails_to_get_orm_from_facade_when_container_is_not_set(): void
+    {
+        $this->expectException(ConfigurationException::class);
+        $this->expectExceptionMessage('Container has not been set.');
+
+        Facade::getOrm();
     }
 
     /**
@@ -82,8 +97,8 @@ final class FacadeTest extends TestCase
 
         Facade::setContainer($container);
 
-        // Assert that a RuntimeException is thrown when the ORM is requested but not available
-        $this->expectException(RuntimeException::class);
+        // Assert that an exception is thrown when the ORM is requested but not available
+        $this->expectException(ConfigurationException::class);
         $this->expectExceptionMessage('The ORM Carrier is not configured.');
 
         Facade::getOrm();
