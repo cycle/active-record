@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Cycle\ActiveRecord;
 
-use Cycle\ActiveRecord\Exceptions\ContainerNotConfigured;
-use Cycle\ActiveRecord\Exceptions\ORMCarrierNotConfigured;
+use Cycle\ActiveRecord\Exceptions\ConfigurationException;
 use Cycle\ORM\EntityManager;
 use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\ORMInterface;
@@ -36,12 +35,12 @@ class Facade
     public static function getOrm(): ORMInterface
     {
         if (null === self::$container) {
-            throw new ContainerNotConfigured();
+            throw new ConfigurationException('Container has not been set. Please set the container first using setContainer() method.');
         }
 
         self::$orm ??= self::$container->get(ORMInterface::class);
         if (null === self::$orm) {
-            throw new ORMCarrierNotConfigured();
+            throw new ConfigurationException('The ORM Carrier is not configured.');
         }
 
         return self::$orm;
