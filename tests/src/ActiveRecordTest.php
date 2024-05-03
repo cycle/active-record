@@ -159,4 +159,21 @@ final class ActiveRecordTest extends DatabaseTestCase
         $savedUserTwo = $this->selectEntity(User::class, cleanHeap: true)->wherePK($userTwo->id)->fetchOne();
         $this::assertSame($savedUserTwo->name, $userTwo->name);
     }
+
+    /**
+     * @test
+     *
+     * @throws NotFoundExceptionInterface
+     * @throws Throwable
+     * @throws ContainerExceptionInterface
+     */
+    #[Test]
+    public function it_deletes_entity(): void
+    {
+        $user = User::find(1);
+        $this::assertNotNull($user);
+
+        $this::assertTrue($user->delete()->isSuccess());
+        $this::assertCount(1, User::findAll());
+    }
 }

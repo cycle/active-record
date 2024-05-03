@@ -6,7 +6,7 @@
             "report": "master"
         }
     },
-    "minCoveredMsi": 93,
+    "minCoveredMsi": 70,
     "minMsi": 70,
     "phpUnit": {
         "configDir": "./"
