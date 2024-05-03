@@ -42,6 +42,21 @@ final class FacadeTest extends TestCase
      *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
+     */
+    #[Test]
+    public function it_fails_to_get_orm_from_facade_when_container_is_not_set(): void
+    {
+        $this->expectException(ConfigurationException::class);
+        $this->expectExceptionMessage('Container has not been set.');
+
+        Facade::getOrm();
+    }
+
+    /**
+     * @test
+     *
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      * @throws Exception
      */
     #[Test]
