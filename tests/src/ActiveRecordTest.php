@@ -176,4 +176,28 @@ final class ActiveRecordTest extends DatabaseTestCase
         $this::assertTrue($user->delete()->isSuccess());
         $this::assertCount(1, User::findAll());
     }
+
+    /**
+     * @test
+     *
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     * @throws Throwable
+     */
+    #[Test]
+    public function it_deletes_multiple_entities_using_remove_method(): void
+    {
+        $userOne = User::find(1);
+        $userTwo = User::find(2);
+
+        $userOne->remove();
+        $userTwo->remove();
+
+        $this::assertCount(2, User::findAll());
+
+        $entityManager = Facade::getEntityManager();
+        $this::assertTrue($entityManager->run()->isSuccess());
+
+        $this::assertCount(0, User::findAll());
+    }
 }

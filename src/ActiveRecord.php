@@ -160,4 +160,18 @@ abstract class ActiveRecord
 
         return $entityManager->run();
     }
+
+    /**
+     * Prepares the current entity for deletion.
+     *
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    final public function remove(bool $cascade = true): EntityManagerInterface
+    {
+        /** @var EntityManager $entityManager */
+        $entityManager = Facade::getEntityManager();
+
+        return $entityManager->delete($this, $cascade);
+    }
 }

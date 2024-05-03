@@ -99,7 +99,7 @@
             "indent-style": "space"
         },
         "config-plugin": {
-            "bootstrap": "config/yii-bootstrap.php"
+            "bootstrap": "src/Bridge/Yii3/yii-bootstrap.php"
         },
         "laravel": {
             "providers": [
