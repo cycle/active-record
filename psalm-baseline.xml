@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="5.24.0@462c80e31c34e58cc4f750c656be3927e80e550e">
+  <file src="src/ActiveRecord.php">
+    <PossiblyUnusedReturnValue>
+      <code><![CDATA[EntityManagerInterface]]></code>
+    </PossiblyUnusedReturnValue>
+  </file>
   <file src="src/Bridge/Laravel/Providers/ActiveRecordProvider.php">
     <UnusedClass>
       <code><![CDATA[ActiveRecordProvider]]></code>
@@ -27,9 +32,6 @@
     </PossiblyUnusedProperty>
   </file>
   <file src="tests/app/Entity/User.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[__construct]]></code>
-    </PossiblyUnusedMethod>
     <PossiblyUnusedProperty>
       <code><![CDATA[$identity]]></code>
     </PossiblyUnusedProperty>

@@ -18,7 +18,7 @@ class User extends ActiveRecord
     #[Column(type: 'bigInteger', primary: true, typecast: 'int')]
     public int $id;
 
-    #[Column(type: 'string')]
+    #[Column(type: 'string', unique: true)]
     public string $name;
 
     #[BelongsTo(target: Identity::class, innerKey: 'id', outerKey: 'id', cascade: true, load: 'eager')]

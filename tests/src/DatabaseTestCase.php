@@ -30,6 +30,7 @@ class DatabaseTestCase extends TestCase
         $user = $userTable->getSchema();
         $user->bigInteger('id')->primary();
         $user->string('name');
+        $user->index(['name'])->unique(true);
         $user->save();
 
         /** @var Table $identityTable */

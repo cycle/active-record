@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cycle\ActiveRecord;
 
 use Cycle\ORM\EntityManager;
+use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\RepositoryInterface;
 use Cycle\ORM\Select;
@@ -121,5 +122,14 @@ abstract class ActiveRecord
         $entityManager->persist($this, $cascade);
 
         return $entityManager->run();
+    }
+
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    final public function persist(bool $cascade = true): EntityManagerInterface
+    {
+        return Facade::getEntityManager()->persist($this, $cascade);
     }
 }
