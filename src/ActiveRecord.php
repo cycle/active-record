@@ -132,4 +132,32 @@ abstract class ActiveRecord
     {
         return Facade::getEntityManager()->persist($this, $cascade);
     }
+
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     * @throws Throwable
+     */
+    final public function delete(bool $cascade = true): StateInterface
+    {
+        /** @var EntityManager $entityManager */
+        $entityManager = Facade::getEntityManager();
+        $entityManager->delete($this, $cascade);
+
+        return $entityManager->run(throwException: false);
+    }
+
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws Throwable
+     * @throws NotFoundExceptionInterface
+     */
+    final public function deleteOrFail(bool $cascade = true): StateInterface
+    {
+        /** @var EntityManager $entityManager */
+        $entityManager = Facade::getEntityManager();
+        $entityManager->delete($this, $cascade);
+
+        return $entityManager->run();
+    }
 }
