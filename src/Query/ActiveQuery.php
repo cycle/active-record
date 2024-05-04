@@ -9,9 +9,11 @@ use Cycle\ORM\Select;
 
 /**
  * @template TEntity of object
+ *
  * @extends Select<TEntity>
  */
-class ActiveSelect extends Select {
+class ActiveQuery extends Select
+{
     /**
      * @param class-string<TEntity> $class
      */

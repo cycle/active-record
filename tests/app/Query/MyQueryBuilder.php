@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Cycle\App\Query;
 
-use Cycle\ActiveRecord\Query\ActiveSelect;
+use Cycle\ActiveRecord\Query\ActiveQuery;
 
-class MyQueryBuilder extends ActiveSelect {
+class MyQueryBuilder extends ActiveQuery
+{
     public function active($state = true)
     {
         return $this->where(['active' => $state]);
