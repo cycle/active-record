@@ -12,14 +12,14 @@
 
 <div align="center">
 
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fwayofdev%2Factive-record%2Fbadge&style=flat-square&label=github%20actions)](https://github.com/wayofdev/active-record/actions)
-[![Total Downloads](https://img.shields.io/packagist/dt/wayofdev/active-record?&style=flat-square)](https://packagist.org/packages/wayofdev/active-record)
-[![Latest Stable Version](https://img.shields.io/packagist/v/wayofdev/active-record?&style=flat-square)](https://packagist.org/packages/wayofdev/active-record)
-[![Commits since latest release](https://img.shields.io/github/commits-since/wayofdev/active-record/latest?style=flat-square)](https://packagist.org/packages/wayofdev/active-record)
-[![PHP Version Require](https://poser.pugx.org/wayofdev/active-record/require/php?style=flat-square)](https://packagist.org/packages/wayofdev/active-record)
-[![Codecov Coverage](https://img.shields.io/codecov/c/github/wayofdev/active-record?style=flat-square&logo=codecov)](https://app.codecov.io/gh/wayofdev/active-record)
-[![Type Coverage](https://shepherd.dev/github/wayofdev/active-record/coverage.svg)](https://shepherd.dev/github/wayofdev/active-record)
-[![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&label=mutation%20score&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fwayofdev%2Factive-record%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/wayofdev/active-record/master)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fcycle%2Factive-record%2Fbadge&style=flat-square&label=github%20actions)](https://github.com/cycle/active-record/actions)
+[![Total Downloads](https://img.shields.io/packagist/dt/cycle/active-record?&style=flat-square)](https://packagist.org/packages/cycle/active-record)
+[![Latest Stable Version](https://img.shields.io/packagist/v/cycle/active-record?&style=flat-square)](https://packagist.org/packages/cycle/active-record)
+[![Commits since latest release](https://img.shields.io/github/commits-since/cycle/active-record/latest?style=flat-square)](https://packagist.org/packages/cycle/active-record)
+[![PHP Version Require](https://poser.pugx.org/cycle/active-record/require/php?style=flat-square)](https://packagist.org/packages/cycle/active-record)
+[![Codecov Coverage](https://img.shields.io/codecov/c/github/cycle/active-record?style=flat-square&logo=codecov)](https://app.codecov.io/gh/cycle/active-record)
+[![Type Coverage](https://shepherd.dev/github/cycle/active-record/coverage.svg)](https://shepherd.dev/github/cycle/active-record)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&label=mutation%20score&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fcycle%2Factive-record%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/cycle/active-record/master)
 ![PHP Stan Level 5 of 9](https://img.shields.io/badge/phpstan%20level-5%20of%209-yellowgreen?style=flat-square)
 [![Discord](https://img.shields.io/discord/538114875570913290?style=flat-square&logo=discord&labelColor=7289d9&logoColor=white&color=39456d)](https://discord.gg/spiralphp)
 [![Follow on Twitter (X)](https://img.shields.io/badge/-Follow-black?style=flat-square&logo=X)](https://x.com/intent/follow?screen_name=SpiralPHP)
@@ -44,7 +44,7 @@ Before you begin, ensure your development environment meets the following requir
 - One of the Cycle ORM adapters:
   - [`spiral/cycle-bridge`](https://github.com/spiral/cycle-bridge) official Cycle ORM adapter for the [Spiral Framework](https://github.com/spiral/framework)
   - [`yiisoft/yii-cycle`](https://github.com/yiisoft/yii-cycle) — official Cycle ORM adapter for the [Yii 3](https://www.yiiframework.com)
-  - [`wayofdev/laravel-cycle-orm-adapter`](https://github.com/wayofdev/laravel-cycle-orm-adapter) —package managed by [@wayofdev](https://github.com/wayofdev) for the [Laravel](https://laravel.com) 10.x or higher.
+  - [`wayofdev/laravel-cycle-orm-adapter`](https://github.com/wayofdev/laravel-cycle-orm-adapter) — package managed by [@wayofdev](https://github.com/wayofdev) for the [Laravel](https://laravel.com) 10.x or higher.
 
 <br>
 
@@ -237,11 +237,11 @@ This project has a [security policy](.github/SECURITY.md).
 
 ## 🙌 Want to Contribute?
 
-Thank you for considering contributing to the wayofdev community! We are open to all kinds of contributions. If you want to:
+Thank you for considering contributing to the cycle community! We are open to all kinds of contributions. If you want to:
 
-- 🤔 [Suggest a feature](https://github.com/wayofdev/active-record/issues/new?assignees=&labels=type%3A+enhancement&projects=&template=2-feature-request.yml&title=%5BFeature%5D%3A+)
-- 🐛 [Report an issue](https://github.com/wayofdev/active-record/issues/new?assignees=&labels=type%3A+documentation%2Ctype%3A+maintenance&projects=&template=1-bug-report.yml&title=%5BBug%5D%3A+)
-- 📖 [Improve documentation](https://github.com/wayofdev/active-record/issues/new?assignees=&labels=type%3A+documentation%2Ctype%3A+maintenance&projects=&template=4-docs-bug-report.yml&title=%5BDocs%5D%3A+)
+- 🤔 [Suggest a feature](https://github.com/cycle/active-record/issues/new?assignees=&labels=type%3A+enhancement&projects=&template=2-feature-request.yml&title=%5BFeature%5D%3A+)
+- 🐛 [Report an issue](https://github.com/cycle/active-record/issues/new?assignees=&labels=type%3A+documentation%2Ctype%3A+maintenance&projects=&template=1-bug-report.yml&title=%5BBug%5D%3A+)
+- 📖 [Improve documentation](https://github.com/cycle/active-record/issues/new?assignees=&labels=type%3A+documentation%2Ctype%3A+maintenance&projects=&template=4-docs-bug-report.yml&title=%5BDocs%5D%3A+)
 - 👨‍💻 Contribute to the code
 
 You are more than welcome. Before contributing, kindly check our [contribution guidelines](.github/CONTRIBUTING.md).
@@ -252,8 +252,8 @@ You are more than welcome. Before contributing, kindly check our [contribution g
 
 ## 🫡 Contributors
 
-<a href="https://github.com/wayofdev/active-record/graphs/contributors">
-    <img align="left" src="https://img.shields.io/github/contributors-anon/wayofdev/active-record?style=for-the-badge" alt="Contributors Badge"/>
+<a href="https://github.com/cycle/active-record/graphs/contributors">
+    <img align="left" src="https://img.shields.io/github/contributors-anon/cycle/active-record?style=for-the-badge" alt="Contributors Badge"/>
 </a>
 
 <br>

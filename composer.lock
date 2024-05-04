@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "813e5b892d01bd8ad46eeeb36e615a22",
+    "content-hash": "31a0aedabe2d834e3396b931d5f78628",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -4189,16 +4189,16 @@
         },
         {
             "name": "buggregator/trap",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/buggregator/trap.git",
-                "reference": "6bfa73ad8671744f172191c06e87c9495f8be081"
+                "reference": "97001d0e0ecc80b3353453c417c40cf0dde1ffdc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/buggregator/trap/zipball/6bfa73ad8671744f172191c06e87c9495f8be081",
-                "reference": "6bfa73ad8671744f172191c06e87c9495f8be081",
+                "url": "https://api.github.com/repos/buggregator/trap/zipball/97001d0e0ecc80b3353453c417c40cf0dde1ffdc",
+                "reference": "97001d0e0ecc80b3353453c417c40cf0dde1ffdc",
                 "shasum": ""
             },
             "require": {
@@ -4208,9 +4208,11 @@
                 "nyholm/psr7": "^1.8",
                 "php": ">=8.1",
                 "php-http/message": "^1.15",
+                "psr/container": "^1.1 || ^2.0",
                 "psr/http-message": "^1.1 || ^2",
                 "symfony/console": "^6.4 || ^7",
-                "symfony/var-dumper": "^6.3 || ^7"
+                "symfony/var-dumper": "^6.3 || ^7",
+                "yiisoft/injector": "^1.2"
             },
             "require-dev": {
                 "dereuromark/composer-prefer-lowest": "^0.1.10",
@@ -4220,6 +4222,7 @@
                 "vimeo/psalm": "^5.11"
             },
             "suggest": {
+                "ext-simplexml": "To load trap.xml",
                 "roxblnfk/unpoly": "If you want to remove unnecessary PHP polyfills depend on PHP version."
             },
             "bin": [
@@ -4265,7 +4268,7 @@
             ],
             "support": {
                 "issues": "https://github.com/buggregator/trap/issues",
-                "source": "https://github.com/buggregator/trap/tree/1.5.0"
+                "source": "https://github.com/buggregator/trap/tree/1.6.0"
             },
             "funding": [
                 {
@@ -4281,7 +4284,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2024-04-22T15:05:34+00:00"
+            "time": "2024-05-04T10:00:44+00:00"
         },
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -8877,12 +8880,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "f9d568f4dfd55d0a2a306d67330dde426277e0dc"
+                "reference": "ddcd0a72eec2dd32a4a4bb719a95201f753f12e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/f9d568f4dfd55d0a2a306d67330dde426277e0dc",
-                "reference": "f9d568f4dfd55d0a2a306d67330dde426277e0dc",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/ddcd0a72eec2dd32a4a4bb719a95201f753f12e8",
+                "reference": "ddcd0a72eec2dd32a4a4bb719a95201f753f12e8",
                 "shasum": ""
             },
             "conflict": {
@@ -9350,7 +9353,7 @@
                 "processwire/processwire": "<=3.0.210",
                 "propel/propel": ">=2.0.0.0-alpha1,<=2.0.0.0-alpha7",
                 "propel/propel1": ">=1,<=1.7.1",
-                "pterodactyl/panel": "<1.7",
+                "pterodactyl/panel": "<1.11.6",
                 "ptheofan/yii2-statemachine": ">=2.0.0.0-RC1-dev,<=2",
                 "ptrofimov/beanstalk_console": "<1.7.14",
                 "pubnub/pubnub": "<6.1",
@@ -9661,7 +9664,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-05-03T05:04:43+00:00"
+            "time": "2024-05-03T21:04:13+00:00"
         },
         {
             "name": "sanmai/later",
