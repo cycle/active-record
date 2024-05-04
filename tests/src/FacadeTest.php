@@ -8,9 +8,11 @@ use Cycle\ActiveRecord\Exceptions\ConfigurationException;
 use Cycle\ActiveRecord\Facade;
 use Cycle\ORM\EntityManager;
 use Cycle\ORM\ORMInterface;
+use Exception as CoreException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\Exception;
 use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 final class FacadeTest extends TestCase
 {
@@ -93,6 +95,37 @@ final class FacadeTest extends TestCase
         $this->expectExceptionMessage('Failed to get ORMInterface from container.');
 
         Facade::getOrm();
+    }
+
+    /**
+     * @test
+     *
+     * @throws Exception
+     */
+    #[Test]
+    public function it_throws_exception_when_container_does_not_have_orm_set(): void
+    {
+        $container = $this->createMock(ContainerInterface::class);
+        $exception = new class() extends CoreException implements NotFoundExceptionInterface {};
+
+        $container
+            ->expects($this::once())
+            ->method('get')
+            ->with(ORMInterface::class)
+            ->willThrowException($exception);
+
+        Facade::setContainer($container);
+
+        // Assert that an exception is thrown when the ORM is requested but not available
+        $this->expectException(ConfigurationException::class);
+        $this->expectExceptionMessage('Container has no ORMInterface service.');
+
+        try {
+            Facade::getOrm();
+        } catch (ConfigurationException $e) {
+            $this::assertSame($exception, $e->getPrevious());
+            throw $e;
+        }
     }
 
     /**
