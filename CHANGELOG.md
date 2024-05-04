@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/wayofdev/active-record/compare/v0.3.0...v0.4.0) (2024-05-03)
+
+
+### Features
+
+* use custom exceptions ([e18df6d](https://github.com/wayofdev/active-record/commit/e18df6de1265546fe516b720f9272bbcffedeb85))
+
 ## [0.3.0](https://github.com/wayofdev/active-record/compare/v0.2.1...v0.3.0) (2024-05-03)
 
 
