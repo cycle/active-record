@@ -10,8 +10,6 @@ use Cycle\ORM\ORMInterface;
 use Cycle\ORM\RepositoryInterface;
 use Cycle\ORM\Select;
 use Cycle\ORM\Transaction\StateInterface;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 use Throwable;
 
 /**
@@ -21,9 +19,6 @@ abstract class ActiveRecord
 {
     /**
      * Finds a single record based on the given primary key.
-     *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      */
     final public static function find(mixed $primaryKey): ?static
     {
@@ -35,9 +30,6 @@ abstract class ActiveRecord
 
     /**
      * Finds a single record based on the given scope.
-     *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      */
     final public static function findOne(array $scope = []): ?static
     {
@@ -49,9 +41,6 @@ abstract class ActiveRecord
 
     /**
      * Finds all records based on the given scope.
-     *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      */
     final public static function findAll(array $scope = []): iterable
     {
@@ -60,9 +49,6 @@ abstract class ActiveRecord
 
     /**
      * Returns a Select query builder for the extending entity class.
-     *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      *
      * @return Select<TEntity>
      */
@@ -74,19 +60,11 @@ abstract class ActiveRecord
         return $select;
     }
 
-    /**
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
-     */
     private static function getRepository(): RepositoryInterface
     {
         return self::getOrm()->getRepository(static::class);
     }
 
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
     private static function getOrm(): ORMInterface
     {
         return Facade::getOrm();
@@ -95,8 +73,6 @@ abstract class ActiveRecord
     /**
      * Persists the current entity.
      *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @throws Throwable
      */
     final public function save(bool $cascade = true): StateInterface
@@ -111,8 +87,6 @@ abstract class ActiveRecord
     /**
      * Persists the current entity and throws an exception if an error occurs.
      *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @throws Throwable
      */
     final public function saveOrFail(bool $cascade = true): StateInterface
@@ -124,18 +98,12 @@ abstract class ActiveRecord
         return $entityManager->run();
     }
 
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
     final public function persist(bool $cascade = true): EntityManagerInterface
     {
         return Facade::getEntityManager()->persist($this, $cascade);
     }
 
     /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @throws Throwable
      */
     final public function delete(bool $cascade = true): StateInterface
@@ -148,9 +116,7 @@ abstract class ActiveRecord
     }
 
     /**
-     * @throws ContainerExceptionInterface
      * @throws Throwable
-     * @throws NotFoundExceptionInterface
      */
     final public function deleteOrFail(bool $cascade = true): StateInterface
     {
@@ -163,9 +129,6 @@ abstract class ActiveRecord
 
     /**
      * Prepares the current entity for deletion.
-     *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      */
     final public function remove(bool $cascade = true): EntityManagerInterface
     {

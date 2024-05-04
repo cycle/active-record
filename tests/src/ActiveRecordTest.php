@@ -8,8 +8,6 @@ use Cycle\ActiveRecord\Facade;
 use Cycle\App\Entity\User;
 use Cycle\Database\DatabaseManager;
 use PHPUnit\Framework\Attributes\Test;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 use Throwable;
 
 final class ActiveRecordTest extends DatabaseTestCase
@@ -29,9 +27,6 @@ final class ActiveRecordTest extends DatabaseTestCase
 
     /**
      * @test
-     *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      */
     #[Test]
     public function it_finds_one_entity(): void
@@ -47,9 +42,6 @@ final class ActiveRecordTest extends DatabaseTestCase
 
     /**
      * @test
-     *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      */
     #[Test]
     public function it_finds_all_entities(): void
@@ -60,9 +52,6 @@ final class ActiveRecordTest extends DatabaseTestCase
 
     /**
      * @test
-     *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      */
     #[Test]
     public function it_finds_entity_by_primary_key(): void
@@ -78,9 +67,6 @@ final class ActiveRecordTest extends DatabaseTestCase
 
     /**
      * @test
-     *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      */
     #[Test]
     public function it_uses_query_to_select_entity(): void
@@ -94,8 +80,6 @@ final class ActiveRecordTest extends DatabaseTestCase
     /**
      * @test
      *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @throws Throwable
      */
     #[Test]
@@ -114,8 +98,6 @@ final class ActiveRecordTest extends DatabaseTestCase
     /**
      * @test
      *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @throws Throwable
      */
     #[Test]
@@ -135,9 +117,7 @@ final class ActiveRecordTest extends DatabaseTestCase
     /**
      * @test
      *
-     * @throws NotFoundExceptionInterface
      * @throws Throwable
-     * @throws ContainerExceptionInterface
      */
     #[Test]
     public function it_persists_multiple_entities(): void
@@ -163,9 +143,7 @@ final class ActiveRecordTest extends DatabaseTestCase
     /**
      * @test
      *
-     * @throws NotFoundExceptionInterface
      * @throws Throwable
-     * @throws ContainerExceptionInterface
      */
     #[Test]
     public function it_deletes_entity(): void
@@ -180,8 +158,6 @@ final class ActiveRecordTest extends DatabaseTestCase
     /**
      * @test
      *
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
      * @throws Throwable
      */
     #[Test]
