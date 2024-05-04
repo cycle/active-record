@@ -8,10 +8,15 @@ use Cycle\ActiveRecord\Exceptions\ConfigurationException;
 use Cycle\ORM\EntityManager;
 use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\ORMInterface;
-use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Throwable;
 
+use function sprintf;
+
+/**
+ * @internal
+ */
 class Facade
 {
     private static ?ORMInterface $orm = null;
@@ -29,27 +34,13 @@ class Facade
     }
 
     /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
+     * @throws ConfigurationException
      */
     public static function getOrm(): ORMInterface
     {
-        if (null === self::$container) {
-            throw new ConfigurationException('Container has not been set. Please set the container first using setContainer() method.');
-        }
-
-        self::$orm ??= self::$container->get(ORMInterface::class);
-        if (null === self::$orm) {
-            throw new ConfigurationException('The ORM Carrier is not configured.');
-        }
-
-        return self::$orm;
+        return self::$orm ??= self::getFromContainer(ORMInterface::class);
     }
 
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
     public static function getEntityManager(): EntityManagerInterface
     {
         return self::$entityManager ??= new EntityManager(self::getOrm());
@@ -60,5 +51,34 @@ class Facade
         self::$orm = null;
         self::$entityManager = null;
         self::$container = null;
+    }
+
+    /**
+     * @template T of object
+     *
+     * @param class-string<T> $class
+     *
+     * @throws ConfigurationException
+     *
+     * @return T
+     */
+    private static function getFromContainer(string $class): object
+    {
+        // Check if container is set
+        null === self::$container and throw new ConfigurationException(
+            sprintf(
+                'Container has not been set. Please set the container first using %s method.',
+                self::class . '::setContainer()',
+            ),
+        );
+
+        // Pull service from container
+        try {
+            return self::$container->get($class);
+        } catch (NotFoundExceptionInterface $e) {
+            throw new ConfigurationException('Container has no ORMInterface service.', previous: $e);
+        } catch (Throwable $e) {
+            throw new ConfigurationException('Failed to get ORMInterface from container.', previous: $e);
+        }
     }
 }
