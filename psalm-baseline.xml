@@ -48,10 +48,7 @@
       <code><![CDATA[$identity]]></code>
     </PossiblyUnusedProperty>
   </file>
-  <file src="tests/app/Query/UserQueryBuilder.php">
-    <MissingTemplateParam>
-      <code><![CDATA[UserQueryBuilder]]></code>
-    </MissingTemplateParam>
+  <file src="tests/app/Query/UserQuery.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[active]]></code>
       <code><![CDATA[orderByCreatedAt]]></code>

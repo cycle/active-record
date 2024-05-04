@@ -44,7 +44,7 @@ class ActiveRepository
         return clone $this->select;
     }
 
-    public function findByPK($id): ?object
+    public function findByPK(mixed $id): ?object
     {
         return $this->select()->wherePK($id)->fetchOne();
     }

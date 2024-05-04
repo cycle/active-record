@@ -164,7 +164,9 @@ final class ActiveRecordTest extends DatabaseTestCase
     #[Test]
     public function it_deletes_multiple_entities_using_remove_method(): void
     {
+        /** @var User $userOne */
         $userOne = User::find(1);
+        /** @var User $userTwo */
         $userTwo = User::find(2);
 
         $userOne->remove();

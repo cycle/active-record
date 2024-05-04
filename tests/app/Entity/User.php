@@ -8,7 +8,7 @@ use Cycle\ActiveRecord\ActiveRecord;
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Relation\BelongsTo;
-use Cycle\App\Query\UserQueryBuilder;
+use Cycle\App\Query\UserQuery;
 
 #[Entity(table: 'user')]
 class User extends ActiveRecord
@@ -22,9 +22,12 @@ class User extends ActiveRecord
     #[BelongsTo(target: Identity::class, innerKey: 'id', outerKey: 'id', cascade: true, load: 'eager')]
     public Identity $identity;
 
-    public static function query(): UserQueryBuilder
+    /**
+     * @return UserQuery<static>
+     */
+    public static function query(): UserQuery
     {
-        return new UserQueryBuilder(self::class);
+        return new UserQuery(static::class);
     }
 
     public function __construct(string $name, ?Identity $identity = null)

@@ -8,7 +8,7 @@ use Cycle\ActiveRecord\Facade;
 use Cycle\ORM\Select;
 
 /**
- * @template TEntity of object
+ * @template-covariant TEntity of object
  *
  * @extends Select<TEntity>
  */
