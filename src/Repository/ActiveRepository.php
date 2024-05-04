@@ -2,15 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Cycle\ActiveRecord\Query;
+namespace Cycle\ActiveRecord\Repository;
 
 use Cycle\ActiveRecord\Facade;
 use Cycle\ORM\Select;
 
 /**
+ * @internal
+ *
  * @template TEntity of object
  */
-class ActiveRepository {
+class ActiveRepository
+{
     /** @var Select<TEntity> */
     private Select $select;
 

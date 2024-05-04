@@ -7,6 +7,7 @@ namespace Cycle\Tests;
 use Cycle\ActiveRecord\Facade;
 use Cycle\App\Entity\User;
 use Cycle\Database\DatabaseManager;
+use Cycle\ORM\Select\Repository;
 use PHPUnit\Framework\Attributes\Test;
 use Throwable;
 
@@ -175,5 +176,16 @@ final class ActiveRecordTest extends DatabaseTestCase
         $this::assertTrue($entityManager->run()->isSuccess());
 
         $this::assertCount(0, User::findAll());
+    }
+
+    /**
+     * @test
+     */
+    #[Test]
+    public function it_gets_default_repository_of_entity(): void
+    {
+        $repository = User::getRepository();
+
+        $this::assertInstanceOf(Repository::class, $repository);
     }
 }

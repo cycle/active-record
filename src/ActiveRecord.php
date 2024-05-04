@@ -50,7 +50,7 @@ abstract class ActiveRecord
         return new ActiveQuery(static::class);
     }
 
-    private static function getRepository(): RepositoryInterface
+    public static function getRepository(): RepositoryInterface
     {
         return self::getOrm()->getRepository(static::class);
     }

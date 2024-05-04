@@ -6,14 +6,14 @@ namespace Cycle\App\Query;
 
 use Cycle\ActiveRecord\Query\ActiveQuery;
 
-class MyQueryBuilder extends ActiveQuery
+class UserQueryBuilder extends ActiveQuery
 {
-    public function active($state = true)
+    public function active($state = true): UserQueryBuilder
     {
         return $this->where(['active' => $state]);
     }
 
-    public function orderByCreatedAt($direction = 'ASC')
+    public function orderByCreatedAt($direction = 'ASC'): UserQueryBuilder
     {
         return $this->orderBy(['created_at' => $direction]);
     }
