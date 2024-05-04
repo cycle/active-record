@@ -10,6 +10,9 @@ use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\ORMInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Throwable;
+
+use function sprintf;
 
 /**
  * @internal
@@ -38,9 +41,6 @@ class Facade
         return self::$orm ??= self::getFromContainer(ORMInterface::class);
     }
 
-    /**
-     * @throws ConfigurationException
-     */
     public static function getEntityManager(): EntityManagerInterface
     {
         return self::$entityManager ??= new EntityManager(self::getOrm());
@@ -55,16 +55,18 @@ class Facade
 
     /**
      * @template T of object
+     *
      * @param class-string<T> $class
-     * @return T
      *
      * @throws ConfigurationException
+     *
+     * @return T
      */
     private static function getFromContainer(string $class): object
     {
         // Check if container is set
         null === self::$container and throw new ConfigurationException(
-            \sprintf(
+            sprintf(
                 'Container has not been set. Please set the container first using %s method.',
                 self::class . '::setContainer()',
             ),
@@ -75,7 +77,7 @@ class Facade
             return self::$container->get($class);
         } catch (NotFoundExceptionInterface $e) {
             throw new ConfigurationException('Container has no ORMInterface service.', previous: $e);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             throw new ConfigurationException('Failed to get ORMInterface from container.', previous: $e);
         }
     }
