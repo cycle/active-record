@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cycle\Tests;
 
-use Cycle\ActiveRecord\Exceptions\ConfigurationException;
+use Cycle\ActiveRecord\Exception\ConfigurationException;
 use Cycle\ActiveRecord\Facade;
 use Cycle\ORM\EntityManager;
 use Cycle\ORM\ORMInterface;

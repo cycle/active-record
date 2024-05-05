@@ -4,17 +4,14 @@ declare(strict_types=1);
 
 namespace Cycle\ActiveRecord;
 
+use Cycle\ActiveRecord\Query\ActiveQuery;
 use Cycle\ORM\EntityManager;
 use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\RepositoryInterface;
-use Cycle\ORM\Select;
 use Cycle\ORM\Transaction\StateInterface;
 use Throwable;
 
-/**
- * @template TEntity of ActiveRecord
- */
 abstract class ActiveRecord
 {
     /**
@@ -22,10 +19,7 @@ abstract class ActiveRecord
      */
     final public static function find(mixed $primaryKey): ?static
     {
-        /** @var static|null $entity */
-        $entity = self::getRepository()->findByPK($primaryKey);
-
-        return $entity;
+        return static::query()->wherePK($primaryKey)->fetchOne();
     }
 
     /**
@@ -33,34 +27,30 @@ abstract class ActiveRecord
      */
     final public static function findOne(array $scope = []): ?static
     {
-        /** @var static|null $entity */
-        $entity = self::getRepository()->findOne($scope);
-
-        return $entity;
+        return static::query()->where($scope)->fetchOne();
     }
 
     /**
      * Finds all records based on the given scope.
+     *
+     * @return iterable<static>
      */
     final public static function findAll(array $scope = []): iterable
     {
-        return self::getRepository()->findAll($scope);
+        return static::query()->where($scope)->fetchAll();
     }
 
     /**
-     * Returns a Select query builder for the extending entity class.
+     * Returns a ActiveQuery query builder for the extending entity class.
      *
-     * @return Select<TEntity>
+     * @return ActiveQuery<static>
      */
-    final public static function query(): Select
+    public static function query(): ActiveQuery
     {
-        /** @var Select<TEntity> $select */
-        $select = new Select(self::getOrm(), static::class);
-
-        return $select;
+        return new ActiveQuery(static::class);
     }
 
-    private static function getRepository(): RepositoryInterface
+    public static function getRepository(): RepositoryInterface
     {
         return self::getOrm()->getRepository(static::class);
     }

@@ -8,10 +8,8 @@ use Cycle\ActiveRecord\ActiveRecord;
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Relation\BelongsTo;
+use Cycle\App\Query\UserQuery;
 
-/**
- * @extends ActiveRecord<User>
- */
 #[Entity(table: 'user')]
 class User extends ActiveRecord
 {
@@ -24,9 +22,22 @@ class User extends ActiveRecord
     #[BelongsTo(target: Identity::class, innerKey: 'id', outerKey: 'id', cascade: true, load: 'eager')]
     public Identity $identity;
 
+    /**
+     * @return UserQuery<static>
+     */
+    public static function query(): UserQuery
+    {
+        return new UserQuery(static::class);
+    }
+
     public function __construct(string $name, ?Identity $identity = null)
     {
         $this->name = $name;
         $this->identity = $identity ?? new Identity();
+    }
+
+    public function getIdentity()
+    {
+        return self::query()->where('id', $this->id)->fetchOne();
     }
 }

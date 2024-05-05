@@ -24,6 +24,11 @@
       <code><![CDATA[setOrm]]></code>
     </PossiblyUnusedMethod>
   </file>
+  <file src="src/Repository/ActiveRepository.php">
+    <UnusedClass>
+      <code><![CDATA[ActiveRepository]]></code>
+    </UnusedClass>
+  </file>
   <file src="tests/app/Bootloader/SyncTablesBootloader.php">
     <UnusedClass>
       <code><![CDATA[SyncTablesBootloader]]></code>
@@ -36,9 +41,18 @@
     </PossiblyUnusedProperty>
   </file>
   <file src="tests/app/Entity/User.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[getIdentity]]></code>
+    </PossiblyUnusedMethod>
     <PossiblyUnusedProperty>
       <code><![CDATA[$identity]]></code>
     </PossiblyUnusedProperty>
+  </file>
+  <file src="tests/app/Query/UserQuery.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[active]]></code>
+      <code><![CDATA[orderByCreatedAt]]></code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="tests/src/Pest.php">
     <InternalMethod>

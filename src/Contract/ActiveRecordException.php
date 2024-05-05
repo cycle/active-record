@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cycle\ActiveRecord\Exceptions;
+namespace Cycle\ActiveRecord\Contract;
 
 use Throwable;
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cycle\ActiveRecord;
 
-use Cycle\ActiveRecord\Exceptions\ConfigurationException;
+use Cycle\ActiveRecord\Exception\ConfigurationException;
 use Cycle\ORM\EntityManager;
 use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\ORMInterface;
