@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.5.0](https://github.com/cycle/active-record/compare/v0.4.0...v0.5.0) (2024-05-05)
+
+
+### Features
+
+* ActiveQuery PoC ([502fa02](https://github.com/cycle/active-record/commit/502fa02202f31f253e5a7a279832a52486911ade))
+* Add ActiveRepository draft ([35e496b](https://github.com/cycle/active-record/commit/35e496b10b2218e5da22d88a018f20c0ac301d1e))
+* add repository method for active-record class ([b3aef78](https://github.com/cycle/active-record/commit/b3aef78f4a5317240391d65c6e34349ccf1d4d34))
+* set repository namespace from wayofdev to cycle ([918a1df](https://github.com/cycle/active-record/commit/918a1df419df7077ea33b47c0ab2fd0f1de8b46d))
+* use ActiveQuery class in ActiveRecord ([350b9f5](https://github.com/cycle/active-record/commit/350b9f5007030befed2b80b63d42c6ccaa17419b))
+
+
+### Bug Fixes
+
+* generic types ([3e74968](https://github.com/cycle/active-record/commit/3e749683507f34f69c449c600bce70ac9dd4ed5d))
+* generics in repository ([ba41883](https://github.com/cycle/active-record/commit/ba41883ae151ad6548eb9f82468b3cb2ebe3ffa2))
+
 ## [0.4.0](https://github.com/wayofdev/active-record/compare/v0.3.0...v0.4.0) (2024-05-03)
 
 
