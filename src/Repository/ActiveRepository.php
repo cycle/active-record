@@ -10,7 +10,7 @@ use Cycle\ORM\Select;
 /**
  * @internal
  *
- * @template TEntity of object
+ * @template-covariant TEntity of object
  */
 class ActiveRepository
 {
@@ -44,7 +44,7 @@ class ActiveRepository
         return clone $this->select;
     }
 
-    public function findByPK(mixed $id): ?object
+    public function find(mixed $id): ?object
     {
         return $this->select()->wherePK($id)->fetchOne();
     }
