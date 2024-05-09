@@ -24,11 +24,6 @@
       <code><![CDATA[setOrm]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="src/Query/ActiveQuery.php">
-    <PossiblyUnusedProperty>
-      <code><![CDATA[$role]]></code>
-    </PossiblyUnusedProperty>
-  </file>
   <file src="src/Repository/ActiveRepository.php">
     <UnusedClass>
       <code><![CDATA[ActiveRepository]]></code>

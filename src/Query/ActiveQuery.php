@@ -26,4 +26,9 @@ class ActiveQuery extends Select
 
         parent::__construct($this->orm, $role);
     }
+
+    public function getRole(): string
+    {
+        return $this->role;
+    }
 }

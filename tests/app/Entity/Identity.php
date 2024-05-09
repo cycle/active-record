@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Cycle\App\Entity;
 
+use Cycle\ActiveRecord\ActiveRecord;
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
 use DateTimeImmutable;
 use DateTimeInterface;
 
 #[Entity(table: 'user_identity')]
-class Identity
+class Identity extends ActiveRecord
 {
     #[Column(type: 'bigPrimary', typecast: 'int')]
     public int $id;
