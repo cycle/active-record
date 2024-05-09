@@ -45,7 +45,7 @@ jobs:
           globs: |
             **/*.md
             !CHANGELOG.md
-            ./docs
+            !./docs
 
   code-coverage:
     timeout-minutes: 4
