@@ -8,6 +8,7 @@ use Cycle\ActiveRecord\ActiveRecord;
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Relation\BelongsTo;
+use Cycle\App\Query\UserCollectionQuery;
 use Cycle\App\Query\UserQuery;
 
 #[Entity(table: 'user')]
@@ -28,6 +29,11 @@ class User extends ActiveRecord
     public static function query(): UserQuery
     {
         return new UserQuery(static::class);
+    }
+
+    public static function queryWithCollection(): UserCollectionQuery
+    {
+        return new UserCollectionQuery(static::class);
     }
 
     public function __construct(string $name, ?Identity $identity = null)

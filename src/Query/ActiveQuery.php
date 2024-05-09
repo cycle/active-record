@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Cycle\ActiveRecord\Query;
 
+use Cycle\ActiveRecord\Attribute\Collection;
 use Cycle\ActiveRecord\Facade;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\Select;
+use ReflectionAttribute;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * @template-covariant TEntity of object
@@ -25,5 +29,26 @@ class ActiveQuery extends Select
         $this->orm = Facade::getOrm();
 
         parent::__construct($this->orm, $class);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function fetchAll(): iterable
+    {
+        $reflection = new ReflectionClass(static::class);
+        // $reflection = new ReflectionClass($this->class);
+        $attributes = $reflection->getAttributes(Collection::class, ReflectionAttribute::IS_INSTANCEOF);
+
+        dd($attributes);
+
+        if ([] === $attributes) {
+            return parent::fetchAll();
+        }
+
+        $attribute = $attributes[0]->newInstance();
+        $collection = $this->orm->getFactory()->collection($attribute->name);
+
+        return $collection->collect($this->getIterator());
     }
 }
