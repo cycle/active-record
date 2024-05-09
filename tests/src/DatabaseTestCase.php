@@ -28,7 +28,7 @@ class DatabaseTestCase extends TestCase
         /** @var Table $userTable */
         $userTable = $this->database->table('user');
         $user = $userTable->getSchema();
-        $user->bigInteger('id')->primary();
+        $user->bigPrimary('id');
         $user->string('name');
         $user->index(['name'])->unique(true);
         $user->save();
@@ -40,13 +40,13 @@ class DatabaseTestCase extends TestCase
         $identity->datetime('created_at');
         $identity->save();
 
-        $identityTable->insertMultiple(['id', 'created_at'], [
-            [1, '2020-11-12 12:34:56'],
-            [2, '2021-01-06 15:34:56'],
+        $identityTable->insertMultiple(['created_at'], [
+            ['2020-11-12 12:34:56'],
+            ['2021-01-06 15:34:56'],
         ]);
-        $userTable->insertMultiple(['id', 'name'], [
-            [1, 'Antony'],
-            [2, 'John'],
+        $userTable->insertMultiple(['name'], [
+            ['Antony'],
+            ['John'],
         ]);
     }
 
