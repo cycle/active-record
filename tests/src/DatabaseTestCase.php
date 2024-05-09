@@ -41,8 +41,8 @@ class DatabaseTestCase extends TestCase
         $identity->save();
 
         $identityTable->insertMultiple(['id', 'created_at'], [
-            [1, '12:34:56 12-11-2020'],
-            [2, '15:34:56 01-06-2021'],
+            [1, '2020-11-12 12:34:56'],
+            [2, '2021-01-06 15:34:56'],
         ]);
         $userTable->insertMultiple(['id', 'name'], [
             [1, 'Antony'],
