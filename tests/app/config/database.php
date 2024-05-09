@@ -51,7 +51,7 @@ return [
                 host: env('DB_HOSTNAME', 'mysql'),
                 port: env('DB_PORT', 3306),
                 user: env('DB_USER', 'cycle'),
-                password: env('DB_PASSWORD'),
+                password: env('DB_PASSWORD', 'SSpaSS__1_123'),
             ),
             queryCache: true
         ),
@@ -61,7 +61,7 @@ return [
                 host: env('DB_HOSTNAME', 'pgsql'),
                 port: env('DB_PORT', 5432),
                 user: env('DB_USER', 'cycle'),
-                password: env('DB_PASSWORD'),
+                password: env('DB_PASSWORD', 'SSpaSS__1_123'),
             ),
             schema: 'public',
             queryCache: true,
@@ -72,7 +72,7 @@ return [
                 host: env('DB_HOSTNAME', 'sqlserver'),
                 port: env('DB_PORT', 1433),
                 user: 'SA',
-                password: env('DB_PASSWORD')
+                password: env('DB_PASSWORD', 'SSpaSS__1_123')
             ),
             queryCache: true
         ),
