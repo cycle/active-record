@@ -27,8 +27,8 @@ jobs:
           - '8.2'
         dependencies:
           - locked
-        mysql-version:
-          - latest
+        pgsql-version:
+          - '13-alpine'
 
     services:
       pgsql:

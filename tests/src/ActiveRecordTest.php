@@ -110,7 +110,7 @@ final class ActiveRecordTest extends DatabaseTestCase
         $user = new User('John');
 
         $this::expectException(Throwable::class);
-        $this::expectExceptionMessage('SQLSTATE[23000]: Integrity constraint violation: 19 UNIQUE constraint failed: user.name');
+        $this::expectExceptionMessage('SQLSTATE[23000]');
 
         $entityManager = $user->saveOrFail();
 
