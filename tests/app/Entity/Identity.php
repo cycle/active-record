@@ -9,7 +9,7 @@ use Cycle\Annotated\Annotation\Entity;
 use DateTimeImmutable;
 use DateTimeInterface;
 
-#[Entity(table: 'identity')]
+#[Entity(table: 'user_identity')]
 class Identity
 {
     #[Column(type: 'bigPrimary', typecast: 'int')]

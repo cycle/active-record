@@ -34,7 +34,7 @@ class DatabaseTestCase extends TestCase
         $user->save();
 
         /** @var Table $identityTable */
-        $identityTable = $this->database->table('identity');
+        $identityTable = $this->database->table('user_identity');
         $identity = $identityTable->getSchema();
         $identity->bigPrimary('id');
         $identity->datetime('created_at');

@@ -71,8 +71,9 @@ return [
                 database: 'tempdb',
                 host: env('DB_HOSTNAME', 'sqlserver'),
                 port: env('DB_PORT', 1433),
+                trustServerCertificate: true,
                 user: 'SA',
-                password: env('DB_PASSWORD', 'SSpaSS__1_123')
+                password: env('DB_PASSWORD', 'SSpaSS__1_123'),
             ),
             queryCache: true
         ),
