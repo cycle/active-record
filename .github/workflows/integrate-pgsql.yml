@@ -10,6 +10,10 @@ on:  # yamllint disable-line rule:truthy
 
 name: 🔍 Continuous integration with PostgreSQL
 
+env:
+  DB_HOSTNAME: 127.0.0.1
+  DB_PORT: 15432
+
 jobs:
   test-mysql:
     timeout-minutes: 4

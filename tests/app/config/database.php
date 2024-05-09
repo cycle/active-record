@@ -48,8 +48,8 @@ return [
         'mysql' => new Config\MySQLDriverConfig(
             connection: new Config\MySQL\TcpConnectionConfig(
                 database: env('DB_DATABASE', 'default'),
-                host: 'mysql',
-                port: 3306,
+                host: env('DB_HOSTNAME', 'mysql'),
+                port: env('DB_PORT', 3306),
                 user: env('DB_USER', 'cycle'),
                 password: env('DB_PASSWORD'),
             ),
@@ -58,8 +58,8 @@ return [
         'pgsql' => new Config\PostgresDriverConfig(
             connection: new Config\Postgres\TcpConnectionConfig(
                 database: env('DB_DATABASE', 'default'),
-                host: 'pgsql',
-                port: 5432,
+                host: env('DB_HOSTNAME', 'pgsql'),
+                port: env('DB_PORT', 5432),
                 user: env('DB_USER', 'cycle'),
                 password: env('DB_PASSWORD'),
             ),
@@ -69,8 +69,8 @@ return [
         'sqlserver' => new Config\SQLServerDriverConfig(
             connection: new Config\SQLServer\TcpConnectionConfig(
                 database: 'tempdb',
-                host: 'sqlserver',
-                port: 1433,
+                host: env('DB_HOSTNAME', 'sqlserver'),
+                port: env('DB_PORT', 1433),
                 user: 'SA',
                 password: env('DB_PASSWORD')
             ),

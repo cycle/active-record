@@ -10,6 +10,10 @@ on:  # yamllint disable-line rule:truthy
 
 name: 🔍 Continuous integration with MySQL
 
+env:
+  DB_HOSTNAME: 127.0.0.1
+  DB_PORT: 13306
+
 jobs:
   test-mysql:
     timeout-minutes: 4
