@@ -203,11 +203,11 @@ lint-actions: ## Lint all github actions
 .PHONY: lint-actions
 
 lint-md: ## Lint all markdown files using markdownlint-cli2
-	@$(MARKDOWN_LINT_RUNNER) --fix "**/*.md" "!CHANGELOG.md" "!vendor" | tee -a $(MAKE_LOGFILE)
+	@$(MARKDOWN_LINT_RUNNER) --fix "**/*.md" "!CHANGELOG.md" "!vendor" "!docs" | tee -a $(MAKE_LOGFILE)
 .PHONY: lint-md
 
 lint-md-dry: ## Lint all markdown files using markdownlint-cli2 in dry-run mode
-	@$(MARKDOWN_LINT_RUNNER) "**/*.md" "!CHANGELOG.md" "!vendor" | tee -a $(MAKE_LOGFILE)
+	@$(MARKDOWN_LINT_RUNNER) "**/*.md" "!CHANGELOG.md" "!vendor" "!docs" | tee -a $(MAKE_LOGFILE)
 .PHONY: lint-md-dry
 
 lint-php: prepare ## Fixes code to follow coding standards using php-cs-fixer
