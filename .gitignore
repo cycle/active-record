@@ -1,5 +1,6 @@
 /vendor/
 /.build/
+/.idea/
+/tests/runtime/
 .env
 coverage.xml
-/tests/runtime/

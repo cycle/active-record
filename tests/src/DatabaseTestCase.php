@@ -18,6 +18,7 @@ class DatabaseTestCase extends TestCase
     use Loggable;
 
     protected DatabaseInterface $database;
+    protected ORMInterface $orm;
 
     /**
      * @throws Throwable
@@ -27,32 +28,23 @@ class DatabaseTestCase extends TestCase
         parent::setUp();
 
         $this->database = $this->getContainer()->get(DatabaseInterface::class);
-
         $this->setUpLogger($this->getDriver());
         $this->enableProfiling();
 
-        /** @var Table $userTable */
-        $userTable = $this->database->table('user');
-        $user = $userTable->getSchema();
-        $user->bigPrimary('id');
-        $user->string('name');
-        $user->index(['name'])->unique(true);
-        $user->save();
+        $this->orm = $this->getContainer()->get(ORMInterface::class);
 
-        /** @var Table $identityTable */
+        // /** @var Table $userTable */
+        $userTable = $this->database->table('user');
+        // /** @var Table $identityTable */
         $identityTable = $this->database->table('user_identity');
-        $identity = $identityTable->getSchema();
-        $identity->bigPrimary('id');
-        $identity->datetime('created_at');
-        $identity->save();
 
         $identityTable->insertMultiple(['created_at'], [
             ['2020-11-12 12:34:56'],
             ['2021-01-06 15:34:56'],
         ]);
-        $userTable->insertMultiple(['name'], [
-            ['Antony'],
-            ['John'],
+        $userTable->insertMultiple(['id', 'name'], [
+            [1, 'Antony'],
+            [2, 'John'],
         ]);
     }
 

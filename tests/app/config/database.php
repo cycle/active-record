@@ -40,10 +40,12 @@ return [
     'drivers' => [
         'memory' => new Config\SQLiteDriverConfig(
             connection: new Config\SQLite\MemoryConnectionConfig(),
-            queryCache: true
+            queryCache: true,
+            options: ['logQueryParameters' => true, 'logInterpolatedQueries' => true],
         ),
         'sqlite' => new Config\SQLiteDriverConfig(
             queryCache: true,
+            options: ['logQueryParameters' => true, 'logInterpolatedQueries' => true],
         ),
         'mysql' => new Config\MySQLDriverConfig(
             connection: new Config\MySQL\TcpConnectionConfig(
@@ -53,7 +55,8 @@ return [
                 user: env('DB_USER', 'cycle'),
                 password: env('DB_PASSWORD', 'SSpaSS__1_123'),
             ),
-            queryCache: true
+            queryCache: true,
+            options: ['logQueryParameters' => true, 'logInterpolatedQueries' => true],
         ),
         'pgsql' => new Config\PostgresDriverConfig(
             connection: new Config\Postgres\TcpConnectionConfig(
@@ -65,6 +68,7 @@ return [
             ),
             schema: 'public',
             queryCache: true,
+            options: ['logQueryParameters' => true, 'logInterpolatedQueries' => true],
         ),
         'sqlserver' => new Config\SQLServerDriverConfig(
             connection: new Config\SQLServer\TcpConnectionConfig(
@@ -76,6 +80,7 @@ return [
                 password: env('DB_PASSWORD', 'SSpaSS__1_123'),
             ),
             queryCache: true,
+            options: ['logQueryParameters' => true, 'logInterpolatedQueries' => true],
         ),
     ],
 ];
