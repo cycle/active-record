@@ -29,7 +29,7 @@ class DatabaseTestCase extends TestCase
 
         $this->database = $this->getContainer()->get(DatabaseInterface::class);
         $this->setUpLogger($this->getDriver());
-        $this->enableProfiling();
+        env('DEBUG', false) and $this->enableProfiling();
 
         $this->orm = $this->getContainer()->get(ORMInterface::class);
 

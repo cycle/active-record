@@ -4,23 +4,19 @@ declare(strict_types=1);
 
 namespace Cycle\App\Entity;
 
-use Cycle\ActiveRecord\ActiveRecord;
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
-use Cycle\Annotated\Annotation\Relation\BelongsTo;
+use Cycle\Annotated\Annotation\Inheritance\JoinedTable;
+use Cycle\Annotated\Annotation\Table\Index;
 use Cycle\App\Query\UserQuery;
 
 #[Entity(table: 'user')]
-class User extends ActiveRecord
+#[JoinedTable]
+#[Index(columns: ['name'], unique: true)]
+class User extends Identity
 {
-    #[Column(type: 'bigInteger', primary: true, typecast: 'int')]
-    public int $id;
-
-    #[Column(type: 'string', unique: true)]
+    #[Column(type: 'string')]
     public string $name;
-
-    #[BelongsTo(target: Identity::class, innerKey: 'id', outerKey: 'id', cascade: true, load: 'eager')]
-    public Identity $identity;
 
     /**
      * @return UserQuery<static>
@@ -30,10 +26,10 @@ class User extends ActiveRecord
         return new UserQuery(static::class);
     }
 
-    public function __construct(string $name, ?Identity $identity = null)
+    public function __construct(string $name)
     {
+        parent::__construct();
         $this->name = $name;
-        $this->identity = $identity ?? new Identity();
     }
 
     public function getIdentity()
