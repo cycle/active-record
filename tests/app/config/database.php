@@ -75,7 +75,7 @@ return [
                 user: 'SA',
                 password: env('DB_PASSWORD', 'SSpaSS__1_123'),
             ),
-            queryCache: true
+            queryCache: true,
         ),
     ],
 ];

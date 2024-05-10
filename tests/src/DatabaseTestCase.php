@@ -6,6 +6,7 @@ namespace Cycle\Tests;
 
 use Cycle\Database\Database;
 use Cycle\Database\DatabaseInterface;
+use Cycle\Database\Driver\DriverInterface;
 use Cycle\Database\Driver\HandlerInterface;
 use Cycle\Database\Table;
 use Cycle\ORM\ORMInterface;
@@ -14,6 +15,8 @@ use Throwable;
 
 class DatabaseTestCase extends TestCase
 {
+    use Loggable;
+
     protected DatabaseInterface $database;
 
     /**
@@ -24,6 +27,9 @@ class DatabaseTestCase extends TestCase
         parent::setUp();
 
         $this->database = $this->getContainer()->get(DatabaseInterface::class);
+
+        $this->setUpLogger($this->getDriver());
+        $this->enableProfiling();
 
         /** @var Table $userTable */
         $userTable = $this->database->table('user');
@@ -48,6 +54,11 @@ class DatabaseTestCase extends TestCase
             ['Antony'],
             ['John'],
         ]);
+    }
+
+    public function getDriver(): DriverInterface
+    {
+        return $this->database->getDriver();
     }
 
     /**
