@@ -29,13 +29,16 @@ class DatabaseTestCase extends TestCase
 
         $this->database = $this->getContainer()->get(DatabaseInterface::class);
         $this->setUpLogger($this->getDriver());
-        env('DEBUG', false) and $this->enableProfiling();
+
+        if (true === env('DEBUG', false)) {
+            $this->enableProfiling();
+        }
 
         $this->orm = $this->getContainer()->get(ORMInterface::class);
 
-        // /** @var Table $userTable */
+        /** @var Table $userTable */
         $userTable = $this->database->table('user');
-        // /** @var Table $identityTable */
+        /** @var Table $identityTable */
         $identityTable = $this->database->table('user_identity');
 
         $identityTable->insertMultiple(['created_at'], [

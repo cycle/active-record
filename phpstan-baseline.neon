@@ -1,2 +1,6 @@
 parameters:
-	ignoreErrors: []
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method Cycle\\\\Database\\\\Driver\\\\DriverInterface\\:\\:setLogger\\(\\)\\.$#"
+			count: 1
+			path: tests/src/DatabaseTestCase.php

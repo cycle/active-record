@@ -7,24 +7,28 @@ namespace Cycle\Tests;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LoggerTrait;
 use Psr\Log\LogLevel;
+use Stringable;
 
-use function strpos;
+use function in_array;
+use function str_contains;
+use function str_starts_with;
 use function strtolower;
 
 class TestLogger implements LoggerInterface
 {
     use LoggerTrait;
 
-    private $display;
+    private const ERROR_COLOR = "\033[31m";
+    private const ALERT_COLOR = "\033[35m";
+    private const SHOW_COLOR = "\033[34m";
+    private const SELECT_COLOR = "\033[32m";
+    private const INSERT_COLOR = "\033[36m";
+    private const OTHER_COLOR = "\033[33m";
+    private const SYSTEM_QUERY_COLOR = "\033[90m";
 
-    private $countWrites;
-    private $countReads;
-
-    public function __construct()
-    {
-        $this->countWrites = 0;
-        $this->countReads = 0;
-    }
+    private bool $display = false;
+    private int $countWrites = 0;
+    private int $countReads = 0;
 
     public function countWriteQueries(): int
     {
@@ -36,48 +40,24 @@ class TestLogger implements LoggerInterface
         return $this->countReads;
     }
 
-    public function log($level, $message, array $context = []): void
+    public function log($level, string|Stringable $message, array $context = []): void
     {
-        if (! empty($context['elapsed'])) {
-            $sql = strtolower($message);
-            if (
-                strpos($sql, 'insert') === 0
-                || strpos($sql, 'update') === 0
-                || strpos($sql, 'delete') === 0
-            ) {
-                ++$this->countWrites;
-            } else {
-                if (! $this->isPostgresSystemQuery($sql)) {
-                    ++$this->countReads;
-                }
-            }
+        $sql = strtolower((string) $message);
+        if (in_array($sql, ['insert', 'update', 'delete'], true)) {
+            ++$this->countWrites;
+        } elseif (! $this->isPostgresSystemQuery($sql)) {
+            ++$this->countReads;
         }
 
         if (! $this->display) {
             return;
         }
 
-        if (LogLevel::ERROR == $level) {
-            echo " \n! \033[31m" . $message . "\033[0m";
-        } elseif (LogLevel::ALERT == $level) {
-            echo " \n! \033[35m" . $message . "\033[0m";
-        } elseif (strpos($message, 'SHOW') === 0) {
-            echo " \n> \033[34m" . $message . "\033[0m";
-        } else {
-            if ($this->isPostgresSystemQuery($message)) {
-                echo " \n> \033[90m" . $message . "\033[0m";
-
-                return;
-            }
-
-            if (strpos($message, 'SELECT') === 0) {
-                echo " \n> \033[32m" . $message . "\033[0m";
-            } elseif (strpos($message, 'INSERT') === 0) {
-                echo " \n> \033[36m" . $message . "\033[0m";
-            } else {
-                echo " \n> \033[33m" . $message . "\033[0m";
-            }
-        }
+        echo match ($level) {
+            LogLevel::ERROR => " \n! " . self::ERROR_COLOR . $message . "\033[0m",
+            LogLevel::ALERT => " \n! " . self::ALERT_COLOR . $message . "\033[0m",
+            default => $this->formatMessage($message)
+        };
     }
 
     public function display(): void
@@ -92,17 +72,28 @@ class TestLogger implements LoggerInterface
 
     protected function isPostgresSystemQuery(string $query): bool
     {
-        $query = strtolower($query);
+        return str_contains($query, 'constraint_name') || str_contains($query, 'pg_') || str_contains($query, 'information_schema');
+    }
 
-        return (bool) (
-            strpos($query, 'tc.constraint_name')
-            || strpos($query, 'pg_indexes')
-            || strpos($query, 'tc.constraint_name')
-            || strpos($query, 'pg_constraint')
-            || strpos($query, 'information_schema')
-            || strpos($query, 'pg_class')
-        )
+    private function formatMessage(string $message): string
+    {
+        if ($this->isPostgresSystemQuery($message)) {
+            return " \n> " . self::SYSTEM_QUERY_COLOR . $message . "\033[0m";
+        }
 
-        ;
+        return " \n> " . $this->outputColor($message) . $message . "\033[0m";
+    }
+
+    private function outputColor(string $message): string
+    {
+        if (str_starts_with($message, 'SHOW')) {
+            return self::SHOW_COLOR;
+        } elseif (str_starts_with($message, 'SELECT')) {
+            return self::SELECT_COLOR;
+        } elseif (str_starts_with($message, 'INSERT')) {
+            return self::INSERT_COLOR;
+        }
+
+        return self::OTHER_COLOR;
     }
 }

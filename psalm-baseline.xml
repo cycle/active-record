@@ -37,16 +37,12 @@
   <file src="tests/app/Entity/Identity.php">
     <PossiblyUnusedProperty>
       <code><![CDATA[$createdAt]]></code>
-      <code><![CDATA[$id]]></code>
     </PossiblyUnusedProperty>
   </file>
   <file src="tests/app/Entity/User.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[getIdentity]]></code>
     </PossiblyUnusedMethod>
-    <PossiblyUnusedProperty>
-      <code><![CDATA[$identity]]></code>
-    </PossiblyUnusedProperty>
   </file>
   <file src="tests/app/Query/UserQuery.php">
     <PossiblyUnusedMethod>
@@ -54,9 +50,32 @@
       <code><![CDATA[orderByCreatedAt]]></code>
     </PossiblyUnusedMethod>
   </file>
+  <file src="tests/src/DatabaseTestCase.php">
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$orm]]></code>
+    </PossiblyUnusedProperty>
+  </file>
+  <file src="tests/src/Loggable.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[disableProfiling]]></code>
+    </PossiblyUnusedMethod>
+    <UndefinedInterfaceMethod>
+      <code><![CDATA[setLogger]]></code>
+    </UndefinedInterfaceMethod>
+  </file>
   <file src="tests/src/Pest.php">
     <InternalMethod>
       <code><![CDATA[in]]></code>
     </InternalMethod>
+  </file>
+  <file src="tests/src/TestLogger.php">
+    <ImplicitToStringCast>
+      <code><![CDATA[$message]]></code>
+      <code><![CDATA[$message]]></code>
+    </ImplicitToStringCast>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[countReadQueries]]></code>
+      <code><![CDATA[countWriteQueries]]></code>
+    </PossiblyUnusedMethod>
   </file>
 </files>
