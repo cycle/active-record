@@ -6,6 +6,7 @@ namespace Cycle\Tests;
 
 use Cycle\Database\Database;
 use Cycle\Database\DatabaseInterface;
+use Cycle\Database\Driver\DriverInterface;
 use Cycle\Database\Driver\HandlerInterface;
 use Cycle\Database\Table;
 use Cycle\ORM\ORMInterface;
@@ -14,7 +15,10 @@ use Throwable;
 
 class DatabaseTestCase extends TestCase
 {
+    use Loggable;
+
     protected DatabaseInterface $database;
+    protected ORMInterface $orm;
 
     /**
      * @throws Throwable
@@ -24,30 +28,32 @@ class DatabaseTestCase extends TestCase
         parent::setUp();
 
         $this->database = $this->getContainer()->get(DatabaseInterface::class);
+        $this->setUpLogger($this->getDriver());
+
+        if (true === env('DEBUG', false)) {
+            $this->enableProfiling();
+        }
+
+        $this->orm = $this->getContainer()->get(ORMInterface::class);
 
         /** @var Table $userTable */
         $userTable = $this->database->table('user');
-        $user = $userTable->getSchema();
-        $user->bigInteger('id')->primary();
-        $user->string('name');
-        $user->index(['name'])->unique(true);
-        $user->save();
-
         /** @var Table $identityTable */
-        $identityTable = $this->database->table('identity');
-        $identity = $identityTable->getSchema();
-        $identity->bigPrimary('id');
-        $identity->datetime('created_at');
-        $identity->save();
+        $identityTable = $this->database->table('user_identity');
 
-        $identityTable->insertMultiple(['id', 'created_at'], [
-            [1, '12:34:56 12-11-2020'],
-            [2, '15:34:56 01-06-2021'],
+        $identityTable->insertMultiple(['created_at'], [
+            ['2020-11-12 12:34:56'],
+            ['2021-01-06 15:34:56'],
         ]);
         $userTable->insertMultiple(['id', 'name'], [
             [1, 'Antony'],
             [2, 'John'],
         ]);
+    }
+
+    public function getDriver(): DriverInterface
+    {
+        return $this->database->getDriver();
     }
 
     /**

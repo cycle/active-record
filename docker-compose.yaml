@@ -55,9 +55,69 @@ services:
     volumes:
       - pgsql-data:/var/lib/postgresql/data:cached
 
+  mysql:
+    image: mysql:latest
+    container_name: ${COMPOSE_PROJECT_NAME}-mysql
+    restart: on-failure
+    networks:
+      - default
+    ports:
+      - '${DB_MYSQL_FORWARD_PORT:-13306}:3306'
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+    volumes:
+      - mysql-data:/var/lib/mysql:cached
+    command: --default-authentication-plugin=mysql_native_password
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    platform: linux/amd64
+    container_name: ${COMPOSE_PROJECT_NAME}-sqlserver
+    restart: on-failure
+    networks:
+      - default
+    ports:
+      - '${DB_SQLSERVER_FORWARD_PORT:-11434}:1433'
+    env_file:
+      - .env
+    environment:
+      SA_PASSWORD: ${DB_PASSWORD}
+      ACCEPT_EULA: 'Y'
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    healthcheck:
+      test:
+        [
+          'CMD',
+          '/opt/mssql-tools/bin/sqlcmd',
+          '-S',
+          'localhost',
+          '-U',
+          'SA',
+          '-P',
+          'SSpaSS__1_123',
+          '-l',
+          '30',
+          '-Q',
+          'SELECT 1',
+        ]
+      interval: 3s
+      timeout: 1s
+      retries: 10
+
 volumes:
   pgsql-data:
     name: ${COMPOSE_PROJECT_NAME}-pgsql-data
+  mysql-data:
+    name: ${COMPOSE_PROJECT_NAME}-mysql-data
+  sqlserver-data:
+    name: ${COMPOSE_PROJECT_NAME}-sqlserver-data
 
 networks:
   default:

@@ -110,7 +110,12 @@ final class ActiveRecordTest extends DatabaseTestCase
         $user = new User('John');
 
         $this::expectException(Throwable::class);
-        $this::expectExceptionMessage('SQLSTATE[23000]: Integrity constraint violation: 19 UNIQUE constraint failed: user.name');
+
+        // pgsql-response: SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "user_index_name_663d5b6bf1e34
+        // sqlite-response: SQLSTATE[23000]: Integrity constraint violation: 19 UNIQUE constraint failed: user.name
+        // mysql-response: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'John' for key 'user.user_index_name_663d5bc589edb'
+
+        $this::expectExceptionMessage('SQLSTATE');
 
         $entityManager = $user->saveOrFail();
 

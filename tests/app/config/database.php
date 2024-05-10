@@ -8,7 +8,7 @@ return [
     'logger' => [
         'default' => null,
         'drivers' => [
-            'runtime' => 'sql_logs', // Log channel for Sql
+            'memory' => 'sql_logs', // Log channel for Sql
         ],
     ],
 
@@ -27,7 +27,7 @@ return [
      */
     'databases' => [
         'default' => [
-            'driver' => 'runtime',
+            'driver' => env('DB_DRIVER', 'memory'),
         ],
     ],
 
@@ -38,9 +38,49 @@ return [
      * the driver class and its connection options.
      */
     'drivers' => [
-        'runtime' => new Config\SQLiteDriverConfig(
+        'memory' => new Config\SQLiteDriverConfig(
             connection: new Config\SQLite\MemoryConnectionConfig(),
-            queryCache: true
+            queryCache: true,
+            options: ['logQueryParameters' => true, 'logInterpolatedQueries' => true],
+        ),
+        'sqlite' => new Config\SQLiteDriverConfig(
+            queryCache: true,
+            options: ['logQueryParameters' => true, 'logInterpolatedQueries' => true],
+        ),
+        'mysql' => new Config\MySQLDriverConfig(
+            connection: new Config\MySQL\TcpConnectionConfig(
+                database: env('DB_DATABASE', 'default'),
+                host: env('DB_HOSTNAME', 'mysql'),
+                port: env('DB_PORT', 3306),
+                user: env('DB_USER', 'cycle'),
+                password: env('DB_PASSWORD', 'SSpaSS__1_123'),
+            ),
+            queryCache: true,
+            options: ['logQueryParameters' => true, 'logInterpolatedQueries' => true],
+        ),
+        'pgsql' => new Config\PostgresDriverConfig(
+            connection: new Config\Postgres\TcpConnectionConfig(
+                database: env('DB_DATABASE', 'default'),
+                host: env('DB_HOSTNAME', 'pgsql'),
+                port: env('DB_PORT', 5432),
+                user: env('DB_USER', 'cycle'),
+                password: env('DB_PASSWORD', 'SSpaSS__1_123'),
+            ),
+            schema: 'public',
+            queryCache: true,
+            options: ['logQueryParameters' => true, 'logInterpolatedQueries' => true],
+        ),
+        'sqlserver' => new Config\SQLServerDriverConfig(
+            connection: new Config\SQLServer\TcpConnectionConfig(
+                database: 'tempdb',
+                host: env('DB_HOSTNAME', 'sqlserver'),
+                port: env('DB_PORT', 1433),
+                trustServerCertificate: true,
+                user: 'SA',
+                password: env('DB_PASSWORD', 'SSpaSS__1_123'),
+            ),
+            queryCache: true,
+            options: ['logQueryParameters' => true, 'logInterpolatedQueries' => true],
         ),
     ],
 ];
