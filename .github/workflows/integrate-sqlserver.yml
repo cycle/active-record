@@ -35,7 +35,12 @@ jobs:
         image: mcr.microsoft.com/mssql/server:${{ matrix.sqlserver-version }}
         env:
           ACCEPT_EULA: 'Y'
-          SA_PASSWORD: 'SSpaSS__1'
+          SA_PASSWORD: 'SSpaSS__1_123'
+        options: >-
+          --health-cmd "/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'SSpaSS__1_123' -l 30 -Q 'SELECT 1'"
+          --health-interval 3s
+          --health-timeout 1s
+          --health-retries 10
         ports:
           - 11433:1433
 
