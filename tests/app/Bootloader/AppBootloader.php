@@ -10,17 +10,17 @@ use Spiral\Cycle\Interceptor\CycleInterceptor;
 
 final class AppBootloader extends DomainBootloader
 {
-    protected static function defineInterceptors(): array
-    {
-        return [
-            CycleInterceptor::class,
-        ];
-    }
-
     public function defineSingletons(): array
     {
         return [
             CoreInterface::class => [self::class, 'domainCore'],
+        ];
+    }
+
+    protected static function defineInterceptors(): array
+    {
+        return [
+            CycleInterceptor::class,
         ];
     }
 }

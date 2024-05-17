@@ -16,27 +16,6 @@ use Psr\Container\NotFoundExceptionInterface;
 
 final class FacadeTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        /*
-         * This ensures that the Facade will have a clean,
-         * as ActiveRecordBootloader loads container into Facade by default.
-         */
-        Facade::reset();
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        /*
-         * Each test-case should have a clean state.
-         */
-        Facade::reset();
-    }
-
     /**
      * @test
      */
@@ -150,5 +129,26 @@ final class FacadeTest extends TestCase
         $entityManager = Facade::getEntityManager();
 
         $this::assertInstanceOf(EntityManager::class, $entityManager);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        /*
+         * This ensures that the Facade will have a clean,
+         * as ActiveRecordBootloader loads container into Facade by default.
+         */
+        Facade::reset();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        /*
+         * Each test-case should have a clean state.
+         */
+        Facade::reset();
     }
 }

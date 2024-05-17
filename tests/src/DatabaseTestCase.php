@@ -11,17 +11,22 @@ use Cycle\Database\Driver\HandlerInterface;
 use Cycle\Database\Table;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\Select;
-use Throwable;
 
 class DatabaseTestCase extends TestCase
 {
     use Loggable;
 
     protected DatabaseInterface $database;
+
     protected ORMInterface $orm;
 
+    public function getDriver(): DriverInterface
+    {
+        return $this->database->getDriver();
+    }
+
     /**
-     * @throws Throwable
+     * @throws \Throwable
      */
     protected function setUp(): void
     {
@@ -30,7 +35,7 @@ class DatabaseTestCase extends TestCase
         $this->database = $this->getContainer()->get(DatabaseInterface::class);
         $this->setUpLogger($this->getDriver());
 
-        if (true === env('DEBUG', false)) {
+        if (env('DEBUG', false) === true) {
             $this->enableProfiling();
         }
 
@@ -51,13 +56,8 @@ class DatabaseTestCase extends TestCase
         ]);
     }
 
-    public function getDriver(): DriverInterface
-    {
-        return $this->database->getDriver();
-    }
-
     /**
-     * @throws Throwable
+     * @throws \Throwable
      */
     protected function selectEntity(string $role, bool $cleanHeap = false): Select
     {
@@ -72,7 +72,7 @@ class DatabaseTestCase extends TestCase
 
     protected function dropDatabase(?Database $database = null): void
     {
-        if (null === $database) {
+        if ($database === null) {
             return;
         }
 

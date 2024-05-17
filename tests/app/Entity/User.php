@@ -18,18 +18,18 @@ class User extends Identity
     #[Column(type: 'string')]
     public string $name;
 
+    public function __construct(string $name)
+    {
+        parent::__construct();
+        $this->name = $name;
+    }
+
     /**
      * @return UserQuery<static>
      */
     public static function query(): UserQuery
     {
         return new UserQuery(static::class);
-    }
-
-    public function __construct(string $name)
-    {
-        parent::__construct();
-        $this->name = $name;
     }
 
     public function getIdentity()
