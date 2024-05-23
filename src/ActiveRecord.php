@@ -10,7 +10,6 @@ use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\RepositoryInterface;
 use Cycle\ORM\Transaction\StateInterface;
-use Throwable;
 
 abstract class ActiveRecord
 {
@@ -55,15 +54,10 @@ abstract class ActiveRecord
         return self::getOrm()->getRepository(static::class);
     }
 
-    private static function getOrm(): ORMInterface
-    {
-        return Facade::getOrm();
-    }
-
     /**
      * Persists the current entity.
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
     final public function save(bool $cascade = true): StateInterface
     {
@@ -77,7 +71,7 @@ abstract class ActiveRecord
     /**
      * Persists the current entity and throws an exception if an error occurs.
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
     final public function saveOrFail(bool $cascade = true): StateInterface
     {
@@ -94,7 +88,7 @@ abstract class ActiveRecord
     }
 
     /**
-     * @throws Throwable
+     * @throws \Throwable
      */
     final public function delete(bool $cascade = true): StateInterface
     {
@@ -106,7 +100,7 @@ abstract class ActiveRecord
     }
 
     /**
-     * @throws Throwable
+     * @throws \Throwable
      */
     final public function deleteOrFail(bool $cascade = true): StateInterface
     {
@@ -126,5 +120,10 @@ abstract class ActiveRecord
         $entityManager = Facade::getEntityManager();
 
         return $entityManager->delete($this, $cascade);
+    }
+
+    private static function getOrm(): ORMInterface
+    {
+        return Facade::getOrm();
     }
 }

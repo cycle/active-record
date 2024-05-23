@@ -27,14 +27,6 @@ class ActiveRepository
     }
 
     /**
-     * ActiveQuery is always immutable by default.
-     */
-    public function __clone()
-    {
-        $this->select = clone $this->select;
-    }
-
-    /**
      * Get selector associated with the repository.
      *
      * @return Select<TEntity>
@@ -57,5 +49,13 @@ class ActiveRepository
     public function findAll(array $scope = [], array $orderBy = []): iterable
     {
         return $this->select()->where($scope)->orderBy($orderBy)->fetchAll();
+    }
+
+    /**
+     * ActiveQuery is always immutable by default.
+     */
+    public function __clone()
+    {
+        $this->select = clone $this->select;
     }
 }

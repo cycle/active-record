@@ -10,25 +10,9 @@ use Cycle\Database\Database;
 use Cycle\Database\DatabaseManager;
 use Cycle\ORM\Select\Repository;
 use PHPUnit\Framework\Attributes\Test;
-use Throwable;
 
 final class ActiveRecordTest extends DatabaseTestCase
 {
-    /**
-     * @throws Throwable
-     */
-    public function tearDown(): void
-    {
-        parent::tearDown();
-
-        $databaseManager = $this->getContainer()->get(DatabaseManager::class);
-        /** @var Database $database */
-        $database = $databaseManager->database('default');
-
-        $this->dropDatabase($database);
-        Facade::reset();
-    }
-
     /**
      * @test
      */
@@ -84,7 +68,7 @@ final class ActiveRecordTest extends DatabaseTestCase
     /**
      * @test
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
     #[Test]
     public function it_saves_entity(): void
@@ -102,14 +86,14 @@ final class ActiveRecordTest extends DatabaseTestCase
     /**
      * @test
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
     #[Test]
     public function it_triggers_exception_when_tries_to_save_entity_using_save_or_fail(): void
     {
         $user = new User('John');
 
-        $this::expectException(Throwable::class);
+        $this::expectException(\Throwable::class);
 
         // pgsql-response: SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "user_index_name_663d5b6bf1e34
         // sqlite-response: SQLSTATE[23000]: Integrity constraint violation: 19 UNIQUE constraint failed: user.name
@@ -126,7 +110,7 @@ final class ActiveRecordTest extends DatabaseTestCase
     /**
      * @test
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
     #[Test]
     public function it_persists_multiple_entities(): void
@@ -152,7 +136,7 @@ final class ActiveRecordTest extends DatabaseTestCase
     /**
      * @test
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
     #[Test]
     public function it_deletes_entity(): void
@@ -167,7 +151,7 @@ final class ActiveRecordTest extends DatabaseTestCase
     /**
      * @test
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
     #[Test]
     public function it_deletes_multiple_entities_using_remove_method(): void
@@ -197,5 +181,20 @@ final class ActiveRecordTest extends DatabaseTestCase
         $repository = User::getRepository();
 
         $this::assertInstanceOf(Repository::class, $repository);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function tearDown(): void
+    {
+        parent::tearDown();
+
+        $databaseManager = $this->getContainer()->get(DatabaseManager::class);
+        /** @var Database $database */
+        $database = $databaseManager->database('default');
+
+        $this->dropDatabase($database);
+        Facade::reset();
     }
 }
