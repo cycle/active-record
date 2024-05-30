@@ -16,17 +16,17 @@ abstract class ActiveRecord
     /**
      * Finds a single record based on the given primary key.
      */
-    final public static function find(mixed $primaryKey): ?static
+    final public static function findByPK(mixed $primaryKey): ?static
     {
         return static::query()->wherePK($primaryKey)->fetchOne();
     }
 
     /**
-     * Finds a single record based on the given scope.
+     * Finds the first single record based on the given scope.
      */
     final public static function findOne(array $scope = []): ?static
     {
-        return static::query()->where($scope)->fetchOne();
+        return static::query()->fetchOne($scope);
     }
 
     /**

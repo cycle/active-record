@@ -44,11 +44,11 @@ final class ActiveRecordTest extends DatabaseTestCase
     #[Test]
     public function it_finds_entity_by_primary_key(): void
     {
-        $user = User::find(1);
+        $user = User::findByPK(1);
         self::assertNotNull($user);
         self::assertSame('Antony', $user->name);
 
-        $user = User::find(2);
+        $user = User::findByPK(2);
         self::assertNotNull($user);
         self::assertSame('John', $user->name);
     }
@@ -141,7 +141,7 @@ final class ActiveRecordTest extends DatabaseTestCase
     #[Test]
     public function it_deletes_entity(): void
     {
-        $user = User::find(1);
+        $user = User::findByPK(1);
         self::assertNotNull($user);
 
         self::assertTrue($user->delete()->isSuccess());
@@ -157,9 +157,9 @@ final class ActiveRecordTest extends DatabaseTestCase
     public function it_deletes_multiple_entities_using_remove_method(): void
     {
         /** @var User $userOne */
-        $userOne = User::find(1);
+        $userOne = User::findByPK(1);
         /** @var User $userTwo */
-        $userTwo = User::find(2);
+        $userTwo = User::findByPK(2);
 
         $userOne->remove();
         $userTwo->remove();
