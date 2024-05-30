@@ -48,7 +48,7 @@ final class FacadeTest extends TestCase
         Facade::setContainer($container);
 
         // Assert that the ORM obtained from Facade is the same as the mock
-        $this::assertSame($orm, Facade::getOrm());
+        self::assertSame($orm, Facade::getOrm());
     }
 
     /**
@@ -102,7 +102,7 @@ final class FacadeTest extends TestCase
         try {
             Facade::getOrm();
         } catch (ConfigurationException $e) {
-            $this::assertSame($exception, $e->getPrevious());
+            self::assertSame($exception, $e->getPrevious());
             throw $e;
         }
     }
@@ -128,7 +128,7 @@ final class FacadeTest extends TestCase
 
         $entityManager = Facade::getEntityManager();
 
-        $this::assertInstanceOf(EntityManager::class, $entityManager);
+        self::assertInstanceOf(EntityManager::class, $entityManager);
     }
 
     protected function setUp(): void

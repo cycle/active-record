@@ -20,12 +20,12 @@ final class ActiveRecordTest extends DatabaseTestCase
     public function it_finds_one_entity(): void
     {
         $user = User::findOne(['id' => 1]);
-        $this::assertNotNull($user);
-        $this::assertSame('Antony', $user->name);
+        self::assertNotNull($user);
+        self::assertSame('Antony', $user->name);
 
         $user = User::findOne(['name' => 'John']);
-        $this::assertNotNull($user);
-        $this::assertSame(2, $user->id);
+        self::assertNotNull($user);
+        self::assertSame(2, $user->id);
     }
 
     /**
@@ -35,7 +35,7 @@ final class ActiveRecordTest extends DatabaseTestCase
     public function it_finds_all_entities(): void
     {
         $users = User::findAll();
-        $this::assertCount(2, $users);
+        self::assertCount(2, $users);
     }
 
     /**
@@ -45,12 +45,12 @@ final class ActiveRecordTest extends DatabaseTestCase
     public function it_finds_entity_by_primary_key(): void
     {
         $user = User::find(1);
-        $this::assertNotNull($user);
-        $this::assertSame('Antony', $user->name);
+        self::assertNotNull($user);
+        self::assertSame('Antony', $user->name);
 
         $user = User::find(2);
-        $this::assertNotNull($user);
-        $this::assertSame('John', $user->name);
+        self::assertNotNull($user);
+        self::assertSame('John', $user->name);
     }
 
     /**
@@ -61,8 +61,8 @@ final class ActiveRecordTest extends DatabaseTestCase
     {
         $user = User::query()->where('id', 1)->fetchOne();
 
-        $this::assertNotNull($user);
-        $this::assertSame('Antony', $user->name);
+        self::assertNotNull($user);
+        self::assertSame('Antony', $user->name);
     }
 
     /**
@@ -75,12 +75,12 @@ final class ActiveRecordTest extends DatabaseTestCase
     {
         $user = new User('Alex');
 
-        $this::assertTrue($user->save()->isSuccess());
-        $this::assertCount(3, User::findAll());
+        self::assertTrue($user->save()->isSuccess());
+        self::assertCount(3, User::findAll());
 
         $result = $this->selectEntity(User::class, cleanHeap: true)->wherePK($user->id)->fetchOne();
 
-        $this::assertSame($result->name, $user->name);
+        self::assertSame($result->name, $user->name);
     }
 
     /**
@@ -103,8 +103,8 @@ final class ActiveRecordTest extends DatabaseTestCase
 
         $entityManager = $user->saveOrFail();
 
-        $this::assertFalse($entityManager->isSuccess());
-        $this::assertCount(2, User::findAll());
+        self::assertFalse($entityManager->isSuccess());
+        self::assertCount(2, User::findAll());
     }
 
     /**
@@ -124,13 +124,13 @@ final class ActiveRecordTest extends DatabaseTestCase
         $entityManager = Facade::getEntityManager();
         $entityManager->run();
 
-        $this::assertCount(4, User::findAll());
+        self::assertCount(4, User::findAll());
 
         $savedUserOne = $this->selectEntity(User::class, cleanHeap: true)->wherePK($userOne->id)->fetchOne();
-        $this::assertSame($savedUserOne->name, $userOne->name);
+        self::assertSame($savedUserOne->name, $userOne->name);
 
         $savedUserTwo = $this->selectEntity(User::class, cleanHeap: true)->wherePK($userTwo->id)->fetchOne();
-        $this::assertSame($savedUserTwo->name, $userTwo->name);
+        self::assertSame($savedUserTwo->name, $userTwo->name);
     }
 
     /**
@@ -142,10 +142,10 @@ final class ActiveRecordTest extends DatabaseTestCase
     public function it_deletes_entity(): void
     {
         $user = User::find(1);
-        $this::assertNotNull($user);
+        self::assertNotNull($user);
 
-        $this::assertTrue($user->delete()->isSuccess());
-        $this::assertCount(1, User::findAll());
+        self::assertTrue($user->delete()->isSuccess());
+        self::assertCount(1, User::findAll());
     }
 
     /**
@@ -164,12 +164,12 @@ final class ActiveRecordTest extends DatabaseTestCase
         $userOne->remove();
         $userTwo->remove();
 
-        $this::assertCount(2, User::findAll());
+        self::assertCount(2, User::findAll());
 
         $entityManager = Facade::getEntityManager();
-        $this::assertTrue($entityManager->run()->isSuccess());
+        self::assertTrue($entityManager->run()->isSuccess());
 
-        $this::assertCount(0, User::findAll());
+        self::assertCount(0, User::findAll());
     }
 
     /**
@@ -180,7 +180,7 @@ final class ActiveRecordTest extends DatabaseTestCase
     {
         $repository = User::getRepository();
 
-        $this::assertInstanceOf(Repository::class, $repository);
+        self::assertInstanceOf(Repository::class, $repository);
     }
 
     /**

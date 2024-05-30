@@ -21,7 +21,7 @@ final class ActiveQueryTest extends DatabaseTestCase
     {
         $query = User::query();
 
-        $this::assertSame(User::class, $query->getRole());
+        self::assertSame(User::class, $query->getRole());
     }
 
     /**
