@@ -44,7 +44,8 @@ ACTION_LINT_RUNNER ?= $(DOCKER) run --rm $$(tty -s && echo "-it" || echo) \
 MARKDOWN_LINT_RUNNER ?= $(DOCKER) run --rm $$(tty -s && echo "-it" || echo) \
 	-v $(shell pwd):/app \
 	--workdir /app \
-	davidanson/markdownlint-cli2-rules:latest
+	davidanson/markdownlint-cli2-rules:latest \
+	--config ".github/.markdownlint.json"
 
 PHIVE_RUNNER ?= $(DOCKER_COMPOSE) run --rm --no-deps app
 
