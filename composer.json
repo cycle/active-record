@@ -120,8 +120,9 @@
             "roave-infection-static-analysis-plugin --configuration=infection.json.dist"
         ],
         "infect:ci": [
+            "Composer\\Config::disableProcessTimeout",
             "@putenv XDEBUG_MODE=coverage",
-            "roave-infection-static-analysis-plugin --ansi --configuration=infection.json.dist --logger-github --ignore-msi-with-no-mutations --only-covered"
+            "roave-infection-static-analysis-plugin --threads=2 --ansi --logger-github --ignore-msi-with-no-mutations --only-covered"
         ],
         "psalm": "psalm --show-info=true",
         "psalm:baseline": "psalm --set-baseline=psalm-baseline.xml",
@@ -137,22 +138,26 @@
         ],
         "test:cc": [
             "@putenv XDEBUG_MODE=coverage",
-            "pest --coverage --coverage-clover=.build/phpunit/logs/clover.xml"
+            "pest --coverage --coverage-clover=.build/phpunit/logs/clover.xml --color=always"
         ],
         "test:mysql": [
-            "@putenv XDEBUG_MODE=coverage DB_DRIVER=mysql",
+            "@putenv XDEBUG_MODE=coverage",
+            "@putenv DB_DRIVER=mysql",
             "pest --color=always"
         ],
         "test:pgsql": [
-            "@putenv XDEBUG_MODE=coverage DB_DRIVER=pgsql",
+            "@putenv XDEBUG_MODE=coverage",
+            "@putenv DB_DRIVER=pgsql",
             "pest --color=always"
         ],
         "test:sqlite": [
-            "@putenv XDEBUG_MODE=coverage DB_DRIVER=sqlite",
+            "@putenv XDEBUG_MODE=coverage",
+            "@putenv DB_DRIVER=sqlite",
             "pest --color=always"
         ],
         "test:sqlserver": [
-            "@putenv XDEBUG_MODE=coverage DB_DRIVER=sqlserver",
+            "@putenv XDEBUG_MODE=coverage",
+            "@putenv DB_DRIVER=sqlserver",
             "pest --color=always"
         ]
     }
