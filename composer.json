@@ -115,8 +115,9 @@
         "cs:diff": "php-cs-fixer fix --dry-run -v --diff",
         "cs:fix": "php-cs-fixer fix -v",
         "infect": [
+            "Composer\\Config::disableProcessTimeout",
             "@putenv XDEBUG_MODE=coverage",
-            "roave-infection-static-analysis-plugin --configuration=infection.json.dist"
+            "roave-infection-static-analysis-plugin"
         ],
         "infect:ci": [
             "Composer\\Config::disableProcessTimeout",
@@ -133,7 +134,11 @@
         "stan:ci": "phpstan analyse --memory-limit=2G --error-format=github",
         "test": [
             "@putenv XDEBUG_MODE=coverage",
-            "pest"
+            "pest --color=always"
+        ],
+        "test:arch": [
+            "@putenv XDEBUG_MODE=coverage",
+            "pest --color=always --configuration pest.xml.dist"
         ],
         "test:cc": [
             "@putenv XDEBUG_MODE=coverage",

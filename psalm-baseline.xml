@@ -29,33 +29,12 @@
       <code><![CDATA[ActiveRepository]]></code>
     </UnusedClass>
   </file>
-  <file src="tests/app/Bootloader/SyncTablesBootloader.php">
-    <UnusedClass>
-      <code><![CDATA[SyncTablesBootloader]]></code>
-    </UnusedClass>
-  </file>
-  <file src="tests/app/Entity/Identity.php">
-    <PossiblyUnusedProperty>
-      <code><![CDATA[$createdAt]]></code>
-    </PossiblyUnusedProperty>
-  </file>
-  <file src="tests/app/Entity/User.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[getIdentity]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="tests/app/Query/UserQuery.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[active]]></code>
-      <code><![CDATA[orderByCreatedAt]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="tests/src/DatabaseTestCase.php">
+  <file src="tests/src/Functional/DatabaseTestCase.php">
     <PossiblyUnusedProperty>
       <code><![CDATA[$orm]]></code>
     </PossiblyUnusedProperty>
   </file>
-  <file src="tests/src/Loggable.php">
+  <file src="tests/src/Functional/Loggable.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[disableProfiling]]></code>
     </PossiblyUnusedMethod>
@@ -63,12 +42,7 @@
       <code><![CDATA[setLogger]]></code>
     </UndefinedInterfaceMethod>
   </file>
-  <file src="tests/src/Pest.php">
-    <InternalMethod>
-      <code><![CDATA[in]]></code>
-    </InternalMethod>
-  </file>
-  <file src="tests/src/TestLogger.php">
+  <file src="tests/src/Functional/TestLogger.php">
     <ImplicitToStringCast>
       <code><![CDATA[$message]]></code>
       <code><![CDATA[$message]]></code>

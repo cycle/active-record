@@ -10,7 +10,5 @@ parameters:
         - rector.php
     excludePaths:
         - tests/runtime/
-
-    checkMissingIterableValueType: false
-
+        - tests/src/Arch/
     tmpDir: .build/phpstan/

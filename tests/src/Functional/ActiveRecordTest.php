@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cycle\Tests;
+namespace Cycle\Tests\Functional;
 
 use Cycle\ActiveRecord\Facade;
 use Cycle\App\Entity\User;

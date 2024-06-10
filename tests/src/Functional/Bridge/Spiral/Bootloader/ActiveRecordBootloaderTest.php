@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Cycle\Tests\Bridge\Spiral\Bootloader;
+namespace Cycle\Tests\Functional\Bridge\Spiral\Bootloader;
 
 use Cycle\ORM\ORMInterface;
-use Cycle\Tests\TestCase;
+use Cycle\Tests\Functional\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class ActiveRecordBootloaderTest extends TestCase
