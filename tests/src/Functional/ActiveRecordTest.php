@@ -13,9 +13,6 @@ use PHPUnit\Framework\Attributes\Test;
 
 final class ActiveRecordTest extends DatabaseTestCase
 {
-    /**
-     * @test
-     */
     #[Test]
     public function it_finds_one_entity(): void
     {
@@ -28,9 +25,6 @@ final class ActiveRecordTest extends DatabaseTestCase
         self::assertSame(2, $user->id);
     }
 
-    /**
-     * @test
-     */
     #[Test]
     public function it_finds_all_entities(): void
     {
@@ -38,9 +32,6 @@ final class ActiveRecordTest extends DatabaseTestCase
         self::assertCount(2, $users);
     }
 
-    /**
-     * @test
-     */
     #[Test]
     public function it_finds_entity_by_primary_key(): void
     {
@@ -53,9 +44,6 @@ final class ActiveRecordTest extends DatabaseTestCase
         self::assertSame('John', $user->name);
     }
 
-    /**
-     * @test
-     */
     #[Test]
     public function it_uses_query_to_select_entity(): void
     {
@@ -66,8 +54,6 @@ final class ActiveRecordTest extends DatabaseTestCase
     }
 
     /**
-     * @test
-     *
      * @throws \Throwable
      */
     #[Test]
@@ -84,8 +70,6 @@ final class ActiveRecordTest extends DatabaseTestCase
     }
 
     /**
-     * @test
-     *
      * @throws \Throwable
      */
     #[Test]
@@ -108,8 +92,6 @@ final class ActiveRecordTest extends DatabaseTestCase
     }
 
     /**
-     * @test
-     *
      * @throws \Throwable
      */
     #[Test]
@@ -134,8 +116,6 @@ final class ActiveRecordTest extends DatabaseTestCase
     }
 
     /**
-     * @test
-     *
      * @throws \Throwable
      */
     #[Test]
@@ -149,8 +129,6 @@ final class ActiveRecordTest extends DatabaseTestCase
     }
 
     /**
-     * @test
-     *
      * @throws \Throwable
      */
     #[Test]
@@ -172,9 +150,6 @@ final class ActiveRecordTest extends DatabaseTestCase
         self::assertCount(0, User::findAll());
     }
 
-    /**
-     * @test
-     */
     #[Test]
     public function it_gets_default_repository_of_entity(): void
     {

@@ -16,9 +16,6 @@ use Psr\Container\NotFoundExceptionInterface;
 
 final class FacadeTest extends TestCase
 {
-    /**
-     * @test
-     */
     #[Test]
     public function it_fails_to_get_orm_from_facade_when_container_is_not_set(): void
     {
@@ -29,8 +26,6 @@ final class FacadeTest extends TestCase
     }
 
     /**
-     * @test
-     *
      * @throws Exception
      */
     #[Test]
@@ -52,8 +47,6 @@ final class FacadeTest extends TestCase
     }
 
     /**
-     * @test
-     *
      * @throws Exception
      */
     #[Test]
@@ -77,8 +70,6 @@ final class FacadeTest extends TestCase
     }
 
     /**
-     * @test
-     *
      * @throws Exception
      */
     #[Test]
@@ -108,8 +99,6 @@ final class FacadeTest extends TestCase
     }
 
     /**
-     * @test
-     *
      * @throws Exception
      */
     #[Test]

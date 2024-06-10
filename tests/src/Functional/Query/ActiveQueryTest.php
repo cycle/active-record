@@ -13,9 +13,6 @@ use PHPUnit\Framework\Attributes\Test;
 
 final class ActiveQueryTest extends DatabaseTestCase
 {
-    /**
-     * @test
-     */
     #[Test]
     public function it_gets_role_from_query(): void
     {

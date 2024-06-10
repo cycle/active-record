@@ -38,7 +38,7 @@ jobs:
         uses: shivammathur/setup-php@2.30.5
         with:
           php-version: ${{ matrix.php-version }}
-          extensions: none, ctype, curl, dom, json, mbstring, phar, simplexml, tokenizer, xml, xmlwriter, opcache, pcntl, posix
+          extensions: none, ctype, curl, dom, json, mbstring, phar, simplexml, tokenizer, xml, xmlwriter, opcache, pcntl, posix, pdo, fileinfo, sockets
           ini-values: error_reporting=E_ALL
           coverage: none
 
@@ -89,7 +89,7 @@ jobs:
         uses: shivammathur/setup-php@2.30.5
         with:
           php-version: ${{ matrix.php-version }}
-          extensions: none, ctype, curl, dom, json, mbstring, phar, simplexml, tokenizer, xml, xmlwriter, opcache, pcntl, posix
+          extensions: none, ctype, curl, dom, json, mbstring, phar, simplexml, tokenizer, xml, xmlwriter, opcache, pcntl, posix, pdo, fileinfo, sockets
           ini-values: error_reporting=E_ALL
           coverage: xdebug
 

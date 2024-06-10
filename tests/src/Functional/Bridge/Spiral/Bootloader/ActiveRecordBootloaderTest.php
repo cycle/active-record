@@ -11,7 +11,7 @@ use PHPUnit\Framework\Attributes\Test;
 final class ActiveRecordBootloaderTest extends TestCase
 {
     /**
-     * @test see - https://github.com/psalm/psalm-plugin-phpunit/issues/144
+     * @see - https://github.com/psalm/psalm-plugin-phpunit/issues/144
      */
     #[Test]
     public function it_gets_container_from_static_origin_class(): void
