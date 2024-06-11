@@ -36,8 +36,8 @@
     "require-dev": {
         "buggregator/trap": "^1.5",
         "cycle/entity-behavior": "^1.3",
-        "ergebnis/composer-normalize": "^2.42",
         "ergebnis/phpunit-slow-test-detector": "^2.14",
+        "fakerphp/faker": "^1.23",
         "illuminate/support": "^10.48 || ^11.0",
         "mockery/mockery": "^1.6",
         "pestphp/pest": "^2.34",
@@ -113,23 +113,57 @@
         }
     },
     "scripts": {
-        "cs:diff": "php vendor/bin/php-cs-fixer fix --dry-run -v --diff",
-        "cs:fix": "php vendor/bin/php-cs-fixer fix -v",
-        "infect": "XDEBUG_MODE=coverage php vendor/bin/roave-infection-static-analysis-plugin --configuration=infection.json.dist",
-        "infect:ci": "XDEBUG_MODE=coverage php vendor/bin/roave-infection-static-analysis-plugin --ansi --configuration=infection.json.dist --logger-github --ignore-msi-with-no-mutations --only-covered",
-        "psalm": "php vendor/bin/psalm --show-info=true",
-        "psalm:baseline": "php vendor/bin/psalm --set-baseline=psalm-baseline.xml",
-        "psalm:ci": "php vendor/bin/psalm --output-format=github --shepherd --show-info=false --stats --threads=4",
-        "refactor": "php vendor/bin/rector process --config=rector.php",
-        "refactor:ci": "php vendor/bin/rector process --config=rector.php --dry-run --ansi",
-        "stan": "php vendor/bin/phpstan analyse --memory-limit=2G",
-        "stan:baseline": "php vendor/bin/phpstan analyse --generate-baseline --memory-limit=2G --allow-empty-baseline",
-        "stan:ci": "php vendor/bin/phpstan analyse --memory-limit=2G --error-format=github",
-        "test": "XDEBUG_MODE=coverage php vendor/bin/pest",
-        "test:cc": "XDEBUG_MODE=coverage php vendor/bin/pest --coverage --coverage-clover=.build/phpunit/logs/clover.xml",
-        "test:mysql": "DB_DRIVER=mysql XDEBUG_MODE=coverage php vendor/bin/pest --color=always",
-        "test:pgsql": "DB_DRIVER=pgsql XDEBUG_MODE=coverage php vendor/bin/pest --color=always",
-        "test:sqlite": "DB_DRIVER=sqlite XDEBUG_MODE=coverage php vendor/bin/pest --color=always",
-        "test:sqlserver": "DB_DRIVER=sqlserver XDEBUG_MODE=coverage php vendor/bin/pest --color=always"
+        "cs:diff": "php-cs-fixer fix --dry-run -v --diff",
+        "cs:fix": "php-cs-fixer fix -v",
+        "infect": [
+            "Composer\\Config::disableProcessTimeout",
+            "@putenv XDEBUG_MODE=coverage",
+            "roave-infection-static-analysis-plugin"
+        ],
+        "infect:ci": [
+            "Composer\\Config::disableProcessTimeout",
+            "@putenv XDEBUG_MODE=coverage",
+            "roave-infection-static-analysis-plugin --threads=2 --ansi --logger-github --ignore-msi-with-no-mutations --only-covered"
+        ],
+        "psalm": "psalm --show-info=true",
+        "psalm:baseline": "psalm --set-baseline=psalm-baseline.xml",
+        "psalm:ci": "psalm --output-format=github --shepherd --show-info=false --stats --threads=4",
+        "refactor": "rector process --config=rector.php",
+        "refactor:ci": "rector process --config=rector.php --dry-run --ansi",
+        "stan": "phpstan analyse --memory-limit=2G",
+        "stan:baseline": "phpstan analyse --generate-baseline --memory-limit=2G --allow-empty-baseline",
+        "stan:ci": "phpstan analyse --memory-limit=2G --error-format=github",
+        "test": [
+            "@putenv XDEBUG_MODE=coverage",
+            "pest --color=always"
+        ],
+        "test:arch": [
+            "@putenv XDEBUG_MODE=coverage",
+            "pest --color=always --configuration pest.xml.dist"
+        ],
+        "test:cc": [
+            "@putenv XDEBUG_MODE=coverage",
+            "pest --coverage --coverage-clover=.build/phpunit/logs/clover.xml --color=always"
+        ],
+        "test:mysql": [
+            "@putenv XDEBUG_MODE=coverage",
+            "@putenv DB_DRIVER=mysql",
+            "pest --color=always"
+        ],
+        "test:pgsql": [
+            "@putenv XDEBUG_MODE=coverage",
+            "@putenv DB_DRIVER=pgsql",
+            "pest --color=always"
+        ],
+        "test:sqlite": [
+            "@putenv XDEBUG_MODE=coverage",
+            "@putenv DB_DRIVER=sqlite",
+            "pest --color=always"
+        ],
+        "test:sqlserver": [
+            "@putenv XDEBUG_MODE=coverage",
+            "@putenv DB_DRIVER=sqlserver",
+            "pest --color=always"
+        ]
     }
 }

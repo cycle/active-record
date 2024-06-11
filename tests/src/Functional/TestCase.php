@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cycle\Tests;
+namespace Cycle\Tests\Functional;
 
 use Cycle\ActiveRecord\Bridge\Spiral\Bootloader\ActiveRecordBootloader;
 use Cycle\App\Bootloader\AppBootloader;
@@ -13,7 +13,7 @@ class TestCase extends \Spiral\Testing\TestCase
 {
     public function rootDirectory(): string
     {
-        return __DIR__ . '/../';
+        return __DIR__ . '/../../';
     }
 
     public function defineBootloaders(): array

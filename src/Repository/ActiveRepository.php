@@ -36,16 +36,25 @@ class ActiveRepository
         return clone $this->select;
     }
 
-    public function find(mixed $id): ?object
+    /**
+     * @return TEntity|null
+     */
+    public function findByPK(mixed $id): ?object
     {
         return $this->select()->wherePK($id)->fetchOne();
     }
 
-    public function findOne(array $scope = []): ?object
+    /**
+     * @return TEntity|null
+     */
+    public function findOne(array $scope = [], array $orderBy = []): ?object
     {
-        return $this->select()->fetchOne($scope);
+        return $this->select()->orderBy($orderBy)->fetchOne($scope);
     }
 
+    /**
+     * @return iterable<TEntity>
+     */
     public function findAll(array $scope = [], array $orderBy = []): iterable
     {
         return $this->select()->where($scope)->orderBy($orderBy)->fetchAll();

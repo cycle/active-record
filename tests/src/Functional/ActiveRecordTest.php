@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cycle\Tests;
+namespace Cycle\Tests\Functional;
 
 use Cycle\ActiveRecord\Facade;
 use Cycle\App\Entity\User;
@@ -13,9 +13,6 @@ use PHPUnit\Framework\Attributes\Test;
 
 final class ActiveRecordTest extends DatabaseTestCase
 {
-    /**
-     * @test
-     */
     #[Test]
     public function it_finds_one_entity(): void
     {
@@ -28,9 +25,6 @@ final class ActiveRecordTest extends DatabaseTestCase
         self::assertSame(2, $user->id);
     }
 
-    /**
-     * @test
-     */
     #[Test]
     public function it_finds_all_entities(): void
     {
@@ -38,24 +32,18 @@ final class ActiveRecordTest extends DatabaseTestCase
         self::assertCount(2, $users);
     }
 
-    /**
-     * @test
-     */
     #[Test]
     public function it_finds_entity_by_primary_key(): void
     {
-        $user = User::find(1);
+        $user = User::findByPK(1);
         self::assertNotNull($user);
         self::assertSame('Antony', $user->name);
 
-        $user = User::find(2);
+        $user = User::findByPK(2);
         self::assertNotNull($user);
         self::assertSame('John', $user->name);
     }
 
-    /**
-     * @test
-     */
     #[Test]
     public function it_uses_query_to_select_entity(): void
     {
@@ -66,8 +54,6 @@ final class ActiveRecordTest extends DatabaseTestCase
     }
 
     /**
-     * @test
-     *
      * @throws \Throwable
      */
     #[Test]
@@ -84,8 +70,6 @@ final class ActiveRecordTest extends DatabaseTestCase
     }
 
     /**
-     * @test
-     *
      * @throws \Throwable
      */
     #[Test]
@@ -108,8 +92,6 @@ final class ActiveRecordTest extends DatabaseTestCase
     }
 
     /**
-     * @test
-     *
      * @throws \Throwable
      */
     #[Test]
@@ -134,14 +116,12 @@ final class ActiveRecordTest extends DatabaseTestCase
     }
 
     /**
-     * @test
-     *
      * @throws \Throwable
      */
     #[Test]
     public function it_deletes_entity(): void
     {
-        $user = User::find(1);
+        $user = User::findByPK(1);
         self::assertNotNull($user);
 
         self::assertTrue($user->delete()->isSuccess());
@@ -149,17 +129,15 @@ final class ActiveRecordTest extends DatabaseTestCase
     }
 
     /**
-     * @test
-     *
      * @throws \Throwable
      */
     #[Test]
     public function it_deletes_multiple_entities_using_remove_method(): void
     {
         /** @var User $userOne */
-        $userOne = User::find(1);
+        $userOne = User::findByPK(1);
         /** @var User $userTwo */
-        $userTwo = User::find(2);
+        $userTwo = User::findByPK(2);
 
         $userOne->remove();
         $userTwo->remove();
@@ -172,9 +150,6 @@ final class ActiveRecordTest extends DatabaseTestCase
         self::assertCount(0, User::findAll());
     }
 
-    /**
-     * @test
-     */
     #[Test]
     public function it_gets_default_repository_of_entity(): void
     {

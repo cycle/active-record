@@ -2,20 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Cycle\Tests\Query;
+namespace Cycle\Tests\Functional\Query;
 
 use Cycle\ActiveRecord\Facade;
 use Cycle\App\Entity\User;
 use Cycle\Database\Database;
 use Cycle\Database\DatabaseManager;
-use Cycle\Tests\DatabaseTestCase;
+use Cycle\Tests\Functional\DatabaseTestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class ActiveQueryTest extends DatabaseTestCase
 {
-    /**
-     * @test
-     */
     #[Test]
     public function it_gets_role_from_query(): void
     {
