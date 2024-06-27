@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.6.0](https://github.com/cycle/active-record/compare/v0.5.0...v0.6.0) (2024-06-11)
+
+
+### Features
+
+* **ActiveQuery:** orm is available as protected property of class ([92c65f4](https://github.com/cycle/active-record/commit/92c65f4c6a84112fa772a5c691081be5f780df9f))
+* rename active record method (find =&gt; findByPK); add type annotations ([58d85ca](https://github.com/cycle/active-record/commit/58d85ca5afdebf183067e0efcf51f299b207f70d))
+* rename active repository methods; add type annotations ([485848b](https://github.com/cycle/active-record/commit/485848b09f83f0e757b08e343a2f0f81b86ae142))
+
+
+### Bug Fixes
+
+* psalm failure and markdown failure with docs dir ([956618d](https://github.com/cycle/active-record/commit/956618dc9db40da396508f52cf3824d5e3ba1b45))
+* use self accessor, as test classes are final ([b0b0eb1](https://github.com/cycle/active-record/commit/b0b0eb128fbdd43de8f395f716677c261387ec6b))
+
+
+### Documentation
+
+* add initial CONTRIBUTING.md ([6e5cf81](https://github.com/cycle/active-record/commit/6e5cf81de3447d39cfe4836a0aad6f03ddb37f85))
+* No subject [13] ([9f4b397](https://github.com/cycle/active-record/commit/9f4b3972b7f1d7e507a2a2003b08ac3a7b12b00a))
+* No subject [16] ([7cc6ab3](https://github.com/cycle/active-record/commit/7cc6ab35da9ba0e7f80b96dd82d3ce4c2937681f))
+* update CONTRIBUTING.md guidelines ([409cf4e](https://github.com/cycle/active-record/commit/409cf4ec4ee9a2b98ef0bb04b8b1814e3acaeee2))
+
 ## [0.5.0](https://github.com/cycle/active-record/compare/v0.4.0...v0.5.0) (2024-05-05)
 
 
