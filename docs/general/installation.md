@@ -5,6 +5,7 @@
 Before you begin, ensure your development environment meets the following requirements:
 
 * **PHP Version:** 8.2 or higher
+* **Composer**
 * One of the Cycle ORM adapters:
 * [`spiral/cycle-bridge`](https://github.com/spiral/cycle-bridge) official Cycle ORM adapter for the [Spiral Framework](https://github.com/spiral/framework)
 * [`yiisoft/yii-cycle`](https://github.com/yiisoft/yii-cycle) — official Cycle ORM adapter for the [Yii 3](https://www.yiiframework.com)
@@ -22,11 +23,15 @@ composer require cycle/active-record
 
 After package install you need to, optionally, register bootloader / service-provider in your application.
 
+
+
+### 🔧 Framework-Specific Configuration
+
 #### → Spiral Framework
 
-If you are installing the package on the Spiral Framework with the \[spiral-packages/discoverer]\(https://github.com/spiral-packages/discoverer) package, then you don't need to register bootloader by yourself. It will be registered automatically.
+If you are installing the package on the Spiral Framework with the \[spiral-packages/discoverer]\(https://github.com/spiral-packages/discoverer) package, then you don't need to register Bootloader by yourself. It will be registered automatically.
 
-Update Bootloader list in your application configuration:
+Otherwise, update the Bootloader list in your application configuration:
 
 ```php
 <?php
