@@ -20,7 +20,7 @@ class ActiveRepository
     /**
      * @param class-string<TEntity> $class
      */
-    final public function __construct(string $class)
+    public function __construct(string $class)
     {
         $orm = Facade::getOrm();
         $this->select = new Select($orm, $class);
