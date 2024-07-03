@@ -67,11 +67,25 @@ For advanced usage of the query builder, this package provides a way to group yo
 
 ### 🗂️ Collections
 
-When working with Active Record entities, methods like `findAll()` retrieve multiple records from the database. However, instead of returning a plain PHP array, an instance of a collection class is returned. The specific type of collection class depends on the adapter package being used, such as:
+The Cycle Active Record team is constantly working on improving the library. Keep an eye on the [official repository](https://github.com/cycle/active-record) for updates and new features, such as the potential introduction of Collection support for query results.
 
-* `spiral/cycle-bridge`,
-* `yiisoft/yii-cycle`
-* `wayofdev/laravel-cycle-orm-adapter`
+There is currently a Proof of Concept (PoC) Pull Request for introducing Collection support for query results:
+
+* [PR #20: Implement basic collections](https://github.com/cycle/active-record/pull/20)
+
+If you're interested in using Collections with Cycle Active Record, you can:
+
+1. Follow the progress of this PR
+2. Contribute to the discussion by providing feedback or use cases
+3. Help with the implementation if you have experience with Collections in ORMs
+
+Contributions from the community are welcome and can significantly impact the direction and features of the library. If Collections are a feature you're particularly interested in, consider getting involved in the development process.
+
+Remember to check the contribution guidelines before submitting any code or opening issues.
+
+
+
+
 
 
 

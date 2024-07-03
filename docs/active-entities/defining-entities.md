@@ -8,7 +8,9 @@ These approaches will be used as main examples across documentation to demonstra
 {% tab title="Strict" %}
 **Strict Approach:**
 
-In the strict approach, you define your entity with private properties and provide public getter and setter methods to access and modify the properties. This approach encapsulates the entity's internal state and provides better control over how the properties are accessed and modified.
+In the strict approach, you define your entity with private properties and provide public getter and setter methods to access and modify the properties.
+
+This approach encapsulates the entity's internal state and provides better control over how the properties are accessed and modified.
 
 ```php
 <?php
@@ -70,7 +72,9 @@ class User extends ActiveRecord
 {% tab title="Fluent " %}
 **Fluent Approach:**
 
-In the fluent approach, you define your entity with public properties, allowing direct access to the properties without the need for explicit getter and setter methods. This approach leads to more concise and readable code, especially when dealing with simple entities.
+In the fluent approach, you define your entity with public properties, allowing direct access to the properties without the need for explicit getter and setter methods.
+
+This approach leads to more concise and readable code, especially when dealing with simple entities.
 
 ```php
 <?php
@@ -104,4 +108,16 @@ class User extends ActiveRecord
 ```
 {% endtab %}
 {% endtabs %}
+
+
+
+### 📚 Entity Annotations
+
+Cycle Active Record uses PHP 8 attributes for entity mapping. These annotations allow you to define the structure of your entities, including table mappings, column definitions, and relationships.
+
+For a full and detailed guide on using annotations in Cycle ORM, please refer to the official Cycle ORM documentation:
+
+[Cycle ORM Annotated Entities](https://cycle-orm.dev/docs/annotated-entity/current/en)
+
+
 

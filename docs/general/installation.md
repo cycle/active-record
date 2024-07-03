@@ -80,3 +80,10 @@ This package uses [PSR-11](https://www.php-fig.org/psr/psr-11/) compatible `cont
 ```php
 \Cycle\ActiveRecord\Facade::setContainer($container);
 ```
+
+
+
+### 🧐 Verifying Installation
+
+To verify that Cycle Active Record has been installed correctly, you can [create a simple entity](../active-entities/defining-entities.md) and try to use it. If no errors occur, the installation was successful.
+

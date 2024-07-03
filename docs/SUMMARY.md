@@ -4,6 +4,7 @@
 
 * [Introduction](README.md)
 * [Installation](general/installation.md)
+* [Contributing](general/contributing.md)
 
 ## 💾 Active Entities
 
