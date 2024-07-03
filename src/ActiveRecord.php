@@ -22,10 +22,7 @@ abstract class ActiveRecord
      * It is preferable to use this method instead of the constructor because
      * it uses ORM services to create the entity.
      *
-     * Equals to calling {@see ORMInterface::make()}.
-     *
-     * @param array<non-empty-string, mixed> $data An associative array where keys are property names
-     *        and values are property values.
+     * @note Equals to calling {@see ORMInterface::make()}.
      *
      * Example:
      *
@@ -35,6 +32,9 @@ abstract class ActiveRecord
      *    'email' => 'johndoe@example.com',
      * ]);
      * ```
+     *
+     * @param array<non-empty-string, mixed> $data An associative array where keys are property names
+     *        and values are property values.
      */
     public static function make(array $data): static
     {
@@ -51,6 +51,8 @@ abstract class ActiveRecord
 
     /**
      * Finds the first single record based on the given scope.
+     *
+     * @note Limit of 1 will be added to the query.
      */
     final public static function findOne(array $scope = []): ?static
     {
