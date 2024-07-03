@@ -53,6 +53,16 @@ final class ActiveRecordTest extends DatabaseTestCase
         self::assertSame('Antony', $user->name);
     }
 
+    #[Test]
+    public function it_creates_entity_instance_using_make(): void
+    {
+        $user = User::make(['name' => 'Alex']);
+
+        self::assertInstanceOf(User::class, $user);
+        self::assertNotSame(User::class, $user::class, 'An Entity Proxy is created');
+        self::assertSame('Alex', $user->name);
+    }
+
     /**
      * @throws \Throwable
      */
