@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace Cycle\Tests\Functional\Repository;
 
-use Cycle\ActiveRecord\Facade;
 use Cycle\ActiveRecord\Repository\ActiveRepository;
 use Cycle\App\Entity\User;
 use Cycle\App\Repository\RepositoryWithActiveQuery;
-use Cycle\Database\Database;
-use Cycle\Database\DatabaseManager;
 use Cycle\Tests\Functional\DatabaseTestCase;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -18,7 +15,7 @@ final class ActiveRepositoryTest extends DatabaseTestCase
     #[Test]
     public function it_extends_repository_constructor(): void
     {
-        $repository = new class extends ActiveRepository {
+        $repository = new class() extends ActiveRepository {
             public function __construct()
             {
                 parent::__construct(User::class);
