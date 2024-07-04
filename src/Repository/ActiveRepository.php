@@ -136,9 +136,11 @@ class ActiveRepository
      * }
      * ```
      *
-     * @param class-string<TEntity> $role
+     * @template T
      *
-     * @return Select<TEntity>
+     * @param class-string<T> $role
+     *
+     * @return Select<T>
      */
     protected function initSelect(ORMInterface $orm, string $role): Select
     {

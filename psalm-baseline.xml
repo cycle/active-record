@@ -26,10 +26,8 @@
   </file>
   <file src="src/Repository/ActiveRepository.php">
     <PossiblyUnusedMethod>
-      <code><![CDATA[__construct]]></code>
       <code><![CDATA[findAll]]></code>
-      <code><![CDATA[findByPK]]></code>
-      <code><![CDATA[findOne]]></code>
+      <code><![CDATA[forUpdate]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="tests/src/Functional/ActiveRecordTest.php">
@@ -77,6 +75,17 @@
   <file src="tests/src/Functional/Query/ActiveQueryTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[it_gets_role_from_query]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="tests/src/Functional/Repository/ActiveRepositoryTest.php">
+    <MissingTemplateParam>
+      <code><![CDATA[class() extends ActiveRepository {]]></code>
+    </MissingTemplateParam>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[it_extends_repository_constructor]]></code>
+      <code><![CDATA[it_fetches_one_entity]]></code>
+      <code><![CDATA[it_fetches_one_entity_by_pk]]></code>
+      <code><![CDATA[it_uses_custom_repository_with_active_query]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="tests/src/Functional/TestLogger.php">
