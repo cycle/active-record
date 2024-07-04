@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.7.0](https://github.com/cycle/active-record/compare/v0.6.0...v0.7.0) (2024-07-04)
+
+
+### Features
+
+* add `AR::make()` method ([a5a37fe](https://github.com/cycle/active-record/commit/a5a37feefdeba121d65f3545e0856835d8d1b5cc))
+* unfinalize `ActiveQuery::__construct()` and `ActiveRepository::__construct()`; ([ad7c0de](https://github.com/cycle/active-record/commit/ad7c0dec619762b8bad82803c666e511e09aea88))
+* update `ActiveRepository` to have all the necessary methods; add examples ([1031c38](https://github.com/cycle/active-record/commit/1031c3895533a5b9d16300d4d2140c5ae55253fa))
+
+
+### Documentation
+
+* Andrij's Jul 3 changes [19] ([9dbb0f7](https://github.com/cycle/active-record/commit/9dbb0f7f60933225e4239a1876df60658e6c681b))
+* Andrij's Jul 3 changes [20] ([b52b819](https://github.com/cycle/active-record/commit/b52b8194c043feb73f367224e5f71c337b03d488))
+* docs: fix link [23] ([fcc8b4c](https://github.com/cycle/active-record/commit/fcc8b4c0b641fec082e36d534558de4205158839))
+* minor fixes in docs [21] ([3cb2bc0](https://github.com/cycle/active-record/commit/3cb2bc015eb1ec934472c7bb0c348c9c981c9e49))
+
 ## [0.6.0](https://github.com/cycle/active-record/compare/v0.5.0...v0.6.0) (2024-06-11)
 
 
