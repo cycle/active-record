@@ -1,6 +1,16 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Method Cycle\\\\ActiveRecord\\\\ActiveRecord\\:\\:make\\(\\) should return static\\(Cycle\\\\ActiveRecord\\\\ActiveRecord\\) but returns object\\.$#"
+			count: 1
+			path: src/ActiveRecord.php
+
+		-
+			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with 'Cycle\\\\\\\\App\\\\\\\\Entity\\\\\\\\User' and Cycle\\\\App\\\\Entity\\\\User will always evaluate to true\\.$#"
+			count: 1
+			path: tests/src/Functional/ActiveRecordTest.php
+
+		-
 			message: "#^Call to an undefined method Cycle\\\\Database\\\\Driver\\\\DriverInterface\\:\\:setLogger\\(\\)\\.$#"
 			count: 1
 			path: tests/src/Functional/DatabaseTestCase.php

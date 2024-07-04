@@ -25,14 +25,46 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="src/Repository/ActiveRepository.php">
-    <UnusedClass>
-      <code><![CDATA[ActiveRepository]]></code>
-    </UnusedClass>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+      <code><![CDATA[findAll]]></code>
+      <code><![CDATA[findByPK]]></code>
+      <code><![CDATA[findOne]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="tests/src/Functional/ActiveRecordTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[it_creates_entity_instance_using_make]]></code>
+      <code><![CDATA[it_deletes_entity]]></code>
+      <code><![CDATA[it_deletes_multiple_entities_using_remove_method]]></code>
+      <code><![CDATA[it_finds_all_entities]]></code>
+      <code><![CDATA[it_finds_entity_by_primary_key]]></code>
+      <code><![CDATA[it_finds_one_entity]]></code>
+      <code><![CDATA[it_gets_default_repository_of_entity]]></code>
+      <code><![CDATA[it_persists_multiple_entities]]></code>
+      <code><![CDATA[it_saves_entity]]></code>
+      <code><![CDATA[it_triggers_exception_when_tries_to_save_entity_using_save_or_fail]]></code>
+      <code><![CDATA[it_uses_query_to_select_entity]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="tests/src/Functional/Bridge/Spiral/Bootloader/ActiveRecordBootloaderTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[it_gets_container_from_static_origin_class]]></code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="tests/src/Functional/DatabaseTestCase.php">
     <PossiblyUnusedProperty>
       <code><![CDATA[$orm]]></code>
     </PossiblyUnusedProperty>
+  </file>
+  <file src="tests/src/Functional/FacadeTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[it_fails_to_get_orm_from_facade_when_container_is_not_set]]></code>
+      <code><![CDATA[it_gets_entity_manager_from_facade]]></code>
+      <code><![CDATA[it_gets_orm_from_facade_when_container_has_orm]]></code>
+      <code><![CDATA[it_throws_exception_when_container_does_not_have_orm]]></code>
+      <code><![CDATA[it_throws_exception_when_container_does_not_have_orm_set]]></code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="tests/src/Functional/Loggable.php">
     <PossiblyUnusedMethod>
@@ -41,6 +73,11 @@
     <UndefinedInterfaceMethod>
       <code><![CDATA[setLogger]]></code>
     </UndefinedInterfaceMethod>
+  </file>
+  <file src="tests/src/Functional/Query/ActiveQueryTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[it_gets_role_from_query]]></code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="tests/src/Functional/TestLogger.php">
     <ImplicitToStringCast>
