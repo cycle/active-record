@@ -11,8 +11,6 @@ Before you begin, ensure your development environment meets the following requir
 * [`yiisoft/yii-cycle`](https://github.com/yiisoft/yii-cycle) — official Cycle ORM adapter for the [Yii 3](https://www.yiiframework.com)
 * [`wayofdev/laravel-cycle-orm-adapter`](https://github.com/wayofdev/laravel-cycle-orm-adapter) — package managed by [@wayofdev](https://github.com/wayofdev) for the [Laravel](https://laravel.com) 10.x or higher.
 
-
-
 ### 💿 Installation
 
 The preferred way to install this package is through [Composer](https://getcomposer.org/).
@@ -23,13 +21,11 @@ composer require cycle/active-record
 
 After package install you need to, optionally, register bootloader / service-provider in your application.
 
-
-
 ### 🔧 Framework-Specific Configuration
 
 #### → Spiral Framework
 
-If you are installing the package on the Spiral Framework with the \[spiral-packages/discoverer]\(https://github.com/spiral-packages/discoverer) package, then you don't need to register Bootloader by yourself. It will be registered automatically.
+If you are installing the package on the Spiral Framework with the [spiral-packages/discoverer](https://github.com/spiral-packages/discoverer) package, then you don't need to register Bootloader by yourself. It will be registered automatically.
 
 Otherwise, update the Bootloader list in your application configuration:
 
@@ -80,8 +76,6 @@ This package uses [PSR-11](https://www.php-fig.org/psr/psr-11/) compatible `cont
 ```php
 \Cycle\ActiveRecord\Facade::setContainer($container);
 ```
-
-
 
 ### 🧐 Verifying Installation
 
