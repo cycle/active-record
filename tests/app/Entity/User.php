@@ -24,12 +24,9 @@ class User extends Identity
         $this->name = $name;
     }
 
-    /**
-     * @return UserQuery<static>
-     */
     public static function query(): UserQuery
     {
-        return new UserQuery(static::class);
+        return new UserQuery();
     }
 
     public function getIdentity()
