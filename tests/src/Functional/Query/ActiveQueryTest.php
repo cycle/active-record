@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Cycle\Tests\Functional\Query;
 
-use Cycle\ActiveRecord\Facade;
 use Cycle\App\Entity\User;
-use Cycle\Database\Database;
-use Cycle\Database\DatabaseManager;
 use Cycle\Tests\Functional\DatabaseTestCase;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -19,20 +16,5 @@ final class ActiveQueryTest extends DatabaseTestCase
         $query = User::query();
 
         self::assertSame(User::class, $query->getRole());
-    }
-
-    /**
-     * @throws \Throwable
-     */
-    public function tearDown(): void
-    {
-        parent::tearDown();
-
-        $databaseManager = $this->getContainer()->get(DatabaseManager::class);
-        /** @var Database $database */
-        $database = $databaseManager->database('default');
-
-        $this->dropDatabase($database);
-        Facade::reset();
     }
 }

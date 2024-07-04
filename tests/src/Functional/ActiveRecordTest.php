@@ -6,8 +6,6 @@ namespace Cycle\Tests\Functional;
 
 use Cycle\ActiveRecord\Facade;
 use Cycle\App\Entity\User;
-use Cycle\Database\Database;
-use Cycle\Database\DatabaseManager;
 use Cycle\ORM\Select\Repository;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -166,20 +164,5 @@ final class ActiveRecordTest extends DatabaseTestCase
         $repository = User::getRepository();
 
         self::assertInstanceOf(Repository::class, $repository);
-    }
-
-    /**
-     * @throws \Throwable
-     */
-    public function tearDown(): void
-    {
-        parent::tearDown();
-
-        $databaseManager = $this->getContainer()->get(DatabaseManager::class);
-        /** @var Database $database */
-        $database = $databaseManager->database('default');
-
-        $this->dropDatabase($database);
-        Facade::reset();
     }
 }
