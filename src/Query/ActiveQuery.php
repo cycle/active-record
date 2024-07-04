@@ -20,8 +20,9 @@ class ActiveQuery extends Select
     /**
      * @param class-string<TEntity>|non-empty-string $role
      */
-    final public function __construct(protected string $role)
-    {
+    public function __construct(
+        protected string $role,
+    ) {
         $this->orm = Facade::getOrm();
 
         parent::__construct($this->orm, $role);
