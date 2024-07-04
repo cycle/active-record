@@ -11,8 +11,36 @@ use Cycle\ORM\ORMInterface;
 use Cycle\ORM\RepositoryInterface;
 use Cycle\ORM\Transaction\StateInterface;
 
+/**
+ * A base class for entities that are managed by the ORM.
+ * Adds a set of ActiveRecord methods to the extending entity class.
+ */
 abstract class ActiveRecord
 {
+    /**
+     * Creates a new entity instance with the given data.
+     * It is preferable to use this method instead of the constructor because
+     * it uses ORM services to create the entity.
+     *
+     * @note Equals to calling {@see ORMInterface::make()}.
+     *
+     * Example:
+     *
+     * ```php
+     * $user = User::make([
+     *    'name' => 'John Doe',
+     *    'email' => 'johndoe@example.com',
+     * ]);
+     * ```
+     *
+     * @param array<non-empty-string, mixed> $data An associative array where keys are property names
+     *        and values are property values.
+     */
+    public static function make(array $data): static
+    {
+        return self::getOrm()->make(static::class, $data);
+    }
+
     /**
      * Finds a single record based on the given primary key.
      */
@@ -23,6 +51,8 @@ abstract class ActiveRecord
 
     /**
      * Finds the first single record based on the given scope.
+     *
+     * @note Limit of 1 will be added to the query.
      */
     final public static function findOne(array $scope = []): ?static
     {

@@ -1,6 +1,31 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Method Cycle\\\\ActiveRecord\\\\ActiveRecord\\:\\:make\\(\\) should return static\\(Cycle\\\\ActiveRecord\\\\ActiveRecord\\) but returns object\\.$#"
+			count: 1
+			path: src/ActiveRecord.php
+
+		-
+			message: "#^Template type TEntity is declared as covariant, but occurs in contravariant position in parameter select of method Cycle\\\\ActiveRecord\\\\Repository\\\\ActiveRepository\\:\\:with\\(\\)\\.$#"
+			count: 1
+			path: src/Repository/ActiveRepository.php
+
+		-
+			message: "#^Type mixed in generic type Cycle\\\\ORM\\\\Select\\<mixed\\> in PHPDoc tag @return is not subtype of template type TEntity of object of class Cycle\\\\ORM\\\\Select\\.$#"
+			count: 1
+			path: src/Repository/ActiveRepository.php
+
+		-
+			message: "#^Return type \\(Cycle\\\\App\\\\Query\\\\UserQuery\\) of method Cycle\\\\App\\\\Entity\\\\User\\:\\:query\\(\\) should be covariant with return type \\(Cycle\\\\ActiveRecord\\\\Query\\\\ActiveQuery\\<static\\(Cycle\\\\ActiveRecord\\\\ActiveRecord\\)\\>\\) of method Cycle\\\\ActiveRecord\\\\ActiveRecord\\:\\:query\\(\\)$#"
+			count: 1
+			path: tests/app/Entity/User.php
+
+		-
+			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with 'Cycle\\\\\\\\App\\\\\\\\Entity\\\\\\\\User' and Cycle\\\\App\\\\Entity\\\\User will always evaluate to true\\.$#"
+			count: 1
+			path: tests/src/Functional/ActiveRecordTest.php
+
+		-
 			message: "#^Call to an undefined method Cycle\\\\Database\\\\Driver\\\\DriverInterface\\:\\:setLogger\\(\\)\\.$#"
 			count: 1
 			path: tests/src/Functional/DatabaseTestCase.php

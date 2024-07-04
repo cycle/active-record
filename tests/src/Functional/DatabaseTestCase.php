@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Cycle\Tests\Functional;
 
+use Cycle\ActiveRecord\Facade;
 use Cycle\Database\Database;
 use Cycle\Database\DatabaseInterface;
+use Cycle\Database\DatabaseManager;
 use Cycle\Database\Driver\DriverInterface;
 use Cycle\Database\Driver\HandlerInterface;
 use Cycle\Database\Table;
@@ -54,6 +56,21 @@ class DatabaseTestCase extends TestCase
             [1, 'Antony'],
             [2, 'John'],
         ]);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $databaseManager = $this->getContainer()->get(DatabaseManager::class);
+        /** @var Database $database */
+        $database = $databaseManager->database('default');
+
+        $this->dropDatabase($database);
+        Facade::reset();
     }
 
     /**
