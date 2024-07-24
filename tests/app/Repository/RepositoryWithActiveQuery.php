@@ -11,6 +11,7 @@ use Cycle\Database\Injection\Fragment;
 use Cycle\ORM\ORMInterface;
 
 /**
+ * @method UserQuery select()
  * @extends ActiveRepository<User>
  */
 final class RepositoryWithActiveQuery extends ActiveRepository
