@@ -17,7 +17,7 @@ enum TransactionMode
      *
      * @see \Cycle\ORM\Transaction\Runner::innerTransaction() with strict mode.
      */
-    case Continue;
+    case Current;
     /**
      * A new transaction will be open for each used driver connection and will close they on finish.
      *

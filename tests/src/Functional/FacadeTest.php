@@ -35,7 +35,7 @@ final class FacadeTest extends TestCase
         $orm = $this->createMock(ORMInterface::class);
 
         $container
-            ->expects($this::once())
+            ->expects(self::once())
             ->method('get')
             ->with(ORMInterface::class)
             ->willReturn($orm);
@@ -55,7 +55,7 @@ final class FacadeTest extends TestCase
         $container = $this->createMock(ContainerInterface::class);
 
         $container
-            ->expects($this::once())
+            ->expects(self::once())
             ->method('get')
             ->with(ORMInterface::class)
             ->willReturn(null);
@@ -79,7 +79,7 @@ final class FacadeTest extends TestCase
         $exception = new class() extends CoreException implements NotFoundExceptionInterface {};
 
         $container
-            ->expects($this::once())
+            ->expects(self::once())
             ->method('get')
             ->with(ORMInterface::class)
             ->willThrowException($exception);
@@ -108,7 +108,7 @@ final class FacadeTest extends TestCase
         $orm = $this->createMock(ORMInterface::class);
 
         $container
-            ->expects($this::once())
+            ->expects(self::once())
             ->method('get')
             ->with(ORMInterface::class)
             ->willReturn($orm);

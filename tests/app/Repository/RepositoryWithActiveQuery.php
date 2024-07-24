@@ -15,7 +15,6 @@ use Cycle\ORM\ORMInterface;
  */
 final class RepositoryWithActiveQuery extends ActiveRepository
 {
-    #[\Override]
     public function __construct()
     {
         parent::__construct(User::class);

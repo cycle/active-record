@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Cycle\Tests\Functional;
 
-use Cycle\ActiveRecord\Facade;
+use Cycle\ActiveRecord\ActiveRecord;
+use Cycle\ActiveRecord\Exception\Transaction\TransactionException;
+use Cycle\ActiveRecord\TransactionMode;
 use Cycle\App\Entity\User;
+use Cycle\ORM\Exception\RunnerException;
 use Cycle\ORM\Select\Repository;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -69,7 +72,7 @@ final class ActiveRecordTest extends DatabaseTestCase
     {
         $user = new User('Alex');
 
-        self::assertTrue($user->save()->isSuccess());
+        self::assertTrue($user->save());
         self::assertCount(3, User::findAll());
 
         $result = $this->selectEntity(User::class, cleanHeap: true)->wherePK($user->id)->fetchOne();
@@ -85,13 +88,13 @@ final class ActiveRecordTest extends DatabaseTestCase
     {
         $user = new User('John');
 
-        $this::expectException(\Throwable::class);
+        self::expectException(\Throwable::class);
 
         // pgsql-response: SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "user_index_name_663d5b6bf1e34
         // sqlite-response: SQLSTATE[23000]: Integrity constraint violation: 19 UNIQUE constraint failed: user.name
         // mysql-response: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'John' for key 'user.user_index_name_663d5bc589edb'
 
-        $this::expectExceptionMessage('SQLSTATE');
+        self::expectExceptionMessage('SQLSTATE');
 
         $entityManager = $user->saveOrFail();
 
@@ -103,16 +106,15 @@ final class ActiveRecordTest extends DatabaseTestCase
      * @throws \Throwable
      */
     #[Test]
-    public function it_persists_multiple_entities(): void
+    public function it_persists_multiple_entities_in_single_transaction(): void
     {
-        $userOne = new User('Foo');
-        $userOne->persist();
+        ActiveRecord::transact(static function () use (&$userOne, &$userTwo) {
+            $userOne = new User('Foo');
+            $userOne->saveOrFail();
 
-        $userTwo = new User('Bar');
-        $userTwo->persist();
-
-        $entityManager = Facade::getEntityManager();
-        $entityManager->run();
+            $userTwo = new User('Bar');
+            $userTwo->saveOrFail();
+        });
 
         self::assertCount(4, User::findAll());
 
@@ -132,7 +134,7 @@ final class ActiveRecordTest extends DatabaseTestCase
         $user = User::findByPK(1);
         self::assertNotNull($user);
 
-        self::assertTrue($user->delete()->isSuccess());
+        self::assertTrue($user->delete());
         self::assertCount(1, User::findAll());
     }
 
@@ -140,20 +142,19 @@ final class ActiveRecordTest extends DatabaseTestCase
      * @throws \Throwable
      */
     #[Test]
-    public function it_deletes_multiple_entities_using_remove_method(): void
+    public function it_deletes_multiple_entities_in_single_transaction(): void
     {
+        self::assertCount(2, User::findAll());
+
         /** @var User $userOne */
         $userOne = User::findByPK(1);
         /** @var User $userTwo */
         $userTwo = User::findByPK(2);
 
-        $userOne->remove();
-        $userTwo->remove();
-
-        self::assertCount(2, User::findAll());
-
-        $entityManager = Facade::getEntityManager();
-        self::assertTrue($entityManager->run()->isSuccess());
+        ActiveRecord::transact(static function () use ($userOne, $userTwo) {
+            $userOne->delete();
+            $userTwo->delete();
+        });
 
         self::assertCount(0, User::findAll());
     }
@@ -164,5 +165,36 @@ final class ActiveRecordTest extends DatabaseTestCase
         $repository = User::getRepository();
 
         self::assertInstanceOf(Repository::class, $repository);
+    }
+
+    #[Test]
+    public function it_runs_transaction_without_actions(): void
+    {
+        $result = ActiveRecord::transact(static function () {
+            return 'foo';
+        });
+
+        self::assertSame('foo', $result);
+    }
+
+    #[Test]
+    public function it_runs_transaction_in_current_transaction_mode_without_opened_transaction(): void
+    {
+        self::expectException(RunnerException::class);
+
+        ActiveRecord::transact(static function () {
+            $user = User::findByPK(1);
+            $user->delete();
+        }, TransactionMode::Current);
+    }
+
+    #[Test]
+    public function it_runs_transaction_in_transaction(): void
+    {
+        self::expectException(TransactionException::class);
+
+        ActiveRecord::transact(static function () {
+            return ActiveRecord::transact(fn () => true);
+        }, TransactionMode::Current);
     }
 }

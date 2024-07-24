@@ -4,43 +4,50 @@ declare(strict_types=1);
 
 namespace Cycle\ActiveRecord\Internal;
 
-use Cycle\ActiveRecord\Exception\TransactionDesyncException;
+use Cycle\ActiveRecord\Exception\Transaction\TransactionException;
 use Cycle\ActiveRecord\Facade;
 use Cycle\ActiveRecord\TransactionMode;
+use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\Transaction\Runner;
-use Cycle\ORM\Transaction\StateInterface;
-use Cycle\ORM\Transaction\UnitOfWork;
 
 final class TransactionFacade
 {
-    private static ?UnitOfWork $uow = null;
+    private static ?EntityManagerInterface $em = null;
 
-    public static function getUoW(): ?UnitOfWork
+    public static function getEntityManager(): ?EntityManagerInterface
     {
-        return self::$uow;
+        return self::$em;
     }
 
+    /**
+     * @template TResult
+     * @param callable(): TResult $callback
+     * @return TResult
+     *
+     * @throws TransactionException
+     * @throws \Throwable
+     */
     public static function transact(
-        callable $callable,
+        callable $callback,
         TransactionMode $mode = TransactionMode::OpenNew,
-    ): StateInterface {
-        $previous = self::$uow;
-        self::$uow = $uow = new UnitOfWork(
-            Facade::getOrm(),
-            match ($mode) {
-                TransactionMode::Ignore => Runner::outerTransaction(strict: false),
-                TransactionMode::Continue => Runner::outerTransaction(strict: true),
-                TransactionMode::OpenNew => Runner::innerTransaction(),
-            },
+    ): mixed {
+        $runner = match ($mode) {
+            TransactionMode::Ignore => Runner::outerTransaction(strict: false),
+            TransactionMode::Current => Runner::outerTransaction(strict: true),
+            TransactionMode::OpenNew => Runner::innerTransaction(),
+        };
+
+        self::$em === null or throw new TransactionException(
+            'A transaction is already in progress.',
         );
+        self::$em = Facade::getEntityManager();
+
         try {
-            $callable();
-            return $uow->run();
+            $result = $callback();
+            self::$em->run(true, $runner);
+            return $result;
         } finally {
-            self::$uow === $uow or throw new TransactionDesyncException(
-                'A transaction was started outside of the previous transaction scope.',
-            );
-            self::$uow = $previous;
+            self::$em = null;
         }
     }
 }
