@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Cycle\ActiveRecord;
 
+use Cycle\ActiveRecord\Exception\Transaction\TransactionException;
+use Cycle\ActiveRecord\Internal\TransactionFacade;
 use Cycle\ActiveRecord\Query\ActiveQuery;
-use Cycle\ORM\EntityManager;
-use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\RepositoryInterface;
-use Cycle\ORM\Transaction\StateInterface;
 
 /**
  * A base class for entities that are managed by the ORM.
@@ -70,6 +69,26 @@ abstract class ActiveRecord
     }
 
     /**
+     * Execute a callback within a single transaction.
+     *
+     * All the ActiveRecord write operations within the callback will be registered
+     * using the Entity Manager without being executed until the end of the callback.
+     *
+     * @template TResult
+     * @param callable(): TResult $callback
+     * @return TResult
+     *
+     * @throws TransactionException
+     * @throws \Throwable
+     */
+    public static function transact(
+        callable $callback,
+        TransactionMode $mode = TransactionMode::OpenNew,
+    ): mixed {
+        return TransactionFacade::transact($callback, $mode);
+    }
+
+    /**
      * Get an ActiveQuery instance for the entity.
      *
      * @return ActiveQuery<static>
@@ -86,81 +105,62 @@ abstract class ActiveRecord
 
     /**
      * Persist the entity.
-     *
-     * @throws \Throwable
      */
-    final public function save(bool $cascade = true): StateInterface
+    final public function save(bool $cascade = true): bool
     {
-        /** @var EntityManager $entityManager */
-        $entityManager = Facade::getEntityManager();
-        $entityManager->persist($this, $cascade);
+        $transacting = TransactionFacade::getEntityManager();
+        if ($transacting === null) {
+            return Facade::getEntityManager()
+                ->persist($this, $cascade)
+                ->run(false)
+                ->isSuccess();
+        }
 
-        return $entityManager->run(throwException: false);
+        $transacting->persist($this, $cascade);
+        return true;
     }
 
     /**
      * Persist the entity and throw an exception if an error occurs.
+     * The exception will be thrown if the action is happening not in a {@see self::transcat()} scope.
      *
      * @throws \Throwable
      */
-    final public function saveOrFail(bool $cascade = true): StateInterface
+    final public function saveOrFail(bool $cascade = true): void
     {
-        /** @var EntityManager $entityManager */
-        $entityManager = Facade::getEntityManager();
-        $entityManager->persist($this, $cascade);
-
-        return $entityManager->run();
-    }
-
-    /**
-     * Prepare the entity for persistence.
-     *
-     * @note This function is experimental and may be removed in the future.
-     */
-    final public function persist(bool $cascade = true): EntityManagerInterface
-    {
-        return Facade::getEntityManager()->persist($this, $cascade);
+        TransactionFacade::getEntityManager()?->persist($this, $cascade) ?? Facade::getEntityManager()
+            ->persist($this, $cascade)
+            ->run();
     }
 
     /**
      * Delete the entity.
-     *
-     * @throws \Throwable
      */
-    final public function delete(bool $cascade = true): StateInterface
+    final public function delete(bool $cascade = true): bool
     {
-        /** @var EntityManager $entityManager */
-        $entityManager = Facade::getEntityManager();
-        $entityManager->delete($this, $cascade);
+        $transacting = TransactionFacade::getEntityManager();
+        if ($transacting === null) {
+            return Facade::getEntityManager()
+                ->delete($this, $cascade)
+                ->run(false)
+                ->isSuccess();
+        }
 
-        return $entityManager->run(throwException: false);
+        $transacting->delete($this, $cascade);
+        return true;
     }
 
     /**
      * Delete the entity and throw an exception if an error occurs.
+     * The exception will be thrown if the action is happening not in a {@see self::transcat()} scope.
      *
      * @throws \Throwable
      */
-    final public function deleteOrFail(bool $cascade = true): StateInterface
+    final public function deleteOrFail(bool $cascade = true): void
     {
-        /** @var EntityManager $entityManager */
-        $entityManager = Facade::getEntityManager();
-        $entityManager->delete($this, $cascade);
-
-        return $entityManager->run();
-    }
-
-    /**
-     * Prepare the entity for deletion.
-     *
-     * @note This function is experimental and may be removed in the future.
-     */
-    final public function remove(bool $cascade = true): EntityManagerInterface
-    {
-        /** @var EntityManager $entityManager */
-        $entityManager = Facade::getEntityManager();
-
-        return $entityManager->delete($this, $cascade);
+        TransactionFacade::getEntityManager()?->delete($this, $cascade) ?? Facade::getEntityManager()
+            ->delete($this, $cascade)
+            ->run();
     }
 
     private static function getOrm(): ORMInterface

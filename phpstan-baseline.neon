@@ -6,6 +6,16 @@ parameters:
 			path: src/ActiveRecord.php
 
 		-
+			message: "#^Method Cycle\\\\ORM\\\\EntityManagerInterface\\:\\:run\\(\\) invoked with 1 parameter, 0 required\\.$#"
+			count: 2
+			path: src/ActiveRecord.php
+
+		-
+			message: "#^Method Cycle\\\\ORM\\\\EntityManagerInterface\\:\\:run\\(\\) invoked with 2 parameters, 0 required\\.$#"
+			count: 1
+			path: src/Internal/TransactionFacade.php
+
+		-
 			message: "#^Template type TEntity is declared as covariant, but occurs in contravariant position in parameter select of method Cycle\\\\ActiveRecord\\\\Repository\\\\ActiveRepository\\:\\:with\\(\\)\\.$#"
 			count: 1
 			path: src/Repository/ActiveRepository.php
@@ -22,6 +32,16 @@ parameters:
 
 		-
 			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with 'Cycle\\\\\\\\App\\\\\\\\Entity\\\\\\\\User' and Cycle\\\\App\\\\Entity\\\\User will always evaluate to true\\.$#"
+			count: 1
+			path: tests/src/Functional/ActiveRecordTest.php
+
+		-
+			message: "#^Cannot call method isSuccess\\(\\) on null\\.$#"
+			count: 1
+			path: tests/src/Functional/ActiveRecordTest.php
+
+		-
+			message: "#^Result of method Cycle\\\\ActiveRecord\\\\ActiveRecord\\:\\:saveOrFail\\(\\) \\(void\\) is used\\.$#"
 			count: 1
 			path: tests/src/Functional/ActiveRecordTest.php
 

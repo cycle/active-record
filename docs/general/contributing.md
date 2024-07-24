@@ -56,7 +56,7 @@ This project uses a Makefile to streamline common development tasks. The Makefil
 make help
 ```
 
-<figure><img src="../.gitbook/assets/screenshot (1).png" alt=""><figcaption><p>visual view of make help command</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/screenshot.png" alt=""><figcaption><p>visual view of make help command</p></figcaption></figure>
 
 #### → Key Commands
 

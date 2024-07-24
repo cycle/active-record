@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.24.0@462c80e31c34e58cc4f750c656be3927e80e550e">
+<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
   <file src="src/ActiveRecord.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[deleteOrFail]]></code>
     </PossiblyUnusedMethod>
-    <PossiblyUnusedReturnValue>
-      <code><![CDATA[EntityManagerInterface]]></code>
-      <code><![CDATA[EntityManagerInterface]]></code>
-    </PossiblyUnusedReturnValue>
+    <TooManyArguments>
+      <code><![CDATA[run]]></code>
+      <code><![CDATA[run]]></code>
+    </TooManyArguments>
   </file>
   <file src="src/Bridge/Laravel/Providers/ActiveRecordProvider.php">
     <UnusedClass>
@@ -24,6 +24,11 @@
       <code><![CDATA[setOrm]]></code>
     </PossiblyUnusedMethod>
   </file>
+  <file src="src/Internal/TransactionFacade.php">
+    <TooManyArguments>
+      <code><![CDATA[run]]></code>
+    </TooManyArguments>
+  </file>
   <file src="src/Repository/ActiveRepository.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[findAll]]></code>
@@ -31,19 +36,38 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="tests/src/Functional/ActiveRecordTest.php">
+    <AssignmentToVoid>
+      <code><![CDATA[$entityManager]]></code>
+    </AssignmentToVoid>
+    <NullReference>
+      <code><![CDATA[isSuccess]]></code>
+    </NullReference>
     <PossiblyUnusedMethod>
       <code><![CDATA[it_creates_entity_instance_using_make]]></code>
       <code><![CDATA[it_deletes_entity]]></code>
-      <code><![CDATA[it_deletes_multiple_entities_using_remove_method]]></code>
+      <code><![CDATA[it_deletes_multiple_entities_in_single_transaction]]></code>
       <code><![CDATA[it_finds_all_entities]]></code>
       <code><![CDATA[it_finds_entity_by_primary_key]]></code>
       <code><![CDATA[it_finds_one_entity]]></code>
       <code><![CDATA[it_gets_default_repository_of_entity]]></code>
-      <code><![CDATA[it_persists_multiple_entities]]></code>
+      <code><![CDATA[it_persists_multiple_entities_in_single_transaction]]></code>
+      <code><![CDATA[it_runs_transaction_in_current_transaction_mode_without_opened_transaction]]></code>
+      <code><![CDATA[it_runs_transaction_in_transaction]]></code>
+      <code><![CDATA[it_runs_transaction_without_actions]]></code>
       <code><![CDATA[it_saves_entity]]></code>
       <code><![CDATA[it_triggers_exception_when_tries_to_save_entity_using_save_or_fail]]></code>
       <code><![CDATA[it_uses_query_to_select_entity]]></code>
     </PossiblyUnusedMethod>
+    <UndefinedVariable>
+      <code><![CDATA[$userOne]]></code>
+      <code><![CDATA[$userOne]]></code>
+      <code><![CDATA[$userOne]]></code>
+      <code><![CDATA[$userTwo]]></code>
+      <code><![CDATA[$userTwo]]></code>
+    </UndefinedVariable>
+    <UnusedVariable>
+      <code><![CDATA[$entityManager]]></code>
+    </UnusedVariable>
   </file>
   <file src="tests/src/Functional/Bridge/Spiral/Bootloader/ActiveRecordBootloaderTest.php">
     <PossiblyUnusedMethod>
