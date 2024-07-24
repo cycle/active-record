@@ -18,7 +18,7 @@ use Cycle\ORM\Transaction\StateInterface;
 abstract class ActiveRecord
 {
     /**
-     * Creates a new entity instance with the given data.
+     * Create a new entity instance with the given data.
      * It is preferable to use this method instead of the constructor because
      * it uses ORM services to create the entity.
      *
@@ -42,7 +42,7 @@ abstract class ActiveRecord
     }
 
     /**
-     * Finds a single record based on the given primary key.
+     * Find a single record based on the given primary key.
      */
     final public static function findByPK(mixed $primaryKey): ?static
     {
@@ -50,7 +50,7 @@ abstract class ActiveRecord
     }
 
     /**
-     * Finds the first single record based on the given scope.
+     * Find the first single record based on the given scope.
      *
      * @note Limit of 1 will be added to the query.
      */
@@ -60,7 +60,7 @@ abstract class ActiveRecord
     }
 
     /**
-     * Finds all records based on the given scope.
+     * Find all records based on the given scope.
      *
      * @return iterable<static>
      */
@@ -70,7 +70,7 @@ abstract class ActiveRecord
     }
 
     /**
-     * Returns a ActiveQuery query builder for the extending entity class.
+     * Get an ActiveQuery instance for the entity.
      *
      * @return ActiveQuery<static>
      */
@@ -85,7 +85,7 @@ abstract class ActiveRecord
     }
 
     /**
-     * Persists the current entity.
+     * Persist the entity.
      *
      * @throws \Throwable
      */
@@ -99,7 +99,7 @@ abstract class ActiveRecord
     }
 
     /**
-     * Persists the current entity and throws an exception if an error occurs.
+     * Persist the entity and throw an exception if an error occurs.
      *
      * @throws \Throwable
      */
@@ -112,12 +112,19 @@ abstract class ActiveRecord
         return $entityManager->run();
     }
 
+    /**
+     * Prepare the entity for persistence.
+     *
+     * @note This function is experimental and may be removed in the future.
+     */
     final public function persist(bool $cascade = true): EntityManagerInterface
     {
         return Facade::getEntityManager()->persist($this, $cascade);
     }
 
     /**
+     * Delete the entity.
+     *
      * @throws \Throwable
      */
     final public function delete(bool $cascade = true): StateInterface
@@ -130,6 +137,8 @@ abstract class ActiveRecord
     }
 
     /**
+     * Delete the entity and throw an exception if an error occurs.
+     *
      * @throws \Throwable
      */
     final public function deleteOrFail(bool $cascade = true): StateInterface
@@ -142,7 +151,9 @@ abstract class ActiveRecord
     }
 
     /**
-     * Prepares the current entity for deletion.
+     * Prepare the entity for deletion.
+     *
+     * @note This function is experimental and may be removed in the future.
      */
     final public function remove(bool $cascade = true): EntityManagerInterface
     {
