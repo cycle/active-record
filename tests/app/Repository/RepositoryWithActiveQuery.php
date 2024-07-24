@@ -9,7 +9,6 @@ use Cycle\App\Entity\User;
 use Cycle\App\Query\UserQuery;
 use Cycle\Database\Injection\Fragment;
 use Cycle\ORM\ORMInterface;
-use Cycle\ORM\Select;
 
 /**
  * @extends ActiveRepository<User>
@@ -23,7 +22,7 @@ final class RepositoryWithActiveQuery extends ActiveRepository
     }
 
     #[\Override]
-    public function initSelect(ORMInterface $orm, string $role): Select
+    public function initSelect(ORMInterface $orm, string $role): UserQuery
     {
         return new UserQuery();
     }

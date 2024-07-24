@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cycle\ActiveRecord;
 
+use Cycle\ActiveRecord\Internal\TransactionFacade;
 use Cycle\ActiveRecord\Query\ActiveQuery;
 use Cycle\ORM\EntityManager;
 use Cycle\ORM\EntityManagerInterface;
@@ -67,6 +68,15 @@ abstract class ActiveRecord
     final public static function findAll(array $scope = []): iterable
     {
         return static::query()->where($scope)->fetchAll();
+    }
+
+    /**
+     * Execute a callback within a single transaction.
+     * Only {@see ActiveRecord} methods will be registered in the transaction and run on the callback completion.
+     */
+    public static function transact(callable $callback, TransactionMode $mode = TransactionMode::OpenNew): void
+    {
+        TransactionFacade::transact($callback, $mode);
     }
 
     /**
