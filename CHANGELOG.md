@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.8.0](https://github.com/cycle/active-record/compare/v0.7.0...v0.8.0) (2024-07-24)
+
+
+### Features
+
+* implement AR transaction via UoW ([9b55326](https://github.com/cycle/active-record/commit/9b553264043c1d77a84b168c3cfc8546f17299f0))
+* rewrite AR transaction to using EntityManager ([10dea8f](https://github.com/cycle/active-record/commit/10dea8ff5f2802db69e309ccd3db094bc433ddab))
+
 ## [0.7.0](https://github.com/cycle/active-record/compare/v0.6.0...v0.7.0) (2024-07-04)
 
 
