@@ -8,6 +8,8 @@ use Cycle\ActiveRecord\ActiveRecord;
 use Cycle\ActiveRecord\Exception\Transaction\TransactionException;
 use Cycle\ActiveRecord\TransactionMode;
 use Cycle\App\Entity\User;
+use Cycle\Database\DatabaseInterface;
+use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\Exception\RunnerException;
 use Cycle\ORM\Select\Repository;
 use PHPUnit\Framework\Attributes\Test;
@@ -106,9 +108,9 @@ final class ActiveRecordTest extends DatabaseTestCase
      * @throws \Throwable
      */
     #[Test]
-    public function it_persists_multiple_entities_in_single_transaction(): void
+    public function it_persists_multiple_entities_in_single_grouping_actions_transaction(): void
     {
-        ActiveRecord::transact(static function () use (&$userOne, &$userTwo): void {
+        ActiveRecord::groupActions(static function () use (&$userOne, &$userTwo): void {
             $userOne = new User('Foo');
             $userOne->saveOrFail();
 
@@ -142,7 +144,7 @@ final class ActiveRecordTest extends DatabaseTestCase
      * @throws \Throwable
      */
     #[Test]
-    public function it_deletes_multiple_entities_in_single_transaction(): void
+    public function it_deletes_multiple_entities_in_single_transaction_using_grouping_actions(): void
     {
         self::assertCount(2, User::findAll());
 
@@ -151,7 +153,7 @@ final class ActiveRecordTest extends DatabaseTestCase
         /** @var User $userTwo */
         $userTwo = User::findByPK(2);
 
-        ActiveRecord::transact(static function () use ($userOne, $userTwo): void {
+        ActiveRecord::groupActions(static function () use ($userOne, $userTwo): void {
             $userOne->delete();
             $userTwo->delete();
         });
@@ -168,9 +170,9 @@ final class ActiveRecordTest extends DatabaseTestCase
     }
 
     #[Test]
-    public function it_runs_transaction_without_actions(): void
+    public function it_runs_grouping_actions_without_actions(): void
     {
-        $result = ActiveRecord::transact(static function () {
+        $result = ActiveRecord::groupActions(static function () {
             return 'foo';
         });
 
@@ -178,23 +180,84 @@ final class ActiveRecordTest extends DatabaseTestCase
     }
 
     #[Test]
-    public function it_runs_transaction_in_current_transaction_mode_without_opened_transaction(): void
+    public function it_runs_grouping_actions_in_current_transaction_mode_without_opened_transaction(): void
     {
         self::expectException(RunnerException::class);
 
-        ActiveRecord::transact(static function (): void {
+        ActiveRecord::groupActions(static function (): void {
             $user = User::findByPK(1);
             $user->delete();
         }, TransactionMode::Current);
     }
 
     #[Test]
-    public function it_runs_transaction_in_transaction(): void
+    public function it_runs_grouping_actions_in_grouping_actions(): void
     {
         self::expectException(TransactionException::class);
 
-        ActiveRecord::transact(static function () {
-            return ActiveRecord::transact(static fn() => true);
+        ActiveRecord::groupActions(static function () {
+            return ActiveRecord::groupActions(static fn() => true);
         }, TransactionMode::Current);
+    }
+
+    #[Test]
+    public function it_runs_grouping_actions_in_strict_mode_outside_transaction(): void
+    {
+        self::expectException(RunnerException::class);
+
+        ActiveRecord::groupActions(static function (): void {
+            $userOne = new User('Foo');
+            $userOne->saveOrFail();
+        }, TransactionMode::Current);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    #[Test]
+    public function it_runs_grouping_actions_without_transaction_inside_manually_opened_transaction(): void
+    {
+        ActiveRecord::transact(static function () use (&$userOne, &$userTwo): void {
+            ActiveRecord::groupActions(static function () use (&$userOne, &$userTwo): void {
+                $userOne = new User('Foo');
+                $userOne->saveOrFail();
+
+                $userTwo = new User('Bar');
+                $userTwo->saveOrFail();
+            }, TransactionMode::Current);
+        });
+
+        self::assertCount(4, User::findAll());
+
+        $savedUserOne = $this->selectEntity(User::class, cleanHeap: true)->wherePK($userOne->id)->fetchOne();
+        self::assertSame($savedUserOne->name, $userOne->name);
+
+        $savedUserTwo = $this->selectEntity(User::class, cleanHeap: true)->wherePK($userTwo->id)->fetchOne();
+        self::assertSame($savedUserTwo->name, $userTwo->name);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    #[Test]
+    public function it_runs_transaction_calling_on_entity_class(): void
+    {
+        User::transact(static function (DatabaseInterface $dbal) use (&$userOne, &$userTwo): void {
+            User::groupActions(static function (EntityManagerInterface $em) use (&$userOne, &$userTwo): void {
+                $userOne = new User('Foo');
+                $em->persist($userOne);
+
+                $userTwo = new User('Bar');
+                $userTwo->saveOrFail();
+            }, TransactionMode::Current);
+        });
+
+        self::assertCount(4, User::findAll());
+
+        $savedUserOne = $this->selectEntity(User::class, cleanHeap: true)->wherePK($userOne->id)->fetchOne();
+        self::assertSame($savedUserOne->name, $userOne->name);
+
+        $savedUserTwo = $this->selectEntity(User::class, cleanHeap: true)->wherePK($userTwo->id)->fetchOne();
+        self::assertSame($savedUserTwo->name, $userTwo->name);
     }
 }

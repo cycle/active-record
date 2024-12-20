@@ -15,7 +15,7 @@ final class ActiveRepositoryTest extends DatabaseTestCase
     #[Test]
     public function it_extends_repository_constructor(): void
     {
-        $repository = new class() extends ActiveRepository {
+        $repository = new class extends ActiveRepository {
             public function __construct()
             {
                 parent::__construct(User::class);

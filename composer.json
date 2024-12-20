@@ -28,8 +28,15 @@
         "source": "https://github.com/cycle/active-record",
         "security": "https://github.com/cycle/active-record/blob/master/.github/SECURITY.md"
     },
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/cycle"
+        }
+    ],
     "require": {
-        "php": "^8.2",
+        "php": ">=8.2",
+        "cycle/database": "^2.11",
         "cycle/orm": "^2.7",
         "psr/container": "^2.0"
     },
