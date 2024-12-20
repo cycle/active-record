@@ -233,4 +233,29 @@ final class ActiveRecordTest extends DatabaseTestCase
         $savedUserTwo = $this->selectEntity(User::class, cleanHeap: true)->wherePK($userTwo->id)->fetchOne();
         self::assertSame($savedUserTwo->name, $userTwo->name);
     }
+
+    /**
+     * @throws \Throwable
+     */
+    #[Test]
+    public function it_runs_transaction_calling_on_entity_class(): void
+    {
+        User::transact(static function () use (&$userOne, &$userTwo): void {
+            User::groupActions(static function () use (&$userOne, &$userTwo): void {
+                $userOne = new User('Foo');
+                $userOne->saveOrFail();
+
+                $userTwo = new User('Bar');
+                $userTwo->saveOrFail();
+            }, TransactionMode::Current);
+        });
+
+        self::assertCount(4, User::findAll());
+
+        $savedUserOne = $this->selectEntity(User::class, cleanHeap: true)->wherePK($userOne->id)->fetchOne();
+        self::assertSame($savedUserOne->name, $userOne->name);
+
+        $savedUserTwo = $this->selectEntity(User::class, cleanHeap: true)->wherePK($userTwo->id)->fetchOne();
+        self::assertSame($savedUserTwo->name, $userTwo->name);
+    }
 }
