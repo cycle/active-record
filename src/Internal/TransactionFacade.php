@@ -10,6 +10,9 @@ use Cycle\ActiveRecord\TransactionMode;
 use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\Transaction\Runner;
 
+/**
+ * @internal
+ */
 final class TransactionFacade
 {
     private static ?EntityManagerInterface $em = null;
@@ -27,7 +30,7 @@ final class TransactionFacade
      * @throws TransactionException
      * @throws \Throwable
      */
-    public static function transact(
+    public static function groupOrmActions(
         callable $callback,
         TransactionMode $mode = TransactionMode::OpenNew,
     ): mixed {

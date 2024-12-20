@@ -81,11 +81,11 @@ abstract class ActiveRecord
      * @throws TransactionException
      * @throws \Throwable
      */
-    public static function transact(
+    public static function groupActions(
         callable $callback,
         TransactionMode $mode = TransactionMode::OpenNew,
     ): mixed {
-        return TransactionFacade::transact($callback, $mode);
+        return TransactionFacade::groupOrmActions($callback, $mode);
     }
 
     /**

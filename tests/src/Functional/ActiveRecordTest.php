@@ -108,7 +108,7 @@ final class ActiveRecordTest extends DatabaseTestCase
     #[Test]
     public function it_persists_multiple_entities_in_single_transaction(): void
     {
-        ActiveRecord::transact(static function () use (&$userOne, &$userTwo): void {
+        ActiveRecord::groupActions(static function () use (&$userOne, &$userTwo): void {
             $userOne = new User('Foo');
             $userOne->saveOrFail();
 
@@ -151,7 +151,7 @@ final class ActiveRecordTest extends DatabaseTestCase
         /** @var User $userTwo */
         $userTwo = User::findByPK(2);
 
-        ActiveRecord::transact(static function () use ($userOne, $userTwo): void {
+        ActiveRecord::groupActions(static function () use ($userOne, $userTwo): void {
             $userOne->delete();
             $userTwo->delete();
         });
@@ -170,7 +170,7 @@ final class ActiveRecordTest extends DatabaseTestCase
     #[Test]
     public function it_runs_transaction_without_actions(): void
     {
-        $result = ActiveRecord::transact(static function () {
+        $result = ActiveRecord::groupActions(static function () {
             return 'foo';
         });
 
@@ -182,7 +182,7 @@ final class ActiveRecordTest extends DatabaseTestCase
     {
         self::expectException(RunnerException::class);
 
-        ActiveRecord::transact(static function (): void {
+        ActiveRecord::groupActions(static function (): void {
             $user = User::findByPK(1);
             $user->delete();
         }, TransactionMode::Current);
@@ -193,8 +193,8 @@ final class ActiveRecordTest extends DatabaseTestCase
     {
         self::expectException(TransactionException::class);
 
-        ActiveRecord::transact(static function () {
-            return ActiveRecord::transact(static fn() => true);
+        ActiveRecord::groupActions(static function () {
+            return ActiveRecord::groupActions(static fn() => true);
         }, TransactionMode::Current);
     }
 }
