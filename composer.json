@@ -36,6 +36,7 @@
     ],
     "require": {
         "php": ">=8.2",
+        "cycle/database": "^2.11",
         "cycle/orm": "^2.7",
         "psr/container": "^2.0"
     },
