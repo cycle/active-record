@@ -76,7 +76,7 @@ final class FacadeTest extends TestCase
     public function it_throws_exception_when_container_does_not_have_orm_set(): void
     {
         $container = $this->createMock(ContainerInterface::class);
-        $exception = new class() extends CoreException implements NotFoundExceptionInterface {};
+        $exception = new class extends CoreException implements NotFoundExceptionInterface {};
 
         $container
             ->expects(self::once())

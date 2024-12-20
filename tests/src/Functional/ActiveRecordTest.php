@@ -203,7 +203,7 @@ final class ActiveRecordTest extends DatabaseTestCase
     {
         self::expectException(RunnerException::class);
 
-        ActiveRecord::groupActions(static function () {
+        ActiveRecord::groupActions(static function (): void {
             $userOne = new User('Foo');
             $userOne->saveOrFail();
         }, TransactionMode::Current);
