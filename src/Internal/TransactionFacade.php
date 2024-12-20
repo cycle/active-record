@@ -47,7 +47,7 @@ final class TransactionFacade
         self::$em = Facade::getEntityManager();
 
         try {
-            $result = $callback();
+            $result = $callback(self::$em);
             self::$em->run(true, $runner);
             return $result;
         } finally {

@@ -8,6 +8,9 @@ use Cycle\ActiveRecord\ActiveRecord;
 use Cycle\ActiveRecord\Exception\Transaction\TransactionException;
 use Cycle\ActiveRecord\TransactionMode;
 use Cycle\App\Entity\User;
+use Cycle\Database\DatabaseInterface;
+use Cycle\Database\DatabaseManager;
+use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\Exception\RunnerException;
 use Cycle\ORM\Select\Repository;
 use PHPUnit\Framework\Attributes\Test;
@@ -240,10 +243,10 @@ final class ActiveRecordTest extends DatabaseTestCase
     #[Test]
     public function it_runs_transaction_calling_on_entity_class(): void
     {
-        User::transact(static function () use (&$userOne, &$userTwo): void {
-            User::groupActions(static function () use (&$userOne, &$userTwo): void {
+        User::transact(static function (DatabaseInterface $dbal) use (&$userOne, &$userTwo): void {
+            User::groupActions(static function (EntityManagerInterface $em) use (&$userOne, &$userTwo): void {
                 $userOne = new User('Foo');
-                $userOne->saveOrFail();
+                $em->persist($userOne);
 
                 $userTwo = new User('Bar');
                 $userTwo->saveOrFail();

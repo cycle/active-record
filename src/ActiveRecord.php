@@ -8,6 +8,7 @@ use Cycle\ActiveRecord\Exception\Transaction\TransactionException;
 use Cycle\ActiveRecord\Internal\TransactionFacade;
 use Cycle\ActiveRecord\Query\ActiveQuery;
 use Cycle\Database\DatabaseInterface;
+use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\Exception\RunnerException;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\RepositoryInterface;
@@ -79,7 +80,7 @@ abstract class ActiveRecord
      * @note DBAL operations will not be executed within the transaction. Use {@see self::transact()} for that.
      *
      * @template TResult
-     * @param callable(): TResult $callback
+     * @param callable(EntityManagerInterface): TResult $callback
      * @return TResult
      *
      * @throws TransactionException
