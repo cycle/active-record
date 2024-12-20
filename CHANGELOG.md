@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.9.0](https://github.com/cycle/active-record/compare/v0.8.0...v0.9.0) (2024-12-20)
+
+
+### Features
+
+* add AR::transact() method to open a DB transaction; ([be62b85](https://github.com/cycle/active-record/commit/be62b85a503ad5cc818e6d3046ee14c9e7d55353))
+* rename ActiveRecord::transact to ActiveRecord::groupActions ([2e0aa92](https://github.com/cycle/active-record/commit/2e0aa92915e82521aa511b707d47af068613c2c7))
+* send `EntityManagerInterface` as the first argument of `AR::groupActions()` callable ([e2036f3](https://github.com/cycle/active-record/commit/e2036f392daf69e9bbebac2633b9ed6559465f7a))
+
 ## [0.8.0](https://github.com/cycle/active-record/compare/v0.7.0...v0.8.0) (2024-07-24)
 
 
