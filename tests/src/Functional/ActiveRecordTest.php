@@ -9,7 +9,6 @@ use Cycle\ActiveRecord\Exception\Transaction\TransactionException;
 use Cycle\ActiveRecord\TransactionMode;
 use Cycle\App\Entity\User;
 use Cycle\Database\DatabaseInterface;
-use Cycle\Database\DatabaseManager;
 use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\Exception\RunnerException;
 use Cycle\ORM\Select\Repository;
