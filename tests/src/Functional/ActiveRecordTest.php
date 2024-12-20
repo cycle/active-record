@@ -106,7 +106,7 @@ final class ActiveRecordTest extends DatabaseTestCase
      * @throws \Throwable
      */
     #[Test]
-    public function it_persists_multiple_entities_in_single_transaction(): void
+    public function it_persists_multiple_entities_in_single_grouping_actions_transaction(): void
     {
         ActiveRecord::groupActions(static function () use (&$userOne, &$userTwo): void {
             $userOne = new User('Foo');
@@ -142,7 +142,7 @@ final class ActiveRecordTest extends DatabaseTestCase
      * @throws \Throwable
      */
     #[Test]
-    public function it_deletes_multiple_entities_in_single_transaction(): void
+    public function it_deletes_multiple_entities_in_single_transaction_using_grouping_actions(): void
     {
         self::assertCount(2, User::findAll());
 
@@ -168,7 +168,7 @@ final class ActiveRecordTest extends DatabaseTestCase
     }
 
     #[Test]
-    public function it_runs_transaction_without_actions(): void
+    public function it_runs_grouping_actions_without_actions(): void
     {
         $result = ActiveRecord::groupActions(static function () {
             return 'foo';
@@ -178,7 +178,7 @@ final class ActiveRecordTest extends DatabaseTestCase
     }
 
     #[Test]
-    public function it_runs_transaction_in_current_transaction_mode_without_opened_transaction(): void
+    public function it_runs_grouping_actions_in_current_transaction_mode_without_opened_transaction(): void
     {
         self::expectException(RunnerException::class);
 
@@ -189,12 +189,48 @@ final class ActiveRecordTest extends DatabaseTestCase
     }
 
     #[Test]
-    public function it_runs_transaction_in_transaction(): void
+    public function it_runs_grouping_actions_in_grouping_actions(): void
     {
         self::expectException(TransactionException::class);
 
         ActiveRecord::groupActions(static function () {
             return ActiveRecord::groupActions(static fn() => true);
         }, TransactionMode::Current);
+    }
+
+    #[Test]
+    public function it_runs_grouping_actions_in_strict_mode_outside_transaction(): void
+    {
+        self::expectException(RunnerException::class);
+
+        ActiveRecord::groupActions(static function () {
+            $userOne = new User('Foo');
+            $userOne->saveOrFail();
+        }, TransactionMode::Current);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    #[Test]
+    public function it_runs_grouping_actions_without_transaction_inside_manually_opened_transaction(): void
+    {
+        ActiveRecord::transact(static function () use (&$userOne, &$userTwo): void {
+            ActiveRecord::groupActions(static function () use (&$userOne, &$userTwo): void {
+                $userOne = new User('Foo');
+                $userOne->saveOrFail();
+
+                $userTwo = new User('Bar');
+                $userTwo->saveOrFail();
+            }, TransactionMode::Current);
+        });
+
+        self::assertCount(4, User::findAll());
+
+        $savedUserOne = $this->selectEntity(User::class, cleanHeap: true)->wherePK($userOne->id)->fetchOne();
+        self::assertSame($savedUserOne->name, $userOne->name);
+
+        $savedUserTwo = $this->selectEntity(User::class, cleanHeap: true)->wherePK($userTwo->id)->fetchOne();
+        self::assertSame($savedUserTwo->name, $userTwo->name);
     }
 }

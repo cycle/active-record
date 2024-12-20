@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cycle\ActiveRecord;
 
 use Cycle\ActiveRecord\Exception\ConfigurationException;
+use Cycle\Database\DatabaseManager;
 use Cycle\ORM\EntityManager;
 use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\ORMInterface;
@@ -22,14 +23,11 @@ class Facade
 
     private static ?ContainerInterface $container = null;
 
+    private static ?DatabaseManager $dbal = null;
+
     public static function setContainer(ContainerInterface $container): void
     {
         self::$container = $container;
-    }
-
-    public static function setOrm(ORMInterface $orm): void
-    {
-        self::$orm = $orm;
     }
 
     /**
@@ -40,6 +38,14 @@ class Facade
         return self::$orm ??= self::getFromContainer(ORMInterface::class);
     }
 
+    /**
+     * @throws ConfigurationException
+     */
+    public static function getDatabaseManager(): DatabaseManager
+    {
+        return self::$dbal ??= self::getFromContainer(DatabaseManager::class);
+    }
+
     public static function getEntityManager(): EntityManagerInterface
     {
         return self::$entityManager ??= new EntityManager(self::getOrm());
@@ -48,6 +54,7 @@ class Facade
     public static function reset(): void
     {
         self::$orm = null;
+        self::$dbal = null;
         self::$entityManager = null;
         self::$container = null;
     }

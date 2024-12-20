@@ -7,6 +7,8 @@ namespace Cycle\ActiveRecord;
 use Cycle\ActiveRecord\Exception\Transaction\TransactionException;
 use Cycle\ActiveRecord\Internal\TransactionFacade;
 use Cycle\ActiveRecord\Query\ActiveQuery;
+use Cycle\Database\DatabaseInterface;
+use Cycle\ORM\Exception\RunnerException;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\RepositoryInterface;
 
@@ -74,11 +76,14 @@ abstract class ActiveRecord
      * All the ActiveRecord write operations within the callback will be registered
      * using the Entity Manager without being executed until the end of the callback.
      *
+     * @note DBAL operations will not be executed within the transaction. Use {@see self::transact()} for that.
+     *
      * @template TResult
      * @param callable(): TResult $callback
      * @return TResult
      *
      * @throws TransactionException
+     * @throws RunnerException
      * @throws \Throwable
      */
     public static function groupActions(
@@ -86,6 +91,26 @@ abstract class ActiveRecord
         TransactionMode $mode = TransactionMode::OpenNew,
     ): mixed {
         return TransactionFacade::groupOrmActions($callback, $mode);
+    }
+
+    /**
+     * Open a new DB transaction and execute the callback within it.
+     *
+     * All the DBAL operations within the callback will be executed within a single transaction.
+     * If an exception is thrown within the callback, the transaction will be rolled back.
+     * If the callback returns a value, the transaction will be committed.
+     *
+     * @template TResult
+     * @param callable(DatabaseInterface): TResult $callback
+     * @return TResult
+     *
+     * @throws TransactionException
+     * @throws \Throwable
+     */
+    public static function transact(
+        callable $callback,
+    ): mixed {
+        return TransactionFacade::transact($callback, static::class === self::class ? null : static::class);
     }
 
     /**

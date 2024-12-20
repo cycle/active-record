@@ -22,6 +22,12 @@
             "email": "the@wayof.dev"
         }
     ],
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/cycle"
+        }
+    ],
     "homepage": "https://cycle-orm.dev",
     "support": {
         "issues": "https://github.com/cycle/active-record/issues",
@@ -29,7 +35,7 @@
         "security": "https://github.com/cycle/active-record/blob/master/.github/SECURITY.md"
     },
     "require": {
-        "php": "^8.2",
+        "php": ">=8.2",
         "cycle/orm": "^2.7",
         "psr/container": "^2.0"
     },
