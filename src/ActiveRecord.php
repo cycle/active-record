@@ -87,7 +87,7 @@ abstract class ActiveRecord
      * @throws RunnerException
      * @throws \Throwable
      */
-    public static function groupActions(
+    final public static function groupActions(
         callable $callback,
         TransactionMode $mode = TransactionMode::OpenNew,
     ): mixed {
@@ -108,7 +108,7 @@ abstract class ActiveRecord
      * @throws TransactionException
      * @throws \Throwable
      */
-    public static function transact(
+    final public static function transact(
         callable $callback,
     ): mixed {
         return TransactionFacade::transact($callback, static::class === self::class ? null : static::class);
