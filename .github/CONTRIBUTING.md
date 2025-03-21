@@ -42,7 +42,7 @@ We appreciate your interest in contributing. This guide will help you get starte
 
 If you would like to contribute, please **open an issue** or a pull request. We are always looking for ways to improve the project and would love to hear your ideas.
 
-The latest changes are always in **`master`** branch, so please make your Pull Request against that branch.
+The latest changes are always in the main branch, so please make your Pull Request against that branch.
 
 <br>
 
@@ -132,7 +132,7 @@ For a full list of commands, run `make help`.
 * **Run Linters**: Ensure your code passes all linting checks using `make lint`.
 * **Commit Your Changes**: Use the [Conventional Commits](#-commit-message-guidelines) standard for your commit messages. You can use `make commit` to assist in creating commit messages.
 * **Push Your Changes**: Push your branch to your fork on GitHub.
-* **Open a Pull Request**: Submit a pull request to the `master` branch of the original repository. Ensure your PR is focused, addressing a single feature, fix, or improvement.
+* **Open a Pull Request**: Submit a pull request to the main branch of the original repository. Ensure your PR is focused, addressing a single feature, fix, or improvement.
 
 <br>
 
