@@ -156,7 +156,7 @@ $ make ssh
 $ make down
 ```
 
-By default, phpunit and phpstan commands will be ran against docker environment.
+By default, phpunit commands will be ran against docker environment.
 
 <br>
 
@@ -173,7 +173,7 @@ Our project employs [GitHub Actions](https://github.com/features/actions) for co
 | [`refactoring.yml`](workflows/refactoring.yml)                 | Runs rector/rector code check.                                      |
 | [`security-analysis.yml`](workflows/security-analysis.yml)     | Checks for security issues.                                         |
 | [`shellcheck.yml`](workflows/shellcheck.yml)                   | Checks shell scripts.                                               |
-| [`static-analysis.yml`](workflows/static-analysis.yml)         | Runs `psalm` and `phpstan` tools.                                   |
+| [`static-analysis.yml`](workflows/static-analysis.yml)         | Runs `psalm`.                                                       |
 | [`testing.yml`](workflows/testing.yml)                         | Runs coverage, mutation and functional tests against SQLite         |
 | [`testing-mysql.yml`](workflows/testing.yml)                   | Runs functional tests against MySQL                                 |
 | [`testing-pgsql.yml`](workflows/testing.yml)                   | Runs functional tests against PostgreSQL                            |
@@ -184,7 +184,7 @@ Our project employs [GitHub Actions](https://github.com/features/actions) for co
 ## 📝 Before You Contribute
 
 * **Tests**: Include tests that cover any new features or bug fixes.
-* **Code Quality**: Utilize `make lint` for code style checks and `make lint-stan lint-psalm` for static analysis with [PHPStan](https://phpstan.org) and [Psalm](https://psalm.dev/).
+* **Code Quality**: Utilize `make lint` for code style checks and `make lint-stan lint-psalm` for static analysis with [Psalm](https://psalm.dev/).
 * **Documentation**: Update relevant documentation to reflect your changes, ensuring other developers can understand and use your contributions effectively.
 * **Commits**: use Conventional Commits standard to create a commit
 
@@ -348,30 +348,25 @@ to run mutation tests.
 
 ## 🔍 Static Code Analysis
 
-We use both [`phpstan/phpstan`](https://github.com/phpstan/phpstan) and [`vimeo/psalm`](https://github.com/vimeo/psalm) to statically analyze the code.
+We use [`vimeo/psalm`](https://github.com/vimeo/psalm) to statically analyze the code.
 
 Run
 
 ```bash
-make lint-stan
 make lint-psalm
 ```
 
 to run a static code analysis.
 
-We also use the baseline features of [`phpstan/phpstan`](https://phpstan.org/user-guide/baseline) and [`vimeo/psalm`](https://psalm.dev/docs/running_psalm/dealing_with_code_issues/#using-a-baseline-file) to ignore existing issues.
+We also use the baseline features of [`vimeo/psalm`](https://psalm.dev/docs/running_psalm/dealing_with_code_issues/#using-a-baseline-file) to ignore existing issues.
 
 Run
 
 ```bash
-make lint-stan-baseline
 make lint-psalm-baseline
 ```
 
-to regenerate the baselines in:
-
-* [`../phpstan-baseline.neon`](../phpstan-baseline.neon).
-* [`../psalm-baseline.xml`](../psalm-baseline.xml).
+to regenerate the baselines in [`../psalm-baseline.xml`](../psalm-baseline.xml).
 
 > [!IMPORTANT]
 >
