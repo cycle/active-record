@@ -7,7 +7,6 @@ namespace Cycle\Tests\Functional;
 use Cycle\ActiveRecord\Exception\ConfigurationException;
 use Cycle\ActiveRecord\Facade;
 use Cycle\App\Testing\TestCase;
-use Cycle\ORM\EntityManager;
 use Cycle\ORM\ORMInterface;
 use Exception as CoreException;
 use PHPUnit\Framework\Attributes\Test;
