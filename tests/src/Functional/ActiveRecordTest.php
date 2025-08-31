@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Cycle\Tests\Functional;
 
 use Cycle\ActiveRecord\ActiveRecord;
+use Cycle\ActiveRecord\Query\ActiveQuery;
 use Cycle\ActiveRecord\TransactionMode;
+use Cycle\App\Entity\Identity;
 use Cycle\App\Entity\User;
 use Cycle\Database\DatabaseInterface;
 use Cycle\ORM\EntityManagerInterface;
@@ -66,9 +68,6 @@ final class ActiveRecordTest extends DatabaseTestCase
         self::assertSame('Alex', $user->name);
     }
 
-    /**
-     * @throws \Throwable
-     */
     #[Test]
     public function it_saves_entity(): void
     {
@@ -82,9 +81,6 @@ final class ActiveRecordTest extends DatabaseTestCase
         self::assertSame($result->name, $user->name);
     }
 
-    /**
-     * @throws \Throwable
-     */
     #[Test]
     public function it_triggers_exception_when_tries_to_save_entity_using_save_or_fail(): void
     {
@@ -104,9 +100,6 @@ final class ActiveRecordTest extends DatabaseTestCase
         self::assertCount(2, User::findAll());
     }
 
-    /**
-     * @throws \Throwable
-     */
     #[Test]
     public function it_persists_multiple_entities_in_single_grouping_actions_transaction(): void
     {
@@ -127,9 +120,6 @@ final class ActiveRecordTest extends DatabaseTestCase
         self::assertSame($savedUserTwo->name, $userTwo->name);
     }
 
-    /**
-     * @throws \Throwable
-     */
     #[Test]
     public function it_deletes_entity(): void
     {
@@ -140,9 +130,16 @@ final class ActiveRecordTest extends DatabaseTestCase
         self::assertCount(1, User::findAll());
     }
 
-    /**
-     * @throws \Throwable
-     */
+    #[Test]
+    public function it_deletes_entity_or_fail_without_fail(): void
+    {
+        $user = User::findByPK(1);
+        self::assertNotNull($user);
+
+        $user->deleteOrFail();
+        self::assertCount(1, User::findAll());
+    }
+
     #[Test]
     public function it_deletes_multiple_entities_in_single_transaction_using_grouping_actions(): void
     {
@@ -210,9 +207,6 @@ final class ActiveRecordTest extends DatabaseTestCase
         }, TransactionMode::Current);
     }
 
-    /**
-     * @throws \Throwable
-     */
     #[Test]
     public function it_runs_grouping_actions_without_transaction_inside_manually_opened_transaction(): void
     {
@@ -235,9 +229,6 @@ final class ActiveRecordTest extends DatabaseTestCase
         self::assertSame($savedUserTwo->name, $userTwo->name);
     }
 
-    /**
-     * @throws \Throwable
-     */
     #[Test]
     public function it_runs_transaction_with_group_actions_calling_on_entity_class(): void
     {
@@ -260,25 +251,41 @@ final class ActiveRecordTest extends DatabaseTestCase
         self::assertSame($savedUserTwo->name, $userTwo->name);
     }
 
-    /**
-     * @throws \Throwable
-     */
     #[Test]
     public function it_runs_transaction_with_orm_actions(): void
     {
-        User::transact(static function (DatabaseInterface $dbal) use (&$userOne, &$userTwo): void {
-            $userOne = new User('Foo');
-            $userTwo = new User('Bar');
-            $userOne->save();
-            $userTwo->save();
+        User::transact(function (
+            DatabaseInterface $dbal,
+            EntityManagerInterface $em,
+        ) use (&$user1, &$user2, &$user3, &$user4): void {
+            $user1 = new User('Foo');
+            $user2 = new User('Bar');
+            $user3 = new User('Baz');
+            $user4 = new User('Qux');
+            $user1->save();
+            $user2->saveOrFail();
+            $em->persist($user3);
+            $em->persistState($user4);
         });
 
-        self::assertCount(4, User::findAll());
+        self::assertCount(6, User::findAll());
 
-        $savedUserOne = $this->selectEntity(User::class, cleanHeap: true)->wherePK($userOne->id)->fetchOne();
-        self::assertSame($savedUserOne->name, $userOne->name);
+        $savedUserOne = $this->selectEntity(User::class, cleanHeap: true)->wherePK($user1->id)->fetchOne();
+        self::assertSame($savedUserOne->name, $user1->name);
 
-        $savedUserTwo = $this->selectEntity(User::class, cleanHeap: true)->wherePK($userTwo->id)->fetchOne();
-        self::assertSame($savedUserTwo->name, $userTwo->name);
+        $savedUserTwo = $this->selectEntity(User::class, cleanHeap: true)->wherePK($user2->id)->fetchOne();
+        self::assertSame($savedUserTwo->name, $user2->name);
+
+        $savedUserThree = $this->selectEntity(User::class, cleanHeap: true)->wherePK($user3->id)->fetchOne();
+        self::assertSame($savedUserThree->name, $user3->name);
+
+        $savedUserFour = $this->selectEntity(User::class, cleanHeap: true)->wherePK($user4->id)->fetchOne();
+        self::assertSame($savedUserFour->name, $user4->name);
+    }
+
+    #[Test]
+    public function query_method_returns_ActiveQuery(): void
+    {
+        self::assertInstanceOf(ActiveQuery::class, Identity::query());
     }
 }
