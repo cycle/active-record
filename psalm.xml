@@ -14,7 +14,10 @@
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
     </plugins>
-
+    <issueHandlers>
+        <PossiblyUnusedMethod errorLevel="suppress" />
+        <UnusedClass errorLevel="suppress" />
+    </issueHandlers>
     <projectFiles>
         <directory name="src/"/>
         <ignoreFiles>

@@ -28,21 +28,21 @@ final class EntityManager implements EntityManagerInterface
     public function persistState(object $entity, bool $cascade = true): EntityManagerInterface
     {
         $this->getUow()->persistState($entity, $cascade);
-        $this->autoExecute === true and $this->run();
+        $this->autoExecute and $this->run();
         return $this;
     }
 
     public function persist(object $entity, bool $cascade = true): EntityManagerInterface
     {
         $this->getUow()->persistDeferred($entity, $cascade);
-        $this->autoExecute === true and $this->run();
+        $this->autoExecute and $this->run();
         return $this;
     }
 
     public function delete(object $entity, bool $cascade = true): EntityManagerInterface
     {
         $this->getUow()->delete($entity, $cascade);
-        $this->autoExecute === true and $this->run();
+        $this->autoExecute and $this->run();
         return $this;
     }
 

@@ -1,38 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
-  <file src="src/ActiveRecord.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[deleteOrFail]]></code>
-    </PossiblyUnusedMethod>
-    <TooManyArguments>
-      <code><![CDATA[run]]></code>
-      <code><![CDATA[run]]></code>
-    </TooManyArguments>
-  </file>
-  <file src="src/Bridge/Laravel/Providers/ActiveRecordProvider.php">
-    <UnusedClass>
-      <code><![CDATA[ActiveRecordProvider]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Bridge/Spiral/Bootloader/ActiveRecordBootloader.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[init]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="src/Facade.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[setOrm]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="src/Internal/TransactionFacade.php">
-    <TooManyArguments>
-      <code><![CDATA[run]]></code>
-    </TooManyArguments>
-  </file>
-  <file src="src/Repository/ActiveRepository.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[findAll]]></code>
-      <code><![CDATA[forUpdate]]></code>
-    </PossiblyUnusedMethod>
+<files psalm-version="6.5.0@38fc8444edf0cebc9205296ee6e30e906ade783b">
+  <file src="src/Internal/EntityManager.php">
+    <InvalidThrow>
+      <code><![CDATA[throw $state->getLastError()]]></code>
+    </InvalidThrow>
   </file>
 </files>
