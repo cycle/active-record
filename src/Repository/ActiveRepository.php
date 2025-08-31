@@ -21,8 +21,6 @@ use Cycle\ORM\Select;
  *
  * @see self::forUpdate() as an example of immutabile method.
  *
- * @internal
- *
  * @template-covariant TEntity of object
  */
 class ActiveRepository
@@ -81,12 +79,20 @@ class ActiveRepository
     }
 
     /**
+     * Return a new repository instance with the "FOR UPDATE" mode enabled.
+     *
+     * This method does not modify the current repository instance, but returns a new one.
+     * It is useful for performing row-level locking in a transaction.
+     *
      * @return $this
      * @mutation-free
      */
     public function forUpdate(): static
     {
-        return $this->with($this->select()->forUpdate());
+        return $this->with(
+            // Change Select or ActiveQuery like this
+            $this->select()->forUpdate(),
+        );
     }
 
     /**
@@ -108,7 +114,7 @@ class ActiveRepository
      *
      * @return $this
      */
-    protected function with(Select $select): static
+    final protected function with(Select $select): static
     {
         $repository = clone $this;
         $repository->select = $select;
