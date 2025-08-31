@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Cycle\Tests\Functional;
 
 use Cycle\ActiveRecord\Facade;
+use Cycle\App\Testing\Loggable;
+use Cycle\App\Testing\TestCase;
 use Cycle\Database\Database;
 use Cycle\Database\DatabaseInterface;
 use Cycle\Database\DatabaseManager;

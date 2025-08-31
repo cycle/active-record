@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cycle\Tests\Functional;
+namespace Cycle\App\Testing;
 
 use Cycle\ActiveRecord\Bridge\Spiral\Bootloader\ActiveRecordBootloader;
 use Cycle\App\Bootloader\AppBootloader;

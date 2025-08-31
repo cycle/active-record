@@ -47,7 +47,6 @@
         "fakerphp/faker": "^1.23",
         "illuminate/support": "^10.48 || ^11.0",
         "mockery/mockery": "^1.6",
-        "pestphp/pest": "^2.34",
         "phpunit/phpunit": "^10.5",
         "psalm/plugin-phpunit": "~0.19.0",
         "rector/rector": "^1.0",
@@ -58,7 +57,8 @@
         "spiral/framework": "^3.12",
         "spiral/logger": "^3.12",
         "spiral/testing": "^2.7",
-        "vimeo/psalm": "^5.23"
+        "ta-tikoma/phpunit-architecture-test": "^0.8.5",
+        "vimeo/psalm": "^6.0"
     },
     "suggest": {
         "spiral/cycle-bridge": "Provides integration with Spiral Framework",
@@ -82,7 +82,6 @@
         "allow-plugins": {
             "ergebnis/composer-normalize": true,
             "infection/extension-installer": true,
-            "pestphp/pest-plugin": true,
             "spiral/composer-publish-plugin": true
         },
         "audit": {
@@ -132,35 +131,35 @@
         "refactor:ci": "rector process --config=rector.php --dry-run --ansi",
         "test": [
             "@putenv XDEBUG_MODE=coverage",
-            "pest --color=always"
+            "phpunit --color=always"
         ],
         "test:arch": [
             "@putenv XDEBUG_MODE=coverage",
-            "pest --color=always --configuration pest.xml.dist"
+            "phpunit --color=always"
         ],
         "test:cc": [
             "@putenv XDEBUG_MODE=coverage",
-            "pest --coverage --coverage-clover=runtime/phpunit/logs/clover.xml --color=always"
+            "phpunit --coverage --coverage-clover=runtime/phpunit/logs/clover.xml --color=always"
         ],
         "test:mysql": [
             "@putenv XDEBUG_MODE=coverage",
             "@putenv DB_DRIVER=mysql",
-            "pest --color=always"
+            "phpunit --color=always"
         ],
         "test:pgsql": [
             "@putenv XDEBUG_MODE=coverage",
             "@putenv DB_DRIVER=pgsql",
-            "pest --color=always"
+            "phpunit --color=always"
         ],
         "test:sqlite": [
             "@putenv XDEBUG_MODE=coverage",
             "@putenv DB_DRIVER=sqlite",
-            "pest --color=always"
+            "phpunit --color=always"
         ],
         "test:sqlserver": [
             "@putenv XDEBUG_MODE=coverage",
             "@putenv DB_DRIVER=sqlserver",
-            "pest --color=always"
+            "phpunit --color=always"
         ]
     }
 }

@@ -376,18 +376,18 @@ to regenerate the baselines in [`../psalm-baseline.xml`](../psalm-baseline.xml).
 
 ## 🧪 Unit and Functional Tests
 
-We use [`phpunit/phpunit`](https://github.com/sebastianbergmann/phpunit) and [`pestphp/pest`](https://github.com/pestphp/pest) to drive the development.
+We use [`phpunit/phpunit`](https://github.com/sebastianbergmann/phpunit) to drive the development.
 
 Run to run all the tests:
 
 ```bash
-# To run both, arch (pest) and unit (phpunit) tests
+# To run both, all the tests
 make test
 
-# To run only arch (pest) tests
+# To run only arch tests
 make test-arch
 
-# To run only unit (phpunit) tests
+# To run only unit tests
 make test-unit
 ```
 

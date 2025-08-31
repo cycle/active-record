@@ -270,31 +270,31 @@ infect-ci: ## Runs infection – mutation testing framework with github output (
 test-all: test test-arch test-pgsql test-mysql test-sqlite test-sqlserver ## Run all test suites
 .PHONY: test-all
 
-test: ## Run project php-unit and pest tests
+test: ## Run project tests
 	$(APP_COMPOSER) test
 .PHONY: test
 
-test-arch: ## Run project pest tests with architecture checks
+test-arch: ## Run architecture checks
 	$(APP_COMPOSER) test:arch
 .PHONY: test-arch
 
-test-pgsql: ## Run project php-unit and pest tests over pgsql database
+test-pgsql: ## Run project tests over pgsql database
 	$(APP_COMPOSER) test:pgsql
 .PHONY: test-pgsql
 
-test-mysql: ## Run project php-unit and pest tests over mysql database
+test-mysql: ## Run project tests over mysql database
 	$(APP_COMPOSER) test:mysql
 .PHONY: test-mysql
 
-test-sqlite: ## Run project php-unit and pest tests over sqlite database
+test-sqlite: ## Run project tests over sqlite database
 	$(APP_COMPOSER) test:sqlite
 .PHONY: test-sqlite
 
-test-sqlserver: ## Run project php-unit and pest tests over sqlserver database
+test-sqlserver: ## Run project tests over sqlserver database
 	$(APP_COMPOSER) test:sqlserver
 .PHONY: test-sqlserver
 
-test-cc: ## Run project php-unit and pest tests in coverage mode and build report
+test-cc: ## Run project tests in coverage mode and build report
 	$(APP_COMPOSER) test:cc
 .PHONY: test-cc
 
