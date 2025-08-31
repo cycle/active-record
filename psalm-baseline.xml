@@ -1,8 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="6.5.0@38fc8444edf0cebc9205296ee6e30e906ade783b">
+  <file src="src/ActiveRecord.php">
+    <MixedArgument>
+      <code><![CDATA[$primaryKey]]></code>
+    </MixedArgument>
+    <PossiblyUnusedReturnValue>
+      <code><![CDATA[TResult]]></code>
+    </PossiblyUnusedReturnValue>
+  </file>
+  <file src="src/Facade.php">
+    <MixedReturnStatement>
+      <code><![CDATA[self::$container->get($class)]]></code>
+    </MixedReturnStatement>
+  </file>
   <file src="src/Internal/EntityManager.php">
     <InvalidThrow>
       <code><![CDATA[throw $state->getLastError()]]></code>
     </InvalidThrow>
+  </file>
+  <file src="src/Repository/ActiveRepository.php">
+    <MixedArgument>
+      <code><![CDATA[$id]]></code>
+    </MixedArgument>
   </file>
 </files>
