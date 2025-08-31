@@ -83,15 +83,6 @@ We use a dockerized environment. Follow these steps to start working with the pr
    make env
    ```
 
-3. **Install phive and composer dependencies:**
-
-   ```bash
-   make phive
-   make install
-   ```
-
-<br>
-
 ## 🔧 Using the Makefile
 
 This project uses a Makefile to streamline common development tasks. The Makefile includes utilities for managing Docker environments, installing project dependencies, running tests, and linting code.
@@ -218,16 +209,6 @@ git commit -am 'fix: something has been fixed'
 | `build:`    | Changes that affect the build system or external dependencies |
 | `chore:`    | Other changes that don't modify src or test files             |
 | `security:` | A code change that fixes a security issue                     |
-
-<br>
-
-## 📦 PHAR Dependencies
-
-We use [Phive](https://phar.io/) to manage PHAR dependencies. You can install all dependencies using the `make phive` command, which will be executed through the Docker environment.
-
-```bash
-make phive
-```
 
 <br>
 

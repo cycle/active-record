@@ -12,8 +12,6 @@ services:
       - ~/.composer:/.composer
     env_file:
       - .env
-    environment:
-      PHIVE_HOME: /app/.phive
 
   trap:
     image: wayofdev/php-dev:8.3-cli-alpine-latest
