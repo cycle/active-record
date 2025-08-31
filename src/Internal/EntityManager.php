@@ -22,7 +22,7 @@ final class EntityManager implements EntityManagerInterface
      */
     public function __construct(
         private readonly \Closure $factory,
-        private bool $autoExecute = false,
+        private readonly bool $autoExecute = false,
     ) {}
 
     public function persistState(object $entity, bool $cascade = true): EntityManagerInterface

@@ -58,4 +58,38 @@ final class ActiveRepositoryTest extends DatabaseTestCase
         self::assertInstanceOf(User::class, $user);
         self::assertSame($letter, $user->name[0]);
     }
+
+    #[Test]
+    public function it_fetches_all_entities(): void
+    {
+        $repository = new ActiveRepository(User::class);
+
+        $users = $repository->findAll();
+
+        self::assertCount(2, $users);
+        foreach ($users as $user) {
+            self::assertInstanceOf(User::class, $user);
+        }
+    }
+
+    #[Test]
+    public function select_method_immutability(): void
+    {
+        $repository = new ActiveRepository(User::class);
+
+        $select1 = $repository->select();
+        $select2 = $repository->select();
+
+        self::assertNotSame($select1, $select2);
+    }
+
+    #[Test]
+    public function forUpdate_method_immutability(): void
+    {
+        $repository = new ActiveRepository(User::class);
+        $repo1 = $repository->forUpdate();
+        $repo2 = $repository->forUpdate();
+
+        self::assertNotSame($repo1, $repo2);
+    }
 }
