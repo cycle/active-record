@@ -1,6 +1,11 @@
-/vendor/
-/.build/
-/.idea/
+/.*
+!/.github/
+!/.well-known/
+/runtime/
 /tests/runtime/
+/vendor/
 .env
-coverage.xml
+composer.lock
+*.db
+clover.xml
+docker-compose.override.yml

@@ -59,12 +59,12 @@
         "roave/infection-static-analysis-plugin": "^1.35",
         "roave/security-advisories": "dev-latest",
         "spiral/boot": "^3.12",
+        "spiral/code-style": "^2.3",
         "spiral/cycle-bridge": "^2.9",
         "spiral/framework": "^3.12",
         "spiral/logger": "^3.12",
         "spiral/testing": "^2.7",
-        "vimeo/psalm": "^5.23",
-        "wayofdev/cs-fixer-config": "^1.4"
+        "vimeo/psalm": "^5.23"
     },
     "suggest": {
         "spiral/cycle-bridge": "Provides integration with Spiral Framework",
