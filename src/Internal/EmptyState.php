@@ -13,7 +13,6 @@ use Cycle\ORM\Transaction\StateInterface;
  */
 final class EmptyState implements StateInterface
 {
-
     public function __construct(
         private readonly ?\Throwable $error = null,
     ) {}

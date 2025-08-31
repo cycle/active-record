@@ -13,23 +13,15 @@ class TestLogger implements LoggerInterface
     use LoggerTrait;
 
     private const ERROR_COLOR = "\033[31m";
-
     private const ALERT_COLOR = "\033[35m";
-
     private const SHOW_COLOR = "\033[34m";
-
     private const SELECT_COLOR = "\033[32m";
-
     private const INSERT_COLOR = "\033[36m";
-
     private const OTHER_COLOR = "\033[33m";
-
     private const SYSTEM_QUERY_COLOR = "\033[90m";
 
     private bool $display = false;
-
     private int $countWrites = 0;
-
     private int $countReads = 0;
 
     public function countWriteQueries(): int

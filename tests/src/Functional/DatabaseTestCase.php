@@ -21,7 +21,6 @@ class DatabaseTestCase extends TestCase
     use Loggable;
 
     protected DatabaseInterface $database;
-
     protected ORMInterface $orm;
 
     public function getDriver(): DriverInterface

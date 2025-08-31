@@ -18,11 +18,8 @@ use Psr\Container\NotFoundExceptionInterface;
 class Facade
 {
     private static ?ORMInterface $orm = null;
-
     private static ?EntityManagerInterface $entityManager = null;
-
     private static ?ContainerInterface $container = null;
-
     private static ?DatabaseManager $dbal = null;
 
     public static function setContainer(ContainerInterface $container): void
