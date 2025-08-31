@@ -1,7 +1,7 @@
 {
     "ignoreMsiWithNoMutations": true,
     "logs": {
-        "text": ".build/infection/infection-log.txt",
+        "text": "runtime/infection/infection-log.txt",
         "stryker": {
             "report": "master"
         }

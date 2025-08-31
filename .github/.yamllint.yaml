@@ -3,7 +3,7 @@
 extends: default
 
 ignore: |
-  .build/
+  runtime/
   vendor/
   docs/
 

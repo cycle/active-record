@@ -8,7 +8,7 @@ use Rector\PHPUnit;
 use Rector\ValueObject;
 
 return static function (Config\RectorConfig $rectorConfig): void {
-    $rectorConfig->cacheDirectory(__DIR__ . '/.build/rector/');
+    $rectorConfig->cacheDirectory(__DIR__ . '/runtime/rector/');
 
     $rectorConfig->import(__DIR__ . '/vendor/fakerphp/faker/rector-migrate.php');
 

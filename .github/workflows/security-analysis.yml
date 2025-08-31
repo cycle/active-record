@@ -28,36 +28,23 @@ jobs:
           - locked
     steps:
       - name: 📦 Check out the codebase
-        uses: actions/checkout@v4.1.6
+        uses: actions/checkout@v5
 
       - name: 🛠️ Setup PHP
-        uses: shivammathur/setup-php@2.30.5
+        uses: shivammathur/setup-php@2
         with:
           php-version: ${{ matrix.php-version }}
           extensions: none, ctype, dom, json, mbstring, phar, simplexml, tokenizer, xml, xmlwriter, sockets, pdo, fileinfo
           ini-values: error_reporting=E_ALL
           coverage: none
 
-      - name: 🛠️ Setup problem matchers
-        run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
-
       - name: 🤖 Validate composer.json and composer.lock
         run: composer validate --ansi --strict
 
-      - name: 🔍 Get composer cache directory
-        uses: cycle/gh-actions/actions/composer/get-cache-directory@v4.0.0
-
-      - name: ♻️ Restore cached dependencies installed with composer
-        uses: actions/cache@v4.0.2
+      - name: 📥 Install dependencies with composer
+        uses: ramsey/composer-install@v3
         with:
-          path: ${{ env.COMPOSER_CACHE_DIR }}
-          key: php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-${{ hashFiles('composer.lock') }}
-          restore-keys: php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-
-
-      - name: 📥 Install "${{ matrix.dependencies }}" dependencies
-        uses: cycle/gh-actions/actions/composer/install@v4.0.0
-        with:
-          dependencies: ${{ matrix.dependencies }}
+          dependency-versions: "highest"
 
       - name: 🐛 Check installed packages for security vulnerability advisories
         run: composer audit --ansi
