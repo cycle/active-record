@@ -6,7 +6,7 @@ namespace Cycle\Tests\Functional;
 
 use Cycle\ActiveRecord\Exception\ConfigurationException;
 use Cycle\ActiveRecord\Facade;
-use Cycle\ORM\EntityManager;
+use Cycle\App\Testing\TestCase;
 use Cycle\ORM\ORMInterface;
 use Exception as CoreException;
 use PHPUnit\Framework\Attributes\Test;
@@ -96,28 +96,6 @@ final class FacadeTest extends TestCase
             self::assertSame($exception, $e->getPrevious());
             throw $e;
         }
-    }
-
-    /**
-     * @throws Exception
-     */
-    #[Test]
-    public function it_gets_entity_manager_from_facade(): void
-    {
-        $container = $this->createMock(ContainerInterface::class);
-        $orm = $this->createMock(ORMInterface::class);
-
-        $container
-            ->expects(self::once())
-            ->method('get')
-            ->with(ORMInterface::class)
-            ->willReturn($orm);
-
-        Facade::setContainer($container);
-
-        $entityManager = Facade::getEntityManager();
-
-        self::assertInstanceOf(EntityManager::class, $entityManager);
     }
 
     protected function setUp(): void

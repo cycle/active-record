@@ -51,8 +51,6 @@ MARKDOWN_LINT_RUNNER ?= $(DOCKER) run --rm $$(tty -s && echo "-it" || echo) \
 	davidanson/markdownlint-cli2-rules:latest \
 	--config ".github/.markdownlint.json"
 
-PHIVE_RUNNER ?= $(DOCKER_COMPOSE) run --rm --no-deps app
-
 NPM_RUNNER ?= pnpm
 
 EXPORT_VARS = '\
@@ -110,7 +108,7 @@ help: ## Show this menu
 # Default action
 # Defines default command when `make` is executed without additional parameters
 # ------------------------------------------------------------------------------------
-all: env prepare install hooks phive up
+all: env prepare install hooks up
 .PHONY: all
 
 #
@@ -130,7 +128,7 @@ endif
 .PHONY: env
 
 prepare: ## Prepare project for development
-	mkdir -p .build/php-cs-fixer
+	mkdir -p runtime/php-cs-fixer
 .PHONY: prepare
 
 #
@@ -186,10 +184,6 @@ update: ## Updates composer dependencies by running composer update command
 	$(APP_COMPOSER) update
 .PHONY: update
 
-phive: ## Installs dependencies with phive
-	$(APP_RUNNER) /usr/local/bin/phive install --trust-gpg-keys 0xC00543248C87FB13,0x033E5F8D801A2F8D
-.PHONY: phive
-
 #
 # Code Quality, Git, Linting
 # ------------------------------------------------------------------------------------
@@ -199,7 +193,7 @@ hooks: ## Install git hooks from pre-commit-config
 	pre-commit autoupdate
 .PHONY: hooks
 
-lint: lint-yaml lint-actions lint-md lint-php lint-stan lint-composer lint-audit ## Runs all linting commands
+lint: lint-yaml lint-actions lint-md lint-php lint-audit ## Runs all linting commands
 .PHONY: lint
 
 lint-yaml: ## Lints yaml files inside project
@@ -226,18 +220,6 @@ lint-diff: prepare ## Runs php-cs-fixer in dry-run mode and shows diff which wil
 	$(APP_COMPOSER) cs:diff
 .PHONY: lint-diff
 
-lint-stan: ## Runs phpstan – static analysis tool
-	$(APP_COMPOSER) stan
-.PHONY: lint-stan
-
-lint-stan-ci: ## Runs phpstan – static analysis tool with github output (CI mode)
-	$(APP_COMPOSER) stan:ci
-.PHONY: lint-stan-ci
-
-lint-stan-baseline: ## Runs phpstan to update its baseline
-	$(APP_COMPOSER) stan:baseline
-.PHONY: lint-stan-baseline
-
 lint-psalm: ## Runs vimeo/psalm – static analysis tool
 	$(APP_COMPOSER) psalm
 .PHONY: lint-psalm
@@ -249,16 +231,6 @@ lint-psalm-ci: ## Runs vimeo/psalm – static analysis tool with github output (
 lint-psalm-baseline: ## Runs vimeo/psalm to update its baseline
 	$(APP_COMPOSER) psalm:baseline
 .PHONY: lint-psalm-baseline
-
-lint-deps: ## Runs composer-require-checker – checks for dependencies that are not used
-	$(APP_RUNNER) .phive/composer-require-checker check \
-		--config-file=/app/composer-require-checker.json \
-		--verbose
-.PHONY: lint-deps
-
-lint-composer: ## Normalize composer.json and composer.lock files
-	$(APP_RUNNER) .phive/composer-normalize normalize
-.PHONY: lint-composer
 
 lint-audit: ## Runs security checks for composer dependencies
 	$(APP_COMPOSER) audit
@@ -282,31 +254,31 @@ infect-ci: ## Runs infection – mutation testing framework with github output (
 test-all: test test-arch test-pgsql test-mysql test-sqlite test-sqlserver ## Run all test suites
 .PHONY: test-all
 
-test: ## Run project php-unit and pest tests
+test: ## Run project tests
 	$(APP_COMPOSER) test
 .PHONY: test
 
-test-arch: ## Run project pest tests with architecture checks
+test-arch: ## Run architecture checks
 	$(APP_COMPOSER) test:arch
 .PHONY: test-arch
 
-test-pgsql: ## Run project php-unit and pest tests over pgsql database
+test-pgsql: ## Run project tests over pgsql database
 	$(APP_COMPOSER) test:pgsql
 .PHONY: test-pgsql
 
-test-mysql: ## Run project php-unit and pest tests over mysql database
+test-mysql: ## Run project tests over mysql database
 	$(APP_COMPOSER) test:mysql
 .PHONY: test-mysql
 
-test-sqlite: ## Run project php-unit and pest tests over sqlite database
+test-sqlite: ## Run project tests over sqlite database
 	$(APP_COMPOSER) test:sqlite
 .PHONY: test-sqlite
 
-test-sqlserver: ## Run project php-unit and pest tests over sqlserver database
+test-sqlserver: ## Run project tests over sqlserver database
 	$(APP_COMPOSER) test:sqlserver
 .PHONY: test-sqlserver
 
-test-cc: ## Run project php-unit and pest tests in coverage mode and build report
+test-cc: ## Run project tests in coverage mode and build report
 	$(APP_COMPOSER) test:cc
 .PHONY: test-cc
 

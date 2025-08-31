@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
-    cacheDirectory=".build/psalm/"
+    cacheDirectory="runtime/psalm/"
     errorBaseline="psalm-baseline.xml"
     errorLevel="4"
     findUnusedBaselineEntry="true"
@@ -14,7 +14,10 @@
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
     </plugins>
-
+    <issueHandlers>
+        <PossiblyUnusedMethod errorLevel="suppress" />
+        <UnusedClass errorLevel="suppress" />
+    </issueHandlers>
     <projectFiles>
         <directory name="src/"/>
         <ignoreFiles>

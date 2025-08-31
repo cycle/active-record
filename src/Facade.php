@@ -6,8 +6,6 @@ namespace Cycle\ActiveRecord;
 
 use Cycle\ActiveRecord\Exception\ConfigurationException;
 use Cycle\Database\DatabaseManager;
-use Cycle\ORM\EntityManager;
-use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\ORMInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -18,11 +16,7 @@ use Psr\Container\NotFoundExceptionInterface;
 class Facade
 {
     private static ?ORMInterface $orm = null;
-
-    private static ?EntityManagerInterface $entityManager = null;
-
     private static ?ContainerInterface $container = null;
-
     private static ?DatabaseManager $dbal = null;
 
     public static function setContainer(ContainerInterface $container): void
@@ -46,16 +40,10 @@ class Facade
         return self::$dbal ??= self::getFromContainer(DatabaseManager::class);
     }
 
-    public static function getEntityManager(): EntityManagerInterface
-    {
-        return self::$entityManager ??= new EntityManager(self::getOrm());
-    }
-
     public static function reset(): void
     {
         self::$orm = null;
         self::$dbal = null;
-        self::$entityManager = null;
         self::$container = null;
     }
 

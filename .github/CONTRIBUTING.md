@@ -83,15 +83,6 @@ We use a dockerized environment. Follow these steps to start working with the pr
    make env
    ```
 
-3. **Install phive and composer dependencies:**
-
-   ```bash
-   make phive
-   make install
-   ```
-
-<br>
-
 ## 🔧 Using the Makefile
 
 This project uses a Makefile to streamline common development tasks. The Makefile includes utilities for managing Docker environments, installing project dependencies, running tests, and linting code.
@@ -156,7 +147,7 @@ $ make ssh
 $ make down
 ```
 
-By default, phpunit and phpstan commands will be ran against docker environment.
+By default, phpunit commands will be ran against docker environment.
 
 <br>
 
@@ -173,7 +164,7 @@ Our project employs [GitHub Actions](https://github.com/features/actions) for co
 | [`refactoring.yml`](workflows/refactoring.yml)                 | Runs rector/rector code check.                                      |
 | [`security-analysis.yml`](workflows/security-analysis.yml)     | Checks for security issues.                                         |
 | [`shellcheck.yml`](workflows/shellcheck.yml)                   | Checks shell scripts.                                               |
-| [`static-analysis.yml`](workflows/static-analysis.yml)         | Runs `psalm` and `phpstan` tools.                                   |
+| [`static-analysis.yml`](workflows/static-analysis.yml)         | Runs `psalm`.                                                       |
 | [`testing.yml`](workflows/testing.yml)                         | Runs coverage, mutation and functional tests against SQLite         |
 | [`testing-mysql.yml`](workflows/testing.yml)                   | Runs functional tests against MySQL                                 |
 | [`testing-pgsql.yml`](workflows/testing.yml)                   | Runs functional tests against PostgreSQL                            |
@@ -184,7 +175,7 @@ Our project employs [GitHub Actions](https://github.com/features/actions) for co
 ## 📝 Before You Contribute
 
 * **Tests**: Include tests that cover any new features or bug fixes.
-* **Code Quality**: Utilize `make lint` for code style checks and `make lint-stan lint-psalm` for static analysis with [PHPStan](https://phpstan.org) and [Psalm](https://psalm.dev/).
+* **Code Quality**: Utilize `make lint` for code style checks and `make lint-stan lint-psalm` for static analysis with [Psalm](https://psalm.dev/).
 * **Documentation**: Update relevant documentation to reflect your changes, ensuring other developers can understand and use your contributions effectively.
 * **Commits**: use Conventional Commits standard to create a commit
 
@@ -218,16 +209,6 @@ git commit -am 'fix: something has been fixed'
 | `build:`    | Changes that affect the build system or external dependencies |
 | `chore:`    | Other changes that don't modify src or test files             |
 | `security:` | A code change that fixes a security issue                     |
-
-<br>
-
-## 📦 PHAR Dependencies
-
-We use [Phive](https://phar.io/) to manage PHAR dependencies. You can install all dependencies using the `make phive` command, which will be executed through the Docker environment.
-
-```bash
-make phive
-```
 
 <br>
 
@@ -348,30 +329,25 @@ to run mutation tests.
 
 ## 🔍 Static Code Analysis
 
-We use both [`phpstan/phpstan`](https://github.com/phpstan/phpstan) and [`vimeo/psalm`](https://github.com/vimeo/psalm) to statically analyze the code.
+We use [`vimeo/psalm`](https://github.com/vimeo/psalm) to statically analyze the code.
 
 Run
 
 ```bash
-make lint-stan
 make lint-psalm
 ```
 
 to run a static code analysis.
 
-We also use the baseline features of [`phpstan/phpstan`](https://phpstan.org/user-guide/baseline) and [`vimeo/psalm`](https://psalm.dev/docs/running_psalm/dealing_with_code_issues/#using-a-baseline-file) to ignore existing issues.
+We also use the baseline features of [`vimeo/psalm`](https://psalm.dev/docs/running_psalm/dealing_with_code_issues/#using-a-baseline-file) to ignore existing issues.
 
 Run
 
 ```bash
-make lint-stan-baseline
 make lint-psalm-baseline
 ```
 
-to regenerate the baselines in:
-
-* [`../phpstan-baseline.neon`](../phpstan-baseline.neon).
-* [`../psalm-baseline.xml`](../psalm-baseline.xml).
+to regenerate the baselines in [`../psalm-baseline.xml`](../psalm-baseline.xml).
 
 > [!IMPORTANT]
 >
@@ -381,18 +357,18 @@ to regenerate the baselines in:
 
 ## 🧪 Unit and Functional Tests
 
-We use [`phpunit/phpunit`](https://github.com/sebastianbergmann/phpunit) and [`pestphp/pest`](https://github.com/pestphp/pest) to drive the development.
+We use [`phpunit/phpunit`](https://github.com/sebastianbergmann/phpunit) to drive the development.
 
 Run to run all the tests:
 
 ```bash
-# To run both, arch (pest) and unit (phpunit) tests
+# To run both, all the tests
 make test
 
-# To run only arch (pest) tests
+# To run only arch tests
 make test-arch
 
-# To run only unit (phpunit) tests
+# To run only unit tests
 make test-unit
 ```
 

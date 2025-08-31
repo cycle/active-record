@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cycle\Tests\Functional;
+namespace Cycle\App\Testing;
 
 use Cycle\Database\Driver\DriverInterface;
 

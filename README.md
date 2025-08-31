@@ -20,7 +20,6 @@
 [![Codecov Coverage](https://img.shields.io/codecov/c/github/cycle/active-record?style=flat-square&logo=codecov)](https://app.codecov.io/gh/cycle/active-record)
 [![Type Coverage](https://shepherd.dev/github/cycle/active-record/coverage.svg)](https://shepherd.dev/github/cycle/active-record)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&label=mutation%20score&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fcycle%2Factive-record%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/cycle/active-record/master)
-![PHP Stan Level 5 of 9](https://img.shields.io/badge/phpstan%20level-5%20of%209-yellowgreen?style=flat-square)
 [![Discord](https://img.shields.io/discord/538114875570913290?style=flat-square&logo=discord&labelColor=7289d9&logoColor=white&color=39456d)](https://discord.gg/spiralphp)
 [![Follow on Twitter (X)](https://img.shields.io/badge/-Follow-black?style=flat-square&logo=X)](https://x.com/intent/follow?screen_name=SpiralPHP)
 
@@ -183,13 +182,7 @@ make infect
 
 ### → Static Analysis
 
-Code quality using PHPStan:
-
-```bash
-make lint-stan
-```
-
-and using Psalm:
+Code quality using Psalm:
 
 ```bash
 make lint-psalm
