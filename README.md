@@ -12,16 +12,13 @@
 
 <div align="center">
 
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fcycle%2Factive-record%2Fbadge&style=flat-square&label=github%20actions)](https://github.com/cycle/active-record/actions)
-[![Total Downloads](https://img.shields.io/packagist/dt/cycle/active-record?&style=flat-square)](https://packagist.org/packages/cycle/active-record)
-[![Latest Stable Version](https://img.shields.io/packagist/v/cycle/active-record?&style=flat-square)](https://packagist.org/packages/cycle/active-record)
-[![Commits since latest release](https://img.shields.io/github/commits-since/cycle/active-record/latest?style=flat-square)](https://packagist.org/packages/cycle/active-record)
-[![PHP Version Require](https://poser.pugx.org/cycle/active-record/require/php?style=flat-square)](https://packagist.org/packages/cycle/active-record)
 [![Codecov Coverage](https://img.shields.io/codecov/c/github/cycle/active-record?style=flat-square&logo=codecov)](https://app.codecov.io/gh/cycle/active-record)
 [![Type Coverage](https://shepherd.dev/github/cycle/active-record/coverage.svg)](https://shepherd.dev/github/cycle/active-record)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&label=mutation%20score&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fcycle%2Factive-record%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/cycle/active-record/master)
 [![Discord](https://img.shields.io/discord/538114875570913290?style=flat-square&logo=discord&labelColor=7289d9&logoColor=white&color=39456d)](https://discord.gg/spiralphp)
 [![Follow on Twitter (X)](https://img.shields.io/badge/-Follow-black?style=flat-square&logo=X)](https://x.com/intent/follow?screen_name=SpiralPHP)
+
+[//]: # ([![Commits since latest release]&#40;https://img.shields.io/github/commits-since/cycle/active-record/latest?style=flat-square&#41;]&#40;https://packagist.org/packages/cycle/active-record&#41;)
 
 </div>
 
@@ -39,7 +36,7 @@ This allows for more straightforward and rapid development cycles, particularly 
 
 Before you begin, ensure your development environment meets the following requirements:
 
-- **PHP Version:** 8.2 or higher
+- **PHP Version:** 8.1 or higher
 - One of the Cycle ORM adapters:
   - [`spiral/cycle-bridge`](https://github.com/spiral/cycle-bridge) official Cycle ORM adapter for the [Spiral Framework](https://github.com/spiral/framework)
   - [`yiisoft/yii-cycle`](https://github.com/yiisoft/yii-cycle) — official Cycle ORM adapter for the [Yii 3](https://www.yiiframework.com)
@@ -54,6 +51,11 @@ The preferred way to install this package is through [Composer](https://getcompo
 ```bash
 composer require cycle/active-record
 ```
+
+[![PHP Version Require](https://poser.pugx.org/cycle/active-record/require/php?style=flat-square)](https://packagist.org/packages/cycle/active-record)
+[![Latest Stable Version](https://img.shields.io/packagist/v/cycle/active-record?&style=flat-square)](https://packagist.org/packages/cycle/active-record)
+[![License](https://img.shields.io/packagist/l/cycle/active-record.svg?style=flat-square)](LICENSE.md)
+[![Total Downloads](https://img.shields.io/packagist/dt/cycle/active-record?&style=flat-square)](https://packagist.org/packages/cycle/active-record)
 
 After package install you need to, optionally, register bootloader / service-provider in your application.
 
@@ -80,15 +82,15 @@ class Kernel extends \Spiral\Framework\Kernel
     {
         return [
             // ...
-        
+
             // ORM
             CycleBridge\SchemaBootloader::class,
             CycleBridge\CycleOrmBootloader::class,
             CycleBridge\AnnotatedBootloader::class,
-            
+
             // ActiveRecord
             ActiveRecordBootloader::class,
-            
+
             // ...
         ];
 }
@@ -98,7 +100,7 @@ For more information about bootloaders, refer to the [Spiral Framework documenta
 
 ### → Laravel
 
-> [!NOTE]
+> [!NOTE]  
 > If you are using Laravel, then you don't need to register service-provider by yourself. It will be registered automatically.
 
 ### → Yii 3
@@ -115,8 +117,8 @@ This package uses [PSR-11](https://www.php-fig.org/psr/psr-11/) compatible `cont
 
 ## 📖 Usage
 
-> [!NOTE]
-> For detailed usage instructions, refer to the [documentation](/docs/README.md).
+> [!NOTE]  
+> For detailed usage instructions, refer to the [documentation][Documentation].
 
 ### → Basic Example
 
@@ -131,24 +133,16 @@ use Cycle\Annotated\Annotation\Entity;
 class User extends ActiveRecord
 {
     #[Column(type: 'primary', typecast: 'int')]
-    private int $id;
+    public ?int $id = null;
 
-    #[Column(type: 'string')]    
-    private string $name;
+    #[Column(type: 'string')]
+    public string $name;
 
-    public function __construct(string $name)
+    public function create(string $name)
     {
-        $this->name = $name;
-    }
-    
-    public function id(): int
-    {
-        return $this->id;
-    }
-    
-    public function name()
-    {
-        return $this->name;
+        return self::make([
+            'name' => $name,
+        ]);
     }
 }
 ```
@@ -156,75 +150,9 @@ class User extends ActiveRecord
 #### Create a new record
 
 ```php
-$user = new User(name: 'John');
-$user->save();
+$user = User::create(name: 'John');
+$user->saveOrFail();
 ```
-
-<br>
-
-## 🧪 Running Tests
-
-### → PHPUnit tests
-
-To run tests, run the following command:
-
-```bash
-make test
-```
-
-### → Mutation tests
-
-To run mutation tests, using [`infection/infection`](https://github.com/infection/infection):
-
-```bash
-make infect
-```
-
-### → Static Analysis
-
-Code quality using Psalm:
-
-```bash
-make lint-psalm
-```
-
-### → Coding Standards Fixing
-
-Fix code using The PHP Coding Standards Fixer (PHP CS Fixer) to follow our standards:
-
-```bash
-make lint-php
-```
-
-### → Lint Yaml files
-
-Lint all yaml files in project:
-
-```bash
-make lint-yaml
-```
-
-### → Lint Markdown files
-
-Lint all yaml files in project:
-
-```bash
-make lint-md
-```
-
-### → Lint GitHub Actions
-
-Lint all yaml files in project:
-
-```bash
-make lint-actions
-```
-
-<br>
-
-## 🔒 Security Policy
-
-This project has a [security policy](.github/SECURITY.md).
 
 <br>
 
@@ -240,27 +168,6 @@ Thank you for considering contributing to the cycle community! We are open to al
 You are more than welcome. Before contributing, kindly check our [contribution guidelines](.github/CONTRIBUTING.md).
 
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg?style=for-the-badge)](https://conventionalcommits.org)
+[![Contributors](https://img.shields.io/github/contributors/cycle/active-record?style=for-the-badge)](https://github.com/cycle/active-record/graphs/contributors)
 
-<br>
-
-## 🫡 Contributors
-
-<a href="https://github.com/cycle/active-record/graphs/contributors">
-    <img align="left" src="https://img.shields.io/github/contributors-anon/cycle/active-record?style=for-the-badge" alt="Contributors Badge"/>
-</a>
-
-<br>
-<br>
-
-## 🌐 Social Links
-
-- **Twitter:** Follow our organization [@SpiralPHP](https://twitter.com/intent/follow?screen_name=spiralphp).
-- **Discord:** Join our community on [Discord](https://discord.gg/SpiralPHP).
-
-<br>
-
-## ⚖️ License
-
-[![Licence](https://img.shields.io/github/license/wayofdev/active-record?style=for-the-badge&color=blue)](./LICENSE.md)
-
-<br>
+[Documentation]: https://cycle-orm.dev/docs/active-record-introduction/
