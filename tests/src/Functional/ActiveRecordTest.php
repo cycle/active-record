@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Cycle\Tests\Functional;
 
 use Cycle\ActiveRecord\ActiveRecord;
-use Cycle\ActiveRecord\Exception\Transaction\TransactionException;
 use Cycle\ActiveRecord\TransactionMode;
 use Cycle\App\Entity\User;
 use Cycle\Database\DatabaseInterface;
 use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\Exception\RunnerException;
 use Cycle\ORM\Select\Repository;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\Attributes\Test;
 
 final class ActiveRecordTest extends DatabaseTestCase
@@ -191,10 +191,9 @@ final class ActiveRecordTest extends DatabaseTestCase
     }
 
     #[Test]
+    #[DoesNotPerformAssertions]
     public function it_runs_grouping_actions_in_grouping_actions(): void
     {
-        self::expectException(TransactionException::class);
-
         ActiveRecord::groupActions(static function () {
             return ActiveRecord::groupActions(static fn() => true);
         }, TransactionMode::Current);
@@ -240,7 +239,7 @@ final class ActiveRecordTest extends DatabaseTestCase
      * @throws \Throwable
      */
     #[Test]
-    public function it_runs_transaction_calling_on_entity_class(): void
+    public function it_runs_transaction_with_group_actions_calling_on_entity_class(): void
     {
         User::transact(static function (DatabaseInterface $dbal) use (&$userOne, &$userTwo): void {
             User::groupActions(static function (EntityManagerInterface $em) use (&$userOne, &$userTwo): void {
@@ -250,6 +249,28 @@ final class ActiveRecordTest extends DatabaseTestCase
                 $userTwo = new User('Bar');
                 $userTwo->saveOrFail();
             }, TransactionMode::Current);
+        });
+
+        self::assertCount(4, User::findAll());
+
+        $savedUserOne = $this->selectEntity(User::class, cleanHeap: true)->wherePK($userOne->id)->fetchOne();
+        self::assertSame($savedUserOne->name, $userOne->name);
+
+        $savedUserTwo = $this->selectEntity(User::class, cleanHeap: true)->wherePK($userTwo->id)->fetchOne();
+        self::assertSame($savedUserTwo->name, $userTwo->name);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    #[Test]
+    public function it_runs_transaction_with_orm_actions(): void
+    {
+        User::transact(static function (DatabaseInterface $dbal) use (&$userOne, &$userTwo): void {
+            $userOne = new User('Foo');
+            $userTwo = new User('Bar');
+            $userOne->save();
+            $userTwo->save();
         });
 
         self::assertCount(4, User::findAll());

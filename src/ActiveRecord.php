@@ -74,10 +74,27 @@ abstract class ActiveRecord
     /**
      * Execute a callback within a single transaction.
      *
-     * All the ActiveRecord write operations within the callback will be registered
-     * using the Entity Manager without being executed until the end of the callback.
+     * Collects all the ActiveRecord operations within the callback and executes them
+     * in a single {@see EntityManagerInterface} at the end of the callback.
      *
-     * @note DBAL operations will not be executed within the transaction. Use {@see self::transact()} for that.
+     * ```
+     *  ActiveRecord::groupActions(static function (EntityManagerInterface $em) use ($user, $post): void {
+     *      $user->saveOrFail();
+     *      $post->saveOrFail();
+     *  });
+     * ```
+     *
+     * @note DBAL operations will not be collected and executed automatically
+     *       within the EM transaction. Use {@see self::transact()} if you need to
+     *       execute QueryBuilder and other DBAL operations within the same transaction.
+     *
+     * @note The difference between this method and {@see self::transact()} is that
+     *       this method opens a new transaction only when all the operations were collected
+     *       and are ready to be executed, while {@see self::transact()} opens a transaction
+     *       immediately when the callback is called.
+     *
+     * @note Nested calls to this method will use separated Unit of Works, but transactions
+     *       will be reused according to the given mode.
      *
      * @template TResult
      * @param callable(EntityManagerInterface): TResult $callback
@@ -101,8 +118,32 @@ abstract class ActiveRecord
      * If an exception is thrown within the callback, the transaction will be rolled back.
      * If the callback returns a value, the transaction will be committed.
      *
+     * All the ORM operations within the callback will be executed in the opened transaction without collecting.
+     * If you need to collect ORM operations and execute them in a separated inner transaction,
+     * use {@see self::groupActions()} within the callback.
+     *
+     * ```
+     *  ActiveRecord::transact(function (DatabaseInterface $db, EntityManagerInterface $em) use ($service): void {
+     *      $user = User::query()->forUpdate()->wherePK(1)->fetchOne();
+     *      $service->process($user);
+     *      // ORM action will be executed right away
+     *      $user->save();
+     *
+     *     // DBAL action
+     *      $db->getDriver()->execute('UPDATE some_table SET some_field = ? WHERE id = ?', ['value', 123]);
+     *
+     *      // EM executes action right away, you don't need to call $em->run()
+     *      $em->persist(new Post('Title', 'Content'));
+     *  });
+     * ```
+     *
+     * @note If you call this method from a child class, the child database connection will be used for
+     *       the transaction. If you call this method from the `ActiveRecord` class, the default database connection
+     *       will be used.
+     *
      * @template TResult
-     * @param callable(DatabaseInterface): TResult $callback
+     * @param callable(DatabaseInterface, EntityManagerInterface): TResult $callback Note that the provided
+     *        Entity Manager doesn't collect operations and executes them right away in the opened transaction.
      * @return TResult
      *
      * @throws TransactionException
@@ -136,9 +177,9 @@ abstract class ActiveRecord
     {
         $transacting = TransactionFacade::getEntityManager();
         if ($transacting === null) {
-            return Facade::getEntityManager()
+            return TransactionFacade::createEntityManager(TransactionMode::Ignore)
                 ->persist($this, $cascade)
-                ->run(false)
+                ->run()
                 ->isSuccess();
         }
 
@@ -148,13 +189,14 @@ abstract class ActiveRecord
 
     /**
      * Persist the entity and throw an exception if an error occurs.
-     * The exception will be thrown if the action is happening not in a {@see self::transcat()} scope.
+     * If the method is called inside a {@see self::groupActions()}, the exception WILL NOT be thrown.
      *
      * @throws \Throwable
      */
     final public function saveOrFail(bool $cascade = true): void
     {
-        TransactionFacade::getEntityManager()?->persist($this, $cascade) ?? Facade::getEntityManager()
+        TransactionFacade::getEntityManager()
+            ?->persist($this, $cascade) ?? TransactionFacade::createEntityManager(TransactionMode::Ignore)
             ->persist($this, $cascade)
             ->run();
     }
@@ -166,9 +208,9 @@ abstract class ActiveRecord
     {
         $transacting = TransactionFacade::getEntityManager();
         if ($transacting === null) {
-            return Facade::getEntityManager()
+            return TransactionFacade::createEntityManager(TransactionMode::Ignore)
                 ->delete($this, $cascade)
-                ->run(false)
+                ->run()
                 ->isSuccess();
         }
 
@@ -178,13 +220,14 @@ abstract class ActiveRecord
 
     /**
      * Delete the entity and throw an exception if an error occurs.
-     * The exception will be thrown if the action is happening not in a {@see self::transcat()} scope.
+     * If the method is called inside a {@see self::groupActions()}, the exception WILL NOT be thrown.
      *
      * @throws \Throwable
      */
     final public function deleteOrFail(bool $cascade = true): void
     {
-        TransactionFacade::getEntityManager()?->delete($this, $cascade) ?? Facade::getEntityManager()
+        TransactionFacade::getEntityManager()
+            ?->delete($this, $cascade) ?? TransactionFacade::createEntityManager(TransactionMode::Ignore)
             ->delete($this, $cascade)
             ->run();
     }
