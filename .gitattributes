@@ -2,5 +2,6 @@
 /tests   export-ignore
 /*.xml   export-ignore
 /*.yml   export-ignore
+/*.yaml   export-ignore
 /*.lock  export-ignore
 /*.dist  export-ignore
