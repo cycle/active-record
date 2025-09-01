@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1](https://github.com/cycle/active-record/compare/v1.0.0...v1.0.1) (2025-09-01)
+
+
+### Documentation
+
+* add advanced usage examples for query builder and batch operations ([da273da](https://github.com/cycle/active-record/commit/da273da0c7095f83b35e02c397a0d3c98cb3d7e1))
+* refresh readme ([99519ac](https://github.com/cycle/active-record/commit/99519acc41eae118c6ff9b784a683abd44f4e2d2))
+
 ## [0.8.0](https://github.com/cycle/active-record/compare/v0.7.0...v0.8.0) (2024-07-24)
 
 
