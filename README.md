@@ -156,6 +156,46 @@ $user = User::create(name: 'John');
 $user->saveOrFail();
 ```
 
+### → Advanced Usage Examples
+
+#### Query Builder Integration
+
+```php
+// Find users with advanced Cycle ORM filtering
+$user = User::query()
+    ->where('name', 'John')
+    ->where('active', true)
+    ->fetchOne();
+
+// Find by primary key
+$user = User::findByPK(42);
+
+// Find with conditions
+$users = User::findAll(['status' => 'active']);
+$user = User::findOne(['email' => 'john@example.com']);
+```
+
+#### Batch Operations and Transactions
+
+```php
+$user1 = new User('Alice');
+$user2 = new User('Bob');
+
+// Group multiple operations in a single transaction
+ActiveRecord::groupActions(function (EntityManagerInterface $em) use ($user1, $user2) {
+    $user1->save();
+    $user2->save();
+    // Both users saved in one transaction
+}, TransactionMode::OpenNew);
+
+// Advanced transaction handling
+User::transact(function (DatabaseInterface $db, EntityManagerInterface $em) {
+    $user = User::query()->forUpdate()->fetchOne(['name' => 'Charlie']);
+    $user->name = 'Charles';
+    $user->save();
+});
+```
+
 <br>
 
 ## 🙌 Want to Contribute?
