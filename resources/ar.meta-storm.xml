@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<meta-storm xmlns="meta-storm">
+    <definitions>
+        <!-- AR::findAll -->
+        <classMethod class="\Cycle\ActiveRecord\ActiveRecord" method="findAll" argument="0" targetInArray="key" targetValue="false">
+            <properties xpath="$variable">
+                <filters>
+                    <hasAttribute class="\Cycle\Annotated\Annotation\Column"/>
+                </filters>
+            </properties>
+        </classMethod>
+        <!-- AR::make -->
+        <classMethod class="\Cycle\ActiveRecord\ActiveRecord" method="make" argument="0" targetInArray="key" targetValue="false">
+            <properties xpath="$variable">
+                <filters>
+                    <hasAttribute class="\Cycle\Annotated\Annotation\Column"/>
+                </filters>
+            </properties>
+        </classMethod>
+        <!-- AR::findByPK -->
+        <classMethod class="\Cycle\ActiveRecord\ActiveRecord" method="findByPK" argument="0" targetInArray="key" targetValue="false">
+            <properties xpath="$variable">
+                <filters>
+                    <hasAttribute class="\Cycle\Annotated\Annotation\Column"/>
+                </filters>
+            </properties>
+        </classMethod>
+        <!-- AR::findOne -->
+        <classMethod class="\Cycle\ActiveRecord\ActiveRecord" method="findOne" argument="0" targetInArray="key" targetValue="false">
+            <properties xpath="$variable">
+                <filters>
+                    <hasAttribute class="\Cycle\Annotated\Annotation\Column"/>
+                </filters>
+            </properties>
+        </classMethod>
+    </definitions>
+</meta-storm>
