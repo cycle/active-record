@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/cycle/active-record/compare/v1.0.1...v1.0.2) (2025-09-11)
+
+
+### Bug Fixes
+
+* improve role resolving in AR::transact method ([#41](https://github.com/cycle/active-record/issues/41)) ([00bfb68](https://github.com/cycle/active-record/commit/00bfb68a2d49c6ae2e84b33d0ceb3439e84eac10))
+
 ## [1.0.1](https://github.com/cycle/active-record/compare/v1.0.0...v1.0.1) (2025-09-01)
 
 
