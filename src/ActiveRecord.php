@@ -152,7 +152,10 @@ abstract class ActiveRecord
     final public static function transact(
         callable $callback,
     ): mixed {
-        return TransactionFacade::transact($callback, static::class === self::class ? null : static::class);
+        return TransactionFacade::transact(
+            $callback,
+            self::getOrm()->getSchema()->defines(static::class) ? static::class : null,
+        );
     }
 
     /**
