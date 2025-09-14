@@ -51,6 +51,8 @@ class ActiveRepository
      *
      * @note Limit of 1 will be added to the query.
      *
+     * @param string|int|non-empty-list<string|int>|non-empty-array<non-empty-string, string|int>|object $id
+     *
      * @return TEntity|null
      */
     public function findByPK(mixed $id): ?object

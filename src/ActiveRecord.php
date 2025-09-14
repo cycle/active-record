@@ -12,6 +12,7 @@ use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\Exception\RunnerException;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\RepositoryInterface;
+use Cycle\ORM\SchemaInterface;
 
 /**
  * A base class for entities that are managed by the ORM.
@@ -19,6 +20,16 @@ use Cycle\ORM\RepositoryInterface;
  */
 abstract class ActiveRecord
 {
+    /**
+     * Get the table name associated with the entity.
+     *
+     * @return non-empty-string
+     */
+    final public static function tableName(): string
+    {
+        return static::getOrm()->getSchema()->define(static::class, SchemaInterface::TABLE);
+    }
+
     /**
      * Create a new entity instance with the given data.
      * It is preferable to use this method instead of the constructor because
@@ -142,8 +153,14 @@ abstract class ActiveRecord
      *       will be used.
      *
      * @template TResult
-     * @param callable(DatabaseInterface, EntityManagerInterface): TResult $callback Note that the provided
-     *        Entity Manager doesn't collect operations and executes them right away in the opened transaction.
+     * @param callable(): TResult $callback A function that may accept parameters of the following types in any order:
+     *   - {@see DatabaseInterface}
+     *   - {@see EntityManagerInterface}
+     *   - {@see ORMInterface}
+     *   - {@see SchemaInterface}
+     * @psalm-param callable(...): TResult $callback
+     * @note that the provided Entity Manager doesn't collect operations and executes them right away in the opened transaction.
+     *
      * @return TResult
      *
      * @throws TransactionException
