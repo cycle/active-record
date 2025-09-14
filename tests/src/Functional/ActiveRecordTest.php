@@ -12,6 +12,9 @@ use Cycle\App\Entity\User;
 use Cycle\Database\DatabaseInterface;
 use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\Exception\RunnerException;
+use Cycle\ORM\Heap\HeapInterface;
+use Cycle\ORM\ORMInterface;
+use Cycle\ORM\SchemaInterface;
 use Cycle\ORM\Select\Repository;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\Attributes\Test;
@@ -281,6 +284,20 @@ final class ActiveRecordTest extends DatabaseTestCase
 
         $savedUserFour = $this->selectEntity(User::class, cleanHeap: true)->wherePK($user4->id)->fetchOne();
         self::assertSame($savedUserFour->name, $user4->name);
+    }
+
+    #[Test]
+    public function transact_method_resolves_parameters(): void
+    {
+        $ars = User::transact(static fn(
+            SchemaInterface $schema,
+            EntityManagerInterface $em,
+            ORMInterface $orm,
+            HeapInterface $heap,
+            DatabaseInterface $dbal,
+        ): array => \func_get_args());
+
+        self::assertIsArray($ars);
     }
 
     #[Test]

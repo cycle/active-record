@@ -153,8 +153,14 @@ abstract class ActiveRecord
      *       will be used.
      *
      * @template TResult
-     * @param callable(DatabaseInterface, EntityManagerInterface): TResult $callback Note that the provided
-     *        Entity Manager doesn't collect operations and executes them right away in the opened transaction.
+     * @param callable(): TResult $callback A function that may accept parameters of the following types in any order:
+     *   - {@see DatabaseInterface}
+     *   - {@see EntityManagerInterface}
+     *   - {@see ORMInterface}
+     *   - {@see SchemaInterface}
+     * @psalm-param callable(...): TResult $callback
+     * @note that the provided Entity Manager doesn't collect operations and executes them right away in the opened transaction.
+     *
      * @return TResult
      *
      * @throws TransactionException

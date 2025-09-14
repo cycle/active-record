@@ -12,6 +12,7 @@ use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\Service\SourceProviderInterface;
 use Cycle\ORM\Transaction\Runner;
 use Cycle\ORM\Transaction\UnitOfWork;
+use Yiisoft\Injector\Injector;
 
 /**
  * @internal
@@ -65,7 +66,8 @@ final class TransactionFacade
 
     /**
      * @template TResult
-     * @param callable(DatabaseInterface, EntityManagerInterface): TResult $callback
+     * @param callable(): TResult $callback
+     * @psalm-param callable(...): TResult $callback
      * @param class-string|null $entity If null, the default database will be used.
      * @return TResult
      *
@@ -86,12 +88,13 @@ final class TransactionFacade
         return $dbal->transaction(static function (DatabaseInterface $db) use ($callback): mixed {
             $previous = self::$em;
             try {
+                $orm = Facade::getOrm();
                 self::$em = $em = new EntityManager(
-                    static fn(): UnitOfWork => new UnitOfWork(Facade::getOrm(), Runner::outerTransaction(strict: true)),
+                    static fn(): UnitOfWork => new UnitOfWork($orm, Runner::outerTransaction(strict: true)),
                     autoExecute: true,
                 );
 
-                return $callback($db, $em);
+                return (new Injector())->invoke($callback, [$db, $em, $orm, $orm->getHeap(), $orm->getSchema()]);
             } finally {
                 self::$em = $previous;
             }
