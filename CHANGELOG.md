@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/cycle/active-record/compare/v1.1.0...v1.1.1) (2025-09-14)
+
+
+### Bug Fixes
+
+* Improve type for `::getRepository()` method ([#45](https://github.com/cycle/active-record/issues/45)) ([671aa27](https://github.com/cycle/active-record/commit/671aa27ad1b28d7ff5bb59e8d7d3b9d40e3cc5ad))
+
 ## [1.1.0](https://github.com/cycle/active-record/compare/v1.0.2...v1.1.0) (2025-09-14)
 
 
