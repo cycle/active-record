@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0](https://github.com/cycle/active-record/compare/v1.0.2...v1.1.0) (2025-09-14)
+
+
+### Features
+
+* add `ActiveRecord::tableName()` method ([5431a10](https://github.com/cycle/active-record/commit/5431a1009e7d0243f6f0a8976e3417f30cc2f006))
+* autowire callable in `transact()` method ([182d387](https://github.com/cycle/active-record/commit/182d387e1844d740bb42908defb234856d14a228))
+
 ## [1.0.2](https://github.com/cycle/active-record/compare/v1.0.1...v1.0.2) (2025-09-11)
 
 
