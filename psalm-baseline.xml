@@ -4,9 +4,9 @@
     <MixedArgument>
       <code><![CDATA[$primaryKey]]></code>
     </MixedArgument>
-    <PossiblyUnusedReturnValue>
-      <code><![CDATA[TResult]]></code>
-    </PossiblyUnusedReturnValue>
+    <MixedReturnStatement>
+      <code><![CDATA[static::getOrm()->getSchema()->define(static::class, SchemaInterface::TABLE)]]></code>
+    </MixedReturnStatement>
   </file>
   <file src="src/Facade.php">
     <MixedReturnStatement>
@@ -19,8 +19,8 @@
     </InvalidThrow>
   </file>
   <file src="src/Repository/ActiveRepository.php">
-    <MixedArgument>
+    <ArgumentTypeCoercion>
       <code><![CDATA[$id]]></code>
-    </MixedArgument>
+    </ArgumentTypeCoercion>
   </file>
 </files>
