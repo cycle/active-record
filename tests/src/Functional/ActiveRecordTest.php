@@ -288,4 +288,11 @@ final class ActiveRecordTest extends DatabaseTestCase
     {
         self::assertInstanceOf(ActiveQuery::class, Identity::query());
     }
+
+    #[Test]
+    public function get_table_name(): void
+    {
+        self::assertSame('user', User::tableName());
+        self::assertSame('user_identity', Identity::tableName());
+    }
 }
