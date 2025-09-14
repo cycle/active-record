@@ -67,8 +67,8 @@ final class TransactionFacade
     /**
      * @template TResult
      * @param callable(): TResult $callback
-     * @psalm-param callable(...): TResult $callback
      * @param class-string|null $entity If null, the default database will be used.
+     * @psalm-param callable(...): TResult $callback
      * @return TResult
      *
      * @throws TransactionException
