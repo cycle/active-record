@@ -185,6 +185,11 @@ abstract class ActiveRecord
         return new ActiveQuery(static::class);
     }
 
+    /**
+     * Get the repository for the entity.
+     *
+     * @return RepositoryInterface<static>
+     */
     public static function getRepository(): RepositoryInterface
     {
         return self::getOrm()->getRepository(static::class);
