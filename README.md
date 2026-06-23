@@ -34,7 +34,7 @@ This allows for more straightforward and rapid development cycles, particularly 
 
 <br>
 
-## 🚩 Prerequisites
+## Prerequisites
 
 Before you begin, ensure your development environment meets the following requirements:
 
@@ -46,7 +46,7 @@ Before you begin, ensure your development environment meets the following requir
 
 <br>
 
-## 💿 Installation
+## Installation
 
 The preferred way to install this package is through [Composer](https://getcomposer.org/).
 
@@ -117,7 +117,7 @@ This package uses [PSR-11](https://www.php-fig.org/psr/psr-11/) compatible `cont
 \Cycle\ActiveRecord\Facade::setContainer($container);
 ```
 
-## 📖 Usage
+## Usage
 
 > [!NOTE]  
 > For detailed usage instructions, refer to the [documentation][Documentation].
@@ -198,7 +198,7 @@ User::transact(function (DatabaseInterface $db, EntityManagerInterface $em) {
 
 <br>
 
-## 🙌 Want to Contribute?
+## Want to Contribute?
 
 Thank you for considering contributing to the cycle community! We are open to all kinds of contributions. If you want to:
 
