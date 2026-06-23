@@ -6,7 +6,6 @@ namespace Cycle\Tests\Functional;
 
 use Cycle\ActiveRecord\ActiveRecord;
 use Cycle\ActiveRecord\Query\ActiveQuery;
-use Cycle\ActiveRecord\TransactionMode;
 use Cycle\App\Entity\Identity;
 use Cycle\App\Entity\User;
 use Cycle\Database\DatabaseInterface;
@@ -16,6 +15,7 @@ use Cycle\ORM\Heap\HeapInterface;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\SchemaInterface;
 use Cycle\ORM\Select\Repository;
+use Cycle\Transaction\TransactionMode;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -284,6 +284,23 @@ final class ActiveRecordTest extends DatabaseTestCase
 
         $savedUserFour = $this->selectEntity(User::class, cleanHeap: true)->wherePK($user4->id)->fetchOne();
         self::assertSame($savedUserFour->name, $user4->name);
+    }
+
+    #[Test]
+    public function it_executes_orm_actions_immediately_within_transact(): void
+    {
+        User::transact(static function (DatabaseInterface $dbal, EntityManagerInterface $em): void {
+            $countBefore = $dbal->table('user')->count();
+
+            (new User('Zoe'))->save();
+            $em->persist(new User('Max'));
+
+            // FlushMode::OnWrite flushes each operation right away, so both rows are
+            // already visible within the open transaction (before it is committed).
+            self::assertSame($countBefore + 2, $dbal->table('user')->count());
+        });
+
+        self::assertCount(4, User::findAll());
     }
 
     #[Test]

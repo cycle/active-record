@@ -29,6 +29,15 @@ return [
         'default' => [
             'driver' => env('DB_DRIVER', 'memory'),
         ],
+        /*
+         * A secondary database that is always backed by an in-memory SQLite
+         * connection, regardless of the DB_DRIVER used for the `default` one.
+         * It is used to exercise multi-database scenarios (e.g. cross-database
+         * transaction guards) in a driver-agnostic way.
+         */
+        'secondary' => [
+            'driver' => 'secondary',
+        ],
     ],
 
     /*
@@ -44,6 +53,11 @@ return [
             options: ['logQueryParameters' => true, 'logInterpolatedQueries' => true],
         ),
         'sqlite' => new Config\SQLiteDriverConfig(
+            queryCache: true,
+            options: ['logQueryParameters' => true, 'logInterpolatedQueries' => true],
+        ),
+        'secondary' => new Config\SQLiteDriverConfig(
+            connection: new Config\SQLite\MemoryConnectionConfig(),
             queryCache: true,
             options: ['logQueryParameters' => true, 'logInterpolatedQueries' => true],
         ),

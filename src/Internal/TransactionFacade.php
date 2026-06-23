@@ -6,12 +6,14 @@ namespace Cycle\ActiveRecord\Internal;
 
 use Cycle\ActiveRecord\Exception\Transaction\TransactionException;
 use Cycle\ActiveRecord\Facade;
-use Cycle\ActiveRecord\TransactionMode;
 use Cycle\Database\DatabaseInterface;
+use Cycle\ORM\EntityManager as ORMEntityManager;
 use Cycle\ORM\EntityManagerInterface;
-use Cycle\ORM\Service\SourceProviderInterface;
 use Cycle\ORM\Transaction\Runner;
-use Cycle\ORM\Transaction\UnitOfWork;
+use Cycle\Transaction\FlushMode;
+use Cycle\Transaction\Internal\TransactionImpl;
+use Cycle\Transaction\Transaction;
+use Cycle\Transaction\TransactionMode;
 use Yiisoft\Injector\Injector;
 
 /**
@@ -19,7 +21,7 @@ use Yiisoft\Injector\Injector;
  */
 final class TransactionFacade
 {
-    private static ?EntityManager $em = null;
+    private static ?EntityManagerInterface $em = null;
 
     public static function getEntityManager(): ?EntityManagerInterface
     {
@@ -27,13 +29,30 @@ final class TransactionFacade
     }
 
     /**
-     * Create a new EntityManager with its own UnitOfWork and Transaction Runner.
+     * Persist a single entity in its own transaction, executing it immediately.
+     *
+     * @throws TransactionException
+     * @throws \Throwable
      */
-    public static function createEntityManager(
-        TransactionMode $mode = TransactionMode::OpenNew,
-    ): EntityManagerInterface {
-        return new EntityManager(
-            static fn(): UnitOfWork => new UnitOfWork(Facade::getOrm(), self::getRunner($mode)),
+    public static function persist(object $entity, bool $cascade = true): void
+    {
+        self::getTransaction()->transact(
+            static fn(EntityManagerInterface $em): EntityManagerInterface => $em->persist($entity, $cascade),
+            self::resolveDatabaseName($entity),
+        );
+    }
+
+    /**
+     * Delete a single entity in its own transaction, executing it immediately.
+     *
+     * @throws TransactionException
+     * @throws \Throwable
+     */
+    public static function delete(object $entity, bool $cascade = true): void
+    {
+        self::getTransaction()->transact(
+            static fn(EntityManagerInterface $em): EntityManagerInterface => $em->delete($entity, $cascade),
+            self::resolveDatabaseName($entity),
         );
     }
 
@@ -53,11 +72,9 @@ final class TransactionFacade
 
         $previous = self::$em;
         try {
-            self::$em = new EntityManager(
-                static fn(): UnitOfWork => new UnitOfWork(Facade::getOrm(), $runner),
-            );
-            $result = $callback(self::$em);
-            self::$em->run();
+            self::$em = $em = new ORMEntityManager(Facade::getOrm());
+            $result = $callback($em);
+            $em->run(runner: $runner);
             return $result;
         } finally {
             self::$em = $previous;
@@ -78,27 +95,43 @@ final class TransactionFacade
         callable $callback,
         ?string $entity,
     ): mixed {
-        $dbal = $entity === null
-            ? Facade::getDatabaseManager()->database()
-            : Facade::getOrm()
-                ->getService(SourceProviderInterface::class)
-                ->getSource($entity)
-                ->getDatabase();
+        return self::getTransaction()->transact(
+            callback: static function (EntityManagerInterface $em, DatabaseInterface $db) use ($callback): mixed {
+                $previous = self::$em;
+                self::$em = $em;
+                try {
+                    $orm = Facade::getOrm();
+                    return (new Injector())->invoke($callback, [$db, $em, $orm, $orm->getHeap(), $orm->getSchema()]);
+                } finally {
+                    self::$em = $previous;
+                }
+            },
+            source: $entity,
+            emMode: TransactionMode::Current,
+            flush: FlushMode::OnWrite,
+        );
+    }
 
-        return $dbal->transaction(static function (DatabaseInterface $db) use ($callback): mixed {
-            $previous = self::$em;
-            try {
-                $orm = Facade::getOrm();
-                self::$em = $em = new EntityManager(
-                    static fn(): UnitOfWork => new UnitOfWork($orm, Runner::outerTransaction(strict: true)),
-                    autoExecute: true,
-                );
+    /**
+     * Build a Transaction service backed by the ActiveRecord ORM and database provider.
+     */
+    private static function getTransaction(): Transaction
+    {
+        return new TransactionImpl(Facade::getOrm(), Facade::getDatabaseManager());
+    }
 
-                return (new Injector())->invoke($callback, [$db, $em, $orm, $orm->getHeap(), $orm->getSchema()]);
-            } finally {
-                self::$em = $previous;
-            }
-        });
+    /**
+     * Resolve the database name the given entity is stored in.
+     *
+     * Resolving from the instance (not its class) handles ORM proxies correctly.
+     *
+     * @return non-empty-string
+     */
+    private static function resolveDatabaseName(object $entity): string
+    {
+        $orm = Facade::getOrm();
+
+        return $orm->getSource($orm->resolveRole($entity))->getDatabase()->getName();
     }
 
     /**
