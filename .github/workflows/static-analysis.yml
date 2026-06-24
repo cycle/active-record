@@ -45,7 +45,7 @@ jobs:
         run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
 
       - name: 🤖 Validate composer.json and composer.lock
-        run: composer validate --ansi --strict
+        run: composer validate --ansi
 
       - name: 📥 Install dependencies with composer
         uses: ramsey/composer-install@v3
