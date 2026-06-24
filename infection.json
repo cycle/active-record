@@ -12,6 +12,9 @@
     "source": {
         "directories": [
             "src"
+        ],
+        "excludes": [
+            "Bridge"
         ]
     },
     "testFramework": "testo",

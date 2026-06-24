@@ -105,6 +105,18 @@ abstract class ActiveRecordTestCase extends BaseTestCase
         Assert::same($stored->name, $user->name);
     }
 
+    public function savesEntityWithinTransaction(): void
+    {
+        ActiveRecord::transact(static function (EntityManagerInterface $em) use (&$user): void {
+            $user = new User('Alex');
+            Assert::true($user->save());
+        });
+
+        Assert::count(User::findAll(), 3);
+        $stored = $this->selectEntity(User::class, cleanHeap: true)->wherePK($user->id)->fetchOne();
+        Assert::same($stored->name, $user->name);
+    }
+
     public function saveOrFailThrowsOnUniqueViolation(): never
     {
         // `name` carries a unique index; persisting a duplicate must surface the driver error.
@@ -188,6 +200,24 @@ abstract class ActiveRecordTestCase extends BaseTestCase
         }, TransactionMode::Current);
     }
 
+    #[WithoutTransaction]
+    public function groupActionsInIgnoreModeOutsideTransactionSucceeds(): void
+    {
+        // When outside a transaction, TransactionMode::Ignore (with strict: false) should work fine.
+        // The runner will ignore the lack of a transaction.
+        // If mutated to strict: true, this would throw RunnerException because there's no active transaction.
+        $result = ActiveRecord::groupActions(static function () use (&$created, &$deleted): string {
+            // Create and immediately delete an entity to generate commands without leaving side effects
+            $user = new User('TestUser');
+            $created = $user->save(); // Must succeed without transaction
+            $deleted = $user->delete(); // Must also succeed
+            return 'success';
+        }, TransactionMode::Ignore);
+        Assert::same($result, 'success');
+        Assert::true($created);
+        Assert::true($deleted);
+    }
+
     public function deletesMultipleEntitiesInGroupActions(): void
     {
         Assert::count(User::findAll(), 2);
@@ -196,8 +226,8 @@ abstract class ActiveRecordTestCase extends BaseTestCase
         $userTwo = User::findByPK(2);
 
         ActiveRecord::groupActions(static function () use ($userOne, $userTwo): void {
-            $userOne->delete();
-            $userTwo->delete();
+            Assert::true($userOne->delete());
+            Assert::true($userTwo->delete());
         });
 
         Assert::count(User::findAll(), 0);
@@ -235,6 +265,58 @@ abstract class ActiveRecordTestCase extends BaseTestCase
 
         $storedTwo = $this->selectEntity(User::class, cleanHeap: true)->wherePK($userTwo->id)->fetchOne();
         Assert::same($storedTwo->name, $userTwo->name);
+    }
+
+    public function groupActionsRestoresEntityManagerAfterCompletion(): void
+    {
+        $emBefore = TransactionFacade::getEntityManager();
+
+        ActiveRecord::groupActions(static function (): void {
+            (new User('Foo'))->saveOrFail();
+        });
+
+        $emAfter = TransactionFacade::getEntityManager();
+
+        Assert::same($emBefore, $emAfter);
+    }
+
+    public function groupActionsRestoresEntityManagerAfterException(): void
+    {
+        $emBefore = TransactionFacade::getEntityManager();
+
+        try {
+            ActiveRecord::groupActions(static function (): never {
+                throw new \RuntimeException('test error');
+            });
+        } catch (\RuntimeException) {
+            // Expected
+        }
+
+        $emAfter = TransactionFacade::getEntityManager();
+
+        Assert::same($emBefore, $emAfter);
+    }
+
+    public function nestedGroupActionsRestoreContextProperly(): void
+    {
+        $emBefore = TransactionFacade::getEntityManager();
+
+        ActiveRecord::groupActions(static function () use ($emBefore): void {
+            $emInOuter = TransactionFacade::getEntityManager();
+            Assert::notSame($emInOuter, $emBefore);
+
+            ActiveRecord::groupActions(static function () use ($emInOuter): void {
+                $emInInner = TransactionFacade::getEntityManager();
+                Assert::notSame($emInInner, $emInOuter);
+                (new User('Bar'))->saveOrFail();
+            }, TransactionMode::Current);
+
+            $emAfterInner = TransactionFacade::getEntityManager();
+            Assert::same($emAfterInner, $emInOuter);
+        });
+
+        $emAfter = TransactionFacade::getEntityManager();
+        Assert::same($emAfter, $emBefore);
     }
 
     public function transactExecutesOrmActions(): void
@@ -284,6 +366,23 @@ abstract class ActiveRecordTestCase extends BaseTestCase
         ): array => \func_get_args());
 
         Assert::array($args)->hasCount(5);
+    }
+
+    public function transactRestoresEntityManagerAfterException(): void
+    {
+        $emBefore = TransactionFacade::getEntityManager();
+
+        try {
+            User::transact(static function (): never {
+                throw new \RuntimeException('test error');
+            });
+        } catch (\RuntimeException) {
+            // Expected
+        }
+
+        $emAfter = TransactionFacade::getEntityManager();
+
+        Assert::same($emBefore, $emAfter);
     }
 
     // endregion
