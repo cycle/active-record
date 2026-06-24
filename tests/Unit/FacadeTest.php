@@ -110,8 +110,8 @@ final class FacadeTest
     {
         $dbal = ConnectionPool::createManager(new SQLiteDriverConfig(connection: new MemoryConnectionConfig()));
 
-        $container = new ConfigurableContainer(static function(string $id) use ($dbal) {
-            return match($id) {
+        $container = new ConfigurableContainer(static function (string $id) use ($dbal) {
+            return match ($id) {
                 DatabaseManager::class => $dbal,
                 default => throw new ServiceNotFoundException("No `$id` service."),
             };
