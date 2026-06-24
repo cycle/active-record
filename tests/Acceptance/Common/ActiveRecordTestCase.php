@@ -125,6 +125,17 @@ abstract class ActiveRecordTestCase extends BaseTestCase
         (new User('John'))->saveOrFail();
     }
 
+    public function saveOrFailPersistsEntityOutsideTransaction(): void
+    {
+        $user = new User('Alex');
+
+        $user->saveOrFail();
+
+        Assert::count(User::findAll(), 3);
+        $stored = $this->selectEntity(User::class, cleanHeap: true)->wherePK($user->id)->fetchOne();
+        Assert::same($stored->name, $user->name);
+    }
+
     public function deletesEntity(): void
     {
         $user = User::findByPK(1);
@@ -140,6 +151,18 @@ abstract class ActiveRecordTestCase extends BaseTestCase
         Assert::instanceOf($user, User::class);
 
         $user->deleteOrFail();
+        Assert::count(User::findAll(), 1);
+    }
+
+    public function deleteOrFailWithinGroupActions(): void
+    {
+        $user = User::findByPK(1);
+        Assert::instanceOf($user, User::class);
+
+        ActiveRecord::groupActions(static function () use ($user): void {
+            $user->deleteOrFail();
+        });
+
         Assert::count(User::findAll(), 1);
     }
 
