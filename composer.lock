@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1be421fe989c796cd3666dea81723b95",
+    "content-hash": "35285e4b71367b219aadf0e8e508a288",
     "packages": [
         {
             "name": "cycle/database",
-            "version": "2.20.0",
+            "version": "2.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cycle/database.git",
-                "reference": "33cf5d583c8d5875ad02ab8d58e31875ef5fea90"
+                "reference": "14c2bc280aa0973a9339866b21d8c03931a5c18e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cycle/database/zipball/33cf5d583c8d5875ad02ab8d58e31875ef5fea90",
-                "reference": "33cf5d583c8d5875ad02ab8d58e31875ef5fea90",
+                "url": "https://api.github.com/repos/cycle/database/zipball/14c2bc280aa0973a9339866b21d8c03931a5c18e",
+                "reference": "14c2bc280aa0973a9339866b21d8c03931a5c18e",
                 "shasum": ""
             },
             "require": {
@@ -98,7 +98,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-11T11:15:19+00:00"
+            "time": "2026-06-24T09:51:31+00:00"
         },
         {
             "name": "cycle/orm",
@@ -195,16 +195,16 @@
         },
         {
             "name": "cycle/transaction",
-            "version": "1.x-dev",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cycle/transaction.git",
-                "reference": "39d93aef8f31b50120e1ffb3eb4eed5cff37c8d0"
+                "reference": "6f851f3a864d878f351ccb0d3f86d767cdec96f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cycle/transaction/zipball/39d93aef8f31b50120e1ffb3eb4eed5cff37c8d0",
-                "reference": "39d93aef8f31b50120e1ffb3eb4eed5cff37c8d0",
+                "url": "https://api.github.com/repos/cycle/transaction/zipball/6f851f3a864d878f351ccb0d3f86d767cdec96f2",
+                "reference": "6f851f3a864d878f351ccb0d3f86d767cdec96f2",
                 "shasum": ""
             },
             "require": {
@@ -214,13 +214,12 @@
             },
             "require-dev": {
                 "cycle/skills": "1.x-dev",
-                "infection/infection": "^0.33.3",
+                "infection/infection": ">=0.32.6",
                 "llm/skills": "^1.7",
                 "testo/bridge-infection": "^0.1.6",
-                "testo/testo": "^0.10.24",
+                "testo/testo": "^0.10.26",
                 "vimeo/psalm": "^7"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -240,9 +239,9 @@
             "description": "Transaction abstraction for Cycle ORM: run DBAL operations and a scoped Entity Manager within a single database transaction.",
             "support": {
                 "issues": "https://github.com/cycle/transaction/issues",
-                "source": "https://github.com/cycle/transaction/tree/1.x"
+                "source": "https://github.com/cycle/transaction/tree/1.0.0"
             },
-            "time": "2026-06-24T07:12:58+00:00"
+            "time": "2026-06-24T11:21:31+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -10446,7 +10445,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "cycle/transaction": 20,
         "vimeo/psalm": 10
     },
     "prefer-stable": true,

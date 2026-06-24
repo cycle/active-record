@@ -38,7 +38,7 @@
         "php": ">=8.2",
         "cycle/database": "^2.20",
         "cycle/orm": "^2.18",
-        "cycle/transaction": "1.x-dev",
+        "cycle/transaction": "^1",
         "psr/container": "^2.0.2",
         "yiisoft/injector": "^1.2.1"
     },

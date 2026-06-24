@@ -4,7 +4,7 @@
     "logs": {
         "text": "runtime/infection/infection-log.txt",
         "stryker": {
-            "report": "master"
+            "report": "1.x"
         }
     },
     "minCoveredMsi": 50,
