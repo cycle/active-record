@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cycle\ActiveRecord;
 
-use Cycle\ActiveRecord\Exception\Transaction\TransactionException;
 use Cycle\ActiveRecord\Internal\TransactionFacade;
 use Cycle\ActiveRecord\Query\ActiveQuery;
 use Cycle\Database\DatabaseInterface;
@@ -13,6 +12,7 @@ use Cycle\ORM\Exception\RunnerException;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\RepositoryInterface;
 use Cycle\ORM\SchemaInterface;
+use Cycle\Transaction\Exception\TransactionException;
 use Cycle\Transaction\TransactionMode;
 
 /**

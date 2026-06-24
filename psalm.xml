@@ -22,6 +22,6 @@
         </ignoreFiles>
     </projectFiles>
     <stubs>
-        <file name="stubs/TransactionMode.php"/>
+        <file name="resources/stubs.php"/>
     </stubs>
 </psalm>

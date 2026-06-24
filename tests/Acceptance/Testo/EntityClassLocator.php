@@ -22,7 +22,7 @@ use Spiral\Tokenizer\ClassesInterface;
 final class EntityClassLocator implements ClassesInterface
 {
     /** @var list<class-string> */
-    private array $classes;
+    private readonly array $classes;
 
     /**
      * @param class-string ...$classes

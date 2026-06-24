@@ -21,16 +21,12 @@ final class ConfigurableContainer implements ContainerInterface
     /** @var list<string> Identifiers that were requested through {@see self::get()}, in order. */
     public array $requested = [];
 
-    /** @var \Closure(string): mixed */
-    private \Closure $resolver;
-
     /**
      * @param \Closure(string): mixed $resolver Produces the value (or throws) for a requested id.
      */
-    public function __construct(\Closure $resolver)
-    {
-        $this->resolver = $resolver;
-    }
+    public function __construct(
+        private readonly \Closure $resolver,
+    ) {}
 
     /**
      * Build a container that always resolves the given identifier to the provided service.

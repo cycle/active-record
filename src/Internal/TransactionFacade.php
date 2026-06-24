@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cycle\ActiveRecord\Internal;
 
-use Cycle\ActiveRecord\Exception\Transaction\TransactionException;
+use Cycle\Transaction\Exception\TransactionException;
 use Cycle\ActiveRecord\Facade;
 use Cycle\Database\DatabaseInterface;
 use Cycle\ORM\EntityManager as ORMEntityManager;
@@ -23,6 +23,9 @@ final class TransactionFacade
 {
     private static ?EntityManagerInterface $em = null;
 
+    /**
+     * @psalm-external-mutation-free
+     */
     public static function getEntityManager(): ?EntityManagerInterface
     {
         return self::$em;
@@ -90,6 +93,8 @@ final class TransactionFacade
      *
      * @throws TransactionException
      * @throws \Throwable
+     *
+     * @psalm-suppress MixedReturnStatement The transaction callback yields a value Psalm cannot narrow.
      */
     public static function transact(
         callable $callback,

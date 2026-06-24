@@ -21,6 +21,8 @@ use Cycle\ORM\Select;
  *
  * @see self::forUpdate() as an example of immutabile method.
  *
+ * @api
+ *
  * @template-covariant TEntity of object
  */
 class ActiveRepository
@@ -65,6 +67,8 @@ class ActiveRepository
      *
      * @note Limit of 1 will be added to the query.
      *
+     * @param array<non-empty-string, non-empty-string> $orderBy
+     *
      * @return TEntity|null
      */
     public function findOne(array $scope = [], array $orderBy = []): ?object
@@ -73,6 +77,8 @@ class ActiveRepository
     }
 
     /**
+     * @param array<non-empty-string, non-empty-string> $orderBy
+     *
      * @return iterable<TEntity>
      */
     public function findAll(array $scope = [], array $orderBy = []): iterable
@@ -104,7 +110,7 @@ class ActiveRepository
      *       If you need to modify the default selector, consider using a constructor or {@see self::initSelect()}.
      *
      * @return Select<TEntity>
-     * @mutation-free
+     * @psalm-mutation-free
      */
     final public function select(): Select
     {
