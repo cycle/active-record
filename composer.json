@@ -43,22 +43,16 @@
         "yiisoft/injector": "^1.2.1"
     },
     "require-dev": {
-        "buggregator/trap": "^1.16",
         "cycle/entity-behavior": "^1.7.1",
-        "ergebnis/phpunit-slow-test-detector": "^2.24",
-        "fakerphp/faker": "^1.24.1",
-        "illuminate/support": "^10.48 || ^11.51",
-        "mockery/mockery": "^1.6.12",
-        "phpunit/phpunit": "^10.5.63",
-        "rector/rector": "^1.2.10",
+        "illuminate/support": "^12 || ^13",
         "infection/infection": ">=0.32.6",
+        "llm/skills": "^1.8",
+        "rector/rector": "^1.2.10",
         "spiral/boot": "^3.12",
         "spiral/code-style": "^2.3.1",
         "spiral/cycle-bridge": "^2.13",
-        "spiral/framework": "^3.17",
-        "spiral/logger": "^3.12",
-        "spiral/testing": "^2.9",
-        "ta-tikoma/phpunit-architecture-test": "^0.8.7",
+        "testo/bridge-infection": "^0.1.6",
+        "testo/testo": "^0.10.26",
         "vimeo/psalm": "^7@beta"
     },
     "suggest": {
@@ -68,12 +62,6 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/cycle/transaction.git"
-        }
-    ],
     "autoload": {
         "psr-4": {
             "Cycle\\ActiveRecord\\": "src/"
@@ -81,14 +69,14 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Cycle\\App\\": "tests/app/",
-            "Cycle\\Tests\\": "tests/src/"
+            "Cycle\\Tests\\": "tests/"
         }
     },
     "config": {
         "allow-plugins": {
             "ergebnis/composer-normalize": true,
             "infection/extension-installer": true,
+            "llm/skills": true,
             "spiral/composer-publish-plugin": true
         },
         "audit": {
@@ -133,37 +121,17 @@
         "psalm:ci": "psalm --output-format=github --shepherd --show-info=false --stats --threads=4",
         "refactor": "rector process --config=rector.php",
         "refactor:ci": "rector process --config=rector.php --dry-run --ansi",
-        "test": [
-            "@putenv XDEBUG_MODE=coverage",
-            "phpunit --color=always"
-        ],
-        "test:arch": [
-            "@putenv XDEBUG_MODE=coverage",
-            "phpunit --color=always"
-        ],
+        "test": "testo",
+        "test:unit": "testo --suite=Unit",
+        "test:acceptance": "testo --suite=Acceptance",
+        "test:no-driver": "testo --group=!driver",
+        "test:sqlite": "testo --suite=Acceptance --group=driver-sqlite",
+        "test:mysql": "testo --suite=Acceptance --group=driver-mysql",
+        "test:pgsql": "testo --suite=Acceptance --group=driver-pgsql",
+        "test:sqlserver": "testo --suite=Acceptance --group=driver-sqlserver",
         "test:cc": [
             "@putenv XDEBUG_MODE=coverage",
-            "phpunit --coverage-clover=runtime/phpunit/logs/clover.xml --color=always"
-        ],
-        "test:mysql": [
-            "@putenv XDEBUG_MODE=coverage",
-            "@putenv DB_DRIVER=mysql",
-            "phpunit --color=always"
-        ],
-        "test:pgsql": [
-            "@putenv XDEBUG_MODE=coverage",
-            "@putenv DB_DRIVER=pgsql",
-            "phpunit --color=always"
-        ],
-        "test:sqlite": [
-            "@putenv XDEBUG_MODE=coverage",
-            "@putenv DB_DRIVER=sqlite",
-            "phpunit --color=always"
-        ],
-        "test:sqlserver": [
-            "@putenv XDEBUG_MODE=coverage",
-            "@putenv DB_DRIVER=sqlserver",
-            "phpunit --color=always"
+            "testo --coverage"
         ]
     }
 }

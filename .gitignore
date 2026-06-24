@@ -3,7 +3,6 @@
 !/.well-known/
 !/.pre-commit-config.yaml
 /runtime/
-/tests/runtime/
 /vendor/
 .env
 composer.lock
