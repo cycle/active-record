@@ -114,7 +114,7 @@
         "infect:ci": [
             "Composer\\Config::disableProcessTimeout",
             "@putenv XDEBUG_MODE=coverage",
-            "infection --ansi --logger-github --ignore-msi-with-no-mutations --only-covered"
+            "infection --ansi --configuration=infection.json --logger-github --threads=max --show-mutations=0 --min-msi=50"
         ],
         "psalm": "psalm --show-info=true",
         "psalm:baseline": "psalm --set-baseline=psalm-baseline.xml",
