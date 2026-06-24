@@ -13,11 +13,6 @@
       <code><![CDATA[self::$container->get($class)]]></code>
     </MixedReturnStatement>
   </file>
-  <file src="src/Internal/EntityManager.php">
-    <InvalidThrow>
-      <code><![CDATA[throw $state->getLastError()]]></code>
-    </InvalidThrow>
-  </file>
   <file src="src/Repository/ActiveRepository.php">
     <ArgumentTypeCoercion>
       <code><![CDATA[$id]]></code>

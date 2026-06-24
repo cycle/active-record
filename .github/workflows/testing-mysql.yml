@@ -1,18 +1,65 @@
 ---
 
 on:  # yamllint disable-line rule:truthy
+  pull_request: null
   push:
     branches:
+      - master
+      - main
       - '*.*'
       - '*.*.*'
-  pull_request: null
 
-name: MSSQL
+name: 🛢️ MySQL
 
 jobs:
-  phpunit:
-    uses: cycle/gh-actions/.github/workflows/db-mssql.yml@master
-    with:
-      php: '["8.1","8.2","8.3","8.4"]'
+  acceptance:
+    name: MySQL · PHP ${{ matrix.php-version }}
+    timeout-minutes: 8
+    runs-on: ubuntu-latest
+    concurrency:
+      cancel-in-progress: true
+      group: mysql-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ matrix.php-version }}
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - '8.2'
+          - '8.3'
+          - '8.4'
+    steps:
+      - name: 📦 Check out the codebase
+        uses: actions/checkout@v5
 
-...
+      - name: 🛠️ Start MySQL
+        run: docker compose -f tests/docker-compose.yml up -d cycle-mysql
+
+      - name: 🛠️ Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, pdo, pdo_sqlite, pdo_mysql
+          ini-values: error_reporting=E_ALL
+
+      - name: 📥 Install dependencies with composer
+        uses: ramsey/composer-install@v3
+        with:
+          dependency-versions: highest
+
+      - name: ⏳ Wait for MySQL
+        run: |
+          for i in $(seq 1 30); do
+            if docker exec $(docker ps -qf "ancestor=mysql:8.0.37") mysqladmin ping -h 127.0.0.1 --silent; then
+              echo "MySQL is up"; exit 0
+            fi
+            echo "Waiting for MySQL... ($i)"; sleep 2
+          done
+          echo "MySQL did not become ready in time"; exit 1
+
+      - name: 🧪 Run acceptance tests (MySQL)
+        env:
+          DB_HOSTNAME: 127.0.0.1
+          DB_PORT: 13306
+          DB_USER: root
+          DB_PASSWORD: 'YourStrong!Passw0rd'
+          DB_DATABASE: spiral
+        run: composer test:mysql

@@ -13,12 +13,15 @@ use Psr\Container\NotFoundExceptionInterface;
 /**
  * @internal
  */
-class Facade
+final class Facade
 {
     private static ?ORMInterface $orm = null;
     private static ?ContainerInterface $container = null;
     private static ?DatabaseManager $dbal = null;
 
+    /**
+     * @psalm-external-mutation-free
+     */
     public static function setContainer(ContainerInterface $container): void
     {
         self::$container = $container;
@@ -40,6 +43,9 @@ class Facade
         return self::$dbal ??= self::getFromContainer(DatabaseManager::class);
     }
 
+    /**
+     * @psalm-external-mutation-free
+     */
     public static function reset(): void
     {
         self::$orm = null;

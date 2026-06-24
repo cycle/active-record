@@ -9,6 +9,8 @@ use Cycle\ORM\ORMInterface;
 use Cycle\ORM\Select;
 
 /**
+ * @api
+ *
  * @template-covariant TEntity of object
  *
  * @extends Select<TEntity>

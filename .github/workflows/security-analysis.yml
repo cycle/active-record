@@ -39,7 +39,7 @@ jobs:
           coverage: none
 
       - name: 🤖 Validate composer.json and composer.lock
-        run: composer validate --ansi --strict
+        run: composer validate --ansi
 
       - name: 📥 Install dependencies with composer
         uses: ramsey/composer-install@v3

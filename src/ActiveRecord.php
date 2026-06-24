@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cycle\ActiveRecord;
 
-use Cycle\ActiveRecord\Exception\Transaction\TransactionException;
 use Cycle\ActiveRecord\Internal\TransactionFacade;
 use Cycle\ActiveRecord\Query\ActiveQuery;
 use Cycle\Database\DatabaseInterface;
@@ -13,6 +12,8 @@ use Cycle\ORM\Exception\RunnerException;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\RepositoryInterface;
 use Cycle\ORM\SchemaInterface;
+use Cycle\Transaction\Exception\TransactionException;
+use Cycle\Transaction\TransactionMode;
 
 /**
  * A base class for entities that are managed by the ORM.
@@ -202,10 +203,8 @@ abstract class ActiveRecord
     {
         $transacting = TransactionFacade::getEntityManager();
         if ($transacting === null) {
-            return TransactionFacade::createEntityManager(TransactionMode::Ignore)
-                ->persist($this, $cascade)
-                ->run()
-                ->isSuccess();
+            TransactionFacade::persist($this, $cascade);
+            return true;
         }
 
         $transacting->persist($this, $cascade);
@@ -220,10 +219,13 @@ abstract class ActiveRecord
      */
     final public function saveOrFail(bool $cascade = true): void
     {
-        TransactionFacade::getEntityManager()
-            ?->persist($this, $cascade) ?? TransactionFacade::createEntityManager(TransactionMode::Ignore)
-            ->persist($this, $cascade)
-            ->run();
+        $transacting = TransactionFacade::getEntityManager();
+        if ($transacting === null) {
+            TransactionFacade::persist($this, $cascade);
+            return;
+        }
+
+        $transacting->persist($this, $cascade);
     }
 
     /**
@@ -233,10 +235,8 @@ abstract class ActiveRecord
     {
         $transacting = TransactionFacade::getEntityManager();
         if ($transacting === null) {
-            return TransactionFacade::createEntityManager(TransactionMode::Ignore)
-                ->delete($this, $cascade)
-                ->run()
-                ->isSuccess();
+            TransactionFacade::delete($this, $cascade);
+            return true;
         }
 
         $transacting->delete($this, $cascade);
@@ -251,10 +251,13 @@ abstract class ActiveRecord
      */
     final public function deleteOrFail(bool $cascade = true): void
     {
-        TransactionFacade::getEntityManager()
-            ?->delete($this, $cascade) ?? TransactionFacade::createEntityManager(TransactionMode::Ignore)
-            ->delete($this, $cascade)
-            ->run();
+        $transacting = TransactionFacade::getEntityManager();
+        if ($transacting === null) {
+            TransactionFacade::delete($this, $cascade);
+            return;
+        }
+
+        $transacting->delete($this, $cascade);
     }
 
     private static function getOrm(): ORMInterface

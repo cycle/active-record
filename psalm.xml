@@ -11,9 +11,6 @@
     findUnusedVariablesAndParams="true"
     strictBinaryOperands="true"
 >
-    <plugins>
-        <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
-    </plugins>
     <issueHandlers>
         <PossiblyUnusedMethod errorLevel="suppress" />
         <UnusedClass errorLevel="suppress" />
@@ -24,4 +21,7 @@
             <directory name="vendor/"/>
         </ignoreFiles>
     </projectFiles>
+    <stubs>
+        <file name="resources/stubs.php"/>
+    </stubs>
 </psalm>

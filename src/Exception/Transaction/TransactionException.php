@@ -4,6 +4,5 @@ declare(strict_types=1);
 
 namespace Cycle\ActiveRecord\Exception\Transaction;
 
-use Cycle\ActiveRecord\Exception\ActiveRecordException;
-
-class TransactionException extends \RuntimeException implements ActiveRecordException {}
+/** @psalm-suppress DeprecatedClass The alias intentionally targets the deprecated class name. */
+\class_alias(\Cycle\Transaction\Exception\TransactionException::class, TransactionException::class);

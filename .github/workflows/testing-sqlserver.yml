@@ -1,18 +1,76 @@
 ---
 
 on:  # yamllint disable-line rule:truthy
+  pull_request: null
   push:
     branches:
+      - master
+      - main
       - '*.*'
       - '*.*.*'
-  pull_request: null
 
-name: MSSQL
+name: 📀 SQLServer
 
 jobs:
-  phpunit:
-    uses: cycle/gh-actions/.github/workflows/db-mssql.yml@master
-    with:
-      php: '["8.1","8.2","8.3","8.4"]'
+  acceptance:
+    name: SQLServer · PHP ${{ matrix.php-version }}
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    concurrency:
+      cancel-in-progress: true
+      group: mssql-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ matrix.php-version }}
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - '8.2'
+          - '8.3'
+          - '8.4'
+    steps:
+      - name: 📦 Check out the codebase
+        uses: actions/checkout@v5
 
-...
+      - name: 🛠️ Install ODBC driver
+        run: |
+          curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list \
+            | sudo tee /etc/apt/sources.list.d/mssql-release.list
+          sudo apt-get update
+          sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18
+
+      - name: 🛠️ Start SQLServer
+        run: docker compose -f tests/docker-compose.yml up -d cycle-sqlserver
+
+      - name: 🛠️ Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          tools: pecl
+          extensions: mbstring, pdo, pdo_sqlite, sqlsrv, pdo_sqlsrv
+          ini-values: error_reporting=E_ALL
+
+      - name: 📥 Install dependencies with composer
+        uses: ramsey/composer-install@v3
+        with:
+          dependency-versions: highest
+
+      - name: ⏳ Wait for SQLServer
+        run: |
+          container=$(docker ps -qf "ancestor=mcr.microsoft.com/mssql/server:2019-latest")
+          for i in $(seq 1 30); do
+            # The image ships sqlcmd under mssql-tools18 (v18 encrypts by default, so it needs -C);
+            # fall back to the legacy mssql-tools path for older images.
+            if docker exec "$container" bash -c \
+              "/opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P 'YourStrong!Passw0rd' -C -Q 'SELECT 1' -b \
+               || /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'YourStrong!Passw0rd' -Q 'SELECT 1' -b"; then
+              echo "SQLServer is up"; exit 0
+            fi
+            echo "Waiting for SQLServer... ($i)"; sleep 3
+          done
+          echo "SQLServer did not become ready in time"; exit 1
+
+      - name: 🧪 Run acceptance tests (SQLServer)
+        env:
+          DB_HOSTNAME: 127.0.0.1
+          DB_PORT: 11433
+          DB_PASSWORD: 'YourStrong!Passw0rd'
+        run: composer test:sqlserver
