@@ -19,7 +19,7 @@ use Cycle\ORM\Select;
  * - Not a QueryBuilder entity, so it can follow a contract with a limited set of methods.
  * - Organically used in the DI container
  *
- * @see self::forUpdate() as an example of immutabile method.
+ * @see self::forUpdate() as an example of immutable method.
  *
  * @api
  *
