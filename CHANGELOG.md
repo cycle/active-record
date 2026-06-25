@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.2.0](https://github.com/cycle/active-record/compare/v1.1.1...v1.2.0) (2026-06-25)
+
+
+### Features
+
+* integrate cycle/transaction and drop the custom EntityManager ([#47](https://github.com/cycle/active-record/issues/47)) ([c200a1e](https://github.com/cycle/active-record/commit/c200a1ee12ad3f4672b8d633ebcd647ebc815e40))
+
+
+### Documentation
+
+* **repository:** fix typo in ActiveRepository docblock ([585ea16](https://github.com/cycle/active-record/commit/585ea1697f0fd1065c7c3be3694057b4b84b1222))
+
+
+### Code Refactoring
+
+* Integrate `TransactionBootloader` ([ac6b017](https://github.com/cycle/active-record/commit/ac6b0171409953e3ae926992e0dcb5f9acceae75))
+
 ## [1.1.1](https://github.com/cycle/active-record/compare/v1.1.0...v1.1.1) (2025-09-14)
 
 
