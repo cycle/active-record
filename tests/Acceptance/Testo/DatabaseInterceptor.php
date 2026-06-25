@@ -8,6 +8,8 @@ use Cycle\ActiveRecord\Facade;
 use Cycle\Database\DatabaseManager;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\SchemaInterface;
+use Cycle\Transaction\Internal\TransactionImpl;
+use Cycle\Transaction\Transaction;
 use Internal\Container\Container;
 use Testo\Common\Messenger;
 use Testo\Core\Context\CaseInfo;
@@ -85,6 +87,7 @@ final readonly class DatabaseInterceptor implements TestCaseRunInterceptor, Test
 
             $scope->set($orm, ORMInterface::class);
             $scope->set($manager);
+            $scope->set(new TransactionImpl($orm, $manager), Transaction::class);
 
             Facade::setContainer($scope);
 

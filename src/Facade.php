@@ -7,6 +7,7 @@ namespace Cycle\ActiveRecord;
 use Cycle\ActiveRecord\Exception\ConfigurationException;
 use Cycle\Database\DatabaseManager;
 use Cycle\ORM\ORMInterface;
+use Cycle\Transaction\Transaction;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -18,6 +19,7 @@ final class Facade
     private static ?ORMInterface $orm = null;
     private static ?ContainerInterface $container = null;
     private static ?DatabaseManager $dbal = null;
+    private static ?Transaction $transaction = null;
 
     /**
      * @psalm-external-mutation-free
@@ -44,12 +46,21 @@ final class Facade
     }
 
     /**
+     * @throws ConfigurationException
+     */
+    public static function getTransaction(): Transaction
+    {
+        return self::$transaction ??= self::getFromContainer(Transaction::class);
+    }
+
+    /**
      * @psalm-external-mutation-free
      */
     public static function reset(): void
     {
         self::$orm = null;
         self::$dbal = null;
+        self::$transaction = null;
         self::$container = null;
     }
 

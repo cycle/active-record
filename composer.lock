@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "35285e4b71367b219aadf0e8e508a288",
+    "content-hash": "3753614cfbfae7158d8c828981ea092c",
     "packages": [
         {
             "name": "cycle/database",
@@ -195,16 +195,16 @@
         },
         {
             "name": "cycle/transaction",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cycle/transaction.git",
-                "reference": "6f851f3a864d878f351ccb0d3f86d767cdec96f2"
+                "reference": "5363c358f7f4bbba6ef36fecb91f0ddf19ac3e5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cycle/transaction/zipball/6f851f3a864d878f351ccb0d3f86d767cdec96f2",
-                "reference": "6f851f3a864d878f351ccb0d3f86d767cdec96f2",
+                "url": "https://api.github.com/repos/cycle/transaction/zipball/5363c358f7f4bbba6ef36fecb91f0ddf19ac3e5f",
+                "reference": "5363c358f7f4bbba6ef36fecb91f0ddf19ac3e5f",
                 "shasum": ""
             },
             "require": {
@@ -213,14 +213,40 @@
                 "php": ">=8.2"
             },
             "require-dev": {
+                "buggregator/trap": "^1.16",
                 "cycle/skills": "1.x-dev",
+                "illuminate/container": "^11 || ^12 || ^13",
+                "illuminate/support": "^11 || ^12 || ^13",
                 "infection/infection": ">=0.32.6",
                 "llm/skills": "^1.7",
+                "spiral/boot": "^3.12",
+                "spiral/cycle-bridge": "^2.13",
                 "testo/bridge-infection": "^0.1.6",
                 "testo/testo": "^0.10.26",
-                "vimeo/psalm": "^7"
+                "vimeo/psalm": "^7",
+                "yiisoft/di": "^1.3"
+            },
+            "suggest": {
+                "spiral/cycle-bridge": "Provides integration with the Spiral Framework via TransactionBootloader",
+                "wayofdev/laravel-cycle-orm-adapter": "Provides Cycle ORM integration for Laravel (TransactionServiceProvider)",
+                "yiisoft/yii-cycle": "Provides Cycle ORM integration for the Yii Framework"
             },
             "type": "library",
+            "extra": {
+                "spiral": {
+                    "bootloaders": [
+                        "Cycle\\Transaction\\Bridge\\Spiral\\Bootloader\\TransactionBootloader"
+                    ]
+                },
+                "laravel": {
+                    "providers": [
+                        "Cycle\\Transaction\\Bridge\\Laravel\\Providers\\TransactionServiceProvider"
+                    ]
+                },
+                "config-plugin": {
+                    "di": "src/Bridge/Yii3/config/di.php"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Cycle\\Transaction\\": "src/"
@@ -239,9 +265,9 @@
             "description": "Transaction abstraction for Cycle ORM: run DBAL operations and a scoped Entity Manager within a single database transaction.",
             "support": {
                 "issues": "https://github.com/cycle/transaction/issues",
-                "source": "https://github.com/cycle/transaction/tree/1.0.0"
+                "source": "https://github.com/cycle/transaction/tree/1.1.0"
             },
-            "time": "2026-06-24T11:21:31+00:00"
+            "time": "2026-06-25T11:06:46+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -4795,16 +4821,16 @@
         },
         {
             "name": "php-cs-fixer/shim",
-            "version": "v3.95.10",
+            "version": "v3.95.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/shim.git",
-                "reference": "898f61c5365778a2a705546965dd56ef5b7742f7"
+                "reference": "87c59806c6ec3da0c554ca154a14c7e970fe5f26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/shim/zipball/898f61c5365778a2a705546965dd56ef5b7742f7",
-                "reference": "898f61c5365778a2a705546965dd56ef5b7742f7",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/shim/zipball/87c59806c6ec3da0c554ca154a14c7e970fe5f26",
+                "reference": "87c59806c6ec3da0c554ca154a14c7e970fe5f26",
                 "shasum": ""
             },
             "require": {
@@ -4841,9 +4867,9 @@
             "description": "A tool to automatically fix PHP code style",
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/shim/issues",
-                "source": "https://github.com/PHP-CS-Fixer/shim/tree/v3.95.10"
+                "source": "https://github.com/PHP-CS-Fixer/shim/tree/v3.95.11"
             },
-            "time": "2026-06-19T14:45:50+00:00"
+            "time": "2026-06-25T14:17:29+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -9874,16 +9900,16 @@
         },
         {
             "name": "testo/testo",
-            "version": "0.10.27",
+            "version": "0.10.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-testo/testo.git",
-                "reference": "7704aff9f34f86fa7c470425ae4cdb10299c3c1c"
+                "reference": "9d01f22add1cbd95efa3974e89291af74b7db5f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-testo/testo/zipball/7704aff9f34f86fa7c470425ae4cdb10299c3c1c",
-                "reference": "7704aff9f34f86fa7c470425ae4cdb10299c3c1c",
+                "url": "https://api.github.com/repos/php-testo/testo/zipball/9d01f22add1cbd95efa3974e89291af74b7db5f1",
+                "reference": "9d01f22add1cbd95efa3974e89291af74b7db5f1",
                 "shasum": ""
             },
             "require": {
@@ -9969,7 +9995,7 @@
                     "type": "boosty"
                 }
             ],
-            "time": "2026-06-24T07:41:24+00:00"
+            "time": "2026-06-24T19:41:17+00:00"
         },
         {
             "name": "thecodingmachine/safe",

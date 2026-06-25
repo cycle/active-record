@@ -11,6 +11,7 @@ use Cycle\Database\Config\SQLiteDriverConfig;
 use Cycle\ORM\ORMInterface;
 use Cycle\Tests\Acceptance\Testo\OrmEnvironment;
 use Cycle\Tests\Unit\Stub\Container\ConfigurableContainer;
+use Cycle\Transaction\Bridge\Spiral\Bootloader\TransactionBootloader;
 use Spiral\Cycle\Bootloader\CycleOrmBootloader;
 use Testo\Assert;
 use Testo\Codecov\Covers;
@@ -49,5 +50,10 @@ final class ActiveRecordBootloaderTest
     public function itDependsOnCycleOrmBootloader(): void
     {
         Assert::contains((new ActiveRecordBootloader())->defineDependencies(), CycleOrmBootloader::class);
+    }
+
+    public function itDependsOnTransactionBootloader(): void
+    {
+        Assert::contains((new ActiveRecordBootloader())->defineDependencies(), TransactionBootloader::class);
     }
 }

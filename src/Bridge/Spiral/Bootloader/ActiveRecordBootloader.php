@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cycle\ActiveRecord\Bridge\Spiral\Bootloader;
 
 use Cycle\ActiveRecord\Facade;
+use Cycle\Transaction\Bridge\Spiral\Bootloader\TransactionBootloader;
 use Psr\Container\ContainerInterface;
 use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Cycle\Bootloader\CycleOrmBootloader;
@@ -19,6 +20,7 @@ final class ActiveRecordBootloader extends Bootloader
     {
         return [
             CycleOrmBootloader::class,
+            TransactionBootloader::class,
         ];
     }
 
