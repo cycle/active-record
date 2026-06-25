@@ -19,10 +19,10 @@ use Spiral\Tokenizer\ClassesInterface;
  *
  * @internal
  */
-final class EntityClassLocator implements ClassesInterface
+final readonly class EntityClassLocator implements ClassesInterface
 {
     /** @var list<class-string> */
-    private readonly array $classes;
+    private array $classes;
 
     /**
      * @param class-string ...$classes

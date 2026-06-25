@@ -9,6 +9,7 @@ use Cycle\Database\DatabaseManager;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\SchemaInterface;
 use Internal\Container\Container;
+use Testo\Common\Messenger;
 use Testo\Core\Context\CaseInfo;
 use Testo\Core\Context\CaseResult;
 use Testo\Core\Context\TestInfo;
@@ -50,6 +51,7 @@ final readonly class DatabaseInterceptor implements TestCaseRunInterceptor, Test
         private Container $container,
         private ConnectionPool $pool,
         private SchemaInterface $schema,
+        private Messenger $messenger,
     ) {}
 
     #[\Override]
@@ -64,6 +66,7 @@ final readonly class DatabaseInterceptor implements TestCaseRunInterceptor, Test
         }
 
         $manager = $this->pool->manager($driver);
+        $manager->setLogger($this->messenger->channel('Query.sql'));
 
         try {
             $manager->database('default')->getDriver()->connect();

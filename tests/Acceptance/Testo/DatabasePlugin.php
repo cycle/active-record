@@ -7,6 +7,7 @@ namespace Cycle\Tests\Acceptance\Testo;
 use Cycle\ORM\Schema;
 use Cycle\ORM\SchemaInterface;
 use Internal\Container\Container;
+use Testo\Common\Messenger;
 use Testo\Common\PluginConfigurator;
 use Testo\Pipeline\InterceptorCollector;
 
@@ -42,9 +43,10 @@ final readonly class DatabasePlugin implements PluginConfigurator
 
         $pool = new ConnectionPool();
         $container->set($pool);
+        $messenger = $container->get(Messenger::class);
 
         $container
             ->get(InterceptorCollector::class)
-            ->addInterceptor(new DatabaseInterceptor($container, $pool, $schema));
+            ->addInterceptor(new DatabaseInterceptor($container, $pool, $schema, $messenger));
     }
 }
