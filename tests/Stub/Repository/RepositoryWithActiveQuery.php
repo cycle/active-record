@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Cycle\Tests\Stub\Repository;
 
 use Cycle\ActiveRecord\Repository\ActiveRepository;
-use Cycle\Tests\Stub\Entity\User;
-use Cycle\Tests\Stub\Query\UserQuery;
 use Cycle\Database\Injection\Fragment;
 use Cycle\ORM\ORMInterface;
+use Cycle\Tests\Stub\Entity\User;
+use Cycle\Tests\Stub\Query\UserQuery;
 
 /**
  * @method UserQuery select()

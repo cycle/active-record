@@ -11,9 +11,6 @@ use Cycle\Annotated\Locator\TokenizerEntityLocator;
 use Cycle\Annotated\MergeColumns;
 use Cycle\Annotated\MergeIndexes;
 use Cycle\Annotated\TableInheritance;
-use Cycle\Tests\Stub\Entity\Identity;
-use Cycle\Tests\Stub\Entity\Post;
-use Cycle\Tests\Stub\Entity\User;
 use Cycle\Database\Config\DriverConfig;
 use Cycle\Database\Database;
 use Cycle\Database\DatabaseManager;
@@ -36,6 +33,9 @@ use Cycle\Schema\Generator\ResetTables;
 use Cycle\Schema\Generator\SyncTables;
 use Cycle\Schema\Generator\ValidateEntities;
 use Cycle\Schema\Registry;
+use Cycle\Tests\Stub\Entity\Identity;
+use Cycle\Tests\Stub\Entity\Post;
+use Cycle\Tests\Stub\Entity\User;
 use Psr\Container\ContainerInterface;
 
 /**

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Cycle\ActiveRecord\Internal;
 
-use Cycle\Transaction\Exception\TransactionException;
 use Cycle\ActiveRecord\Facade;
 use Cycle\Database\DatabaseInterface;
 use Cycle\ORM\EntityManager as ORMEntityManager;
 use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\Transaction\Runner;
+use Cycle\Transaction\Exception\TransactionException;
 use Cycle\Transaction\FlushMode;
 use Cycle\Transaction\TransactionMode;
 use Yiisoft\Injector\Injector;
