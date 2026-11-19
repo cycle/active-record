@@ -1,15 +1,15 @@
 ---
 
 on:  # yamllint disable-line rule:truthy
-  pull_request: null
+  pull_request:
   push:
     branches:
-      - master
-      - main
-      - '*.*'
-      - '*.*.*'
+      - 1.x
 
 name: 🛢️ MySQL
+
+permissions:
+  contents: read
 
 jobs:
   acceptance:
@@ -17,7 +17,7 @@ jobs:
     timeout-minutes: 8
     runs-on: ubuntu-latest
     concurrency:
-      cancel-in-progress: true
+      cancel-in-progress: ${{ github.event_name == 'pull_request' }}
       group: mysql-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ matrix.php-version }}
     strategy:
       fail-fast: false
@@ -26,9 +26,12 @@ jobs:
           - '8.2'
           - '8.3'
           - '8.4'
+          - '8.5'
     steps:
       - name: 📦 Check out the codebase
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: 🛠️ Start MySQL
         run: docker compose -f tests/docker-compose.yml up -d cycle-mysql

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="7.11.0@9e0d0f88bc0a4233357a9aeb4b32da060644e196">
+  <file src="src/ActiveRecord.php">
+    <MixedArgument>
+      <code><![CDATA[$primaryKey]]></code>
+    </MixedArgument>
+    <MixedReturnStatement>
+      <code><![CDATA[static::getOrm()->getSchema()->define(static::class, SchemaInterface::TABLE)]]></code>
+    </MixedReturnStatement>
+    <UnusedMethod>
+      <code><![CDATA[getOrm]]></code>
+    </UnusedMethod>
+  </file>
+  <file src="src/Facade.php">
+    <ImpureStaticProperty>
+      <code><![CDATA[self::$container]]></code>
+      <code><![CDATA[self::$container]]></code>
+      <code><![CDATA[self::$dbal]]></code>
+      <code><![CDATA[self::$orm]]></code>
+      <code><![CDATA[self::$transaction]]></code>
+    </ImpureStaticProperty>
+    <MixedReturnStatement>
+      <code><![CDATA[self::$container->get($class)]]></code>
+    </MixedReturnStatement>
+    <UnusedProperty>
+      <code><![CDATA[$dbal]]></code>
+      <code><![CDATA[$transaction]]></code>
+    </UnusedProperty>
+  </file>
+  <file src="src/Internal/TransactionFacade.php">
+    <ImpureStaticProperty>
+      <code><![CDATA[self::$em]]></code>
+    </ImpureStaticProperty>
+    <UnhandledMatchCondition>
+      <code><![CDATA[$mode]]></code>
+    </UnhandledMatchCondition>
+  </file>
+  <file src="src/Repository/ActiveRepository.php">
+    <ArgumentTypeCoercion>
+      <code><![CDATA[$id]]></code>
+    </ArgumentTypeCoercion>
+    <ImpureMethodCall>
+      <code><![CDATA[clone $this->select]]></code>
+    </ImpureMethodCall>
+    <InvalidReturnStatement>
+      <code><![CDATA[$repository]]></code>
+    </InvalidReturnStatement>
+    <InvalidTemplateParam>
+      <code><![CDATA[Select<TEntity>]]></code>
+    </InvalidTemplateParam>
+  </file>
+</files>

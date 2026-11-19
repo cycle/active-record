@@ -2,22 +2,23 @@
 
 on:  # yamllint disable-line rule:truthy
   pull_request:
-    branches:
-      - '*.*'
     paths:
       - 'src/**'
       - 'tests/**'
-      - '.php-cs-fixer.dist.php'
+      - 'vendor-bin/code-style/.php-cs-fixer.dist.php'
       - 'rector.php'
 
 name: ⚙️ Refactoring
+
+permissions:
+  contents: read
 
 jobs:
   refactoring:
     timeout-minutes: 4
     runs-on: ${{ matrix.os }}
     concurrency:
-      cancel-in-progress: true
+      cancel-in-progress: ${{ github.event_name == 'pull_request' }}
       group: refactoring-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
     strategy:
       fail-fast: true
@@ -27,10 +28,12 @@ jobs:
         php-version:
           - '8.2'
         dependencies:
-          - locked
+          - highest
     steps:
       - name: 📦 Check out the codebase
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: 🛠️ Setup PHP
         uses: shivammathur/setup-php@v2
@@ -40,8 +43,8 @@ jobs:
           ini-values: error_reporting=E_ALL
           coverage: none
 
-      - name: 🤖 Validate composer.json and composer.lock
-        run: composer validate --ansi
+      - name: 🤖 Validate composer.json
+        run: composer validate --ansi --strict
 
       - name: 📥 Install dependencies with composer
         uses: ramsey/composer-install@v3

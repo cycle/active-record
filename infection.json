@@ -1,5 +1,5 @@
 {
-    "$schema": "vendor/infection/infection/resources/schema.json",
+    "$schema": "vendor-bin/infection/vendor/infection/infection/resources/schema.json",
     "ignoreMsiWithNoMutations": true,
     "logs": {
         "text": "runtime/infection/infection-log.txt",

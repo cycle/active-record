@@ -21,7 +21,7 @@ repos:
       - id: php-cs-fixer
         name: PHP CS Fixer
         description: Lint files using PHP CS Fixer
-        entry: vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose --diff
+        entry: composer cs:fix
         language: system
         types: [php]
         exclude: ^vendor/

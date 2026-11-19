@@ -36,24 +36,24 @@
     ],
     "require": {
         "php": ">=8.2",
-        "cycle/database": "^2.20",
+        "cycle/database": "^2.23",
         "cycle/orm": "^2.18",
         "cycle/transaction": "^1.1",
         "psr/container": "^2.0.2",
-        "yiisoft/injector": "^1.2.1"
+        "yiisoft/injector": "^1.2.2"
     },
     "require-dev": {
+        "bamarni/composer-bin-plugin": "^1.9",
+        "buggregator/trap": "^1.20",
         "cycle/entity-behavior": "^1.7.1",
         "illuminate/support": "^12 || ^13",
-        "infection/infection": ">=0.32.6",
-        "llm/skills": "^1.8",
-        "rector/rector": "^1.2.10",
-        "spiral/boot": "^3.12",
-        "spiral/code-style": "^2.3.1",
+        "llm/skills": "^1.20",
+        "rector/rector": "^2.8",
+        "roxblnfk/unpoly": "^1.8",
+        "spiral/boot": "^3.18",
         "spiral/cycle-bridge": "^2.13",
-        "testo/bridge-infection": "^0.1.6",
-        "testo/testo": "^0.10.26",
-        "vimeo/psalm": "^7@beta"
+        "testo/bridge-infection": "^0.1.9",
+        "testo/testo": "^0.10.60"
     },
     "suggest": {
         "spiral/cycle-bridge": "Provides integration with Spiral Framework",
@@ -74,8 +74,8 @@
     },
     "config": {
         "allow-plugins": {
+            "bamarni/composer-bin-plugin": true,
             "ergebnis/composer-normalize": true,
-            "infection/extension-installer": true,
             "llm/skills": true,
             "spiral/composer-publish-plugin": true
         },
@@ -85,6 +85,11 @@
         "sort-packages": true
     },
     "extra": {
+        "bamarni-bin": {
+            "bin-links": true,
+            "forward-command": false,
+            "target-directory": "vendor-bin"
+        },
         "composer-normalize": {
             "indent-size": 4,
             "indent-style": "space"
@@ -104,8 +109,8 @@
         }
     },
     "scripts": {
-        "cs:diff": "php-cs-fixer fix --dry-run -v --diff",
-        "cs:fix": "php-cs-fixer fix -v",
+        "cs:diff": "php-cs-fixer fix --dry-run -v --diff --config=vendor-bin/code-style/.php-cs-fixer.dist.php",
+        "cs:fix": "php-cs-fixer fix -v --config=vendor-bin/code-style/.php-cs-fixer.dist.php",
         "infect": [
             "Composer\\Config::disableProcessTimeout",
             "@putenv XDEBUG_MODE=coverage",
@@ -116,9 +121,9 @@
             "@putenv XDEBUG_MODE=coverage",
             "infection --ansi --configuration=infection.json --logger-github --threads=max --show-mutations=0 --min-msi=50"
         ],
-        "psalm": "psalm --show-info=true",
-        "psalm:baseline": "psalm --set-baseline=psalm-baseline.xml",
-        "psalm:ci": "psalm --output-format=github --shepherd --show-info=false --stats --threads=4",
+        "psalm": "psalm -c vendor-bin/psalm/psalm.xml --show-info=true",
+        "psalm:baseline": "psalm -c vendor-bin/psalm/psalm.xml --set-baseline=vendor-bin/psalm/psalm-baseline.xml",
+        "psalm:ci": "psalm -c vendor-bin/psalm/psalm.xml --output-format=github --shepherd --show-info=false --stats --threads=4",
         "refactor": "rector process --config=rector.php",
         "refactor:ci": "rector process --config=rector.php --dry-run --ansi",
         "test": "testo",
