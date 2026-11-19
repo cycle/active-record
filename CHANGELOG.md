@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.1](https://github.com/cycle/active-record/compare/v1.2.0...v1.2.1) (2026-11-19)
+
+
+### Documentation
+
+* move the Discord badge to the first row ([#55](https://github.com/cycle/active-record/issues/55)) ([8ff67b2](https://github.com/cycle/active-record/commit/8ff67b2e8c635deb5096214ff6f8466a06d6d19f))
+* restructure the README by the cycle template ([#53](https://github.com/cycle/active-record/issues/53)) ([ee6bcd6](https://github.com/cycle/active-record/commit/ee6bcd69e226a79ddc9e5280d04ad02f352c71bc))
+
+
+### Dependencies
+
+* raise dependency minimums and polish the tooling ([#51](https://github.com/cycle/active-record/issues/51)) ([58dc7c6](https://github.com/cycle/active-record/commit/58dc7c6d93680796892f4cf294103f3a3367a9f0))
+
 ## [1.2.0](https://github.com/cycle/active-record/compare/v1.1.1...v1.2.0) (2026-06-25)
 
 
