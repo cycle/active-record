@@ -1,30 +1,29 @@
 <div align="center">
-    <br>
     <a href="https://cycle-orm.dev" target="_blank">
         <picture>
             <source media="(prefers-color-scheme: dark)" srcset="https://github.com/cycle/.github/blob/main/logo/words-vector-dark.svg?raw=true">
             <img width="50%" align="center" src="https://github.com/cycle/.github/blob/main/logo/words-vector-light.svg?raw=true" alt="CycleORM Logo">
         </picture>
     </a>
-    <br>
-    <br>
 </div>
+
+<p align="center">Active Record implementation for Cycle ORM</p>
 
 <div align="center">
 
-[![Codecov Coverage](https://img.shields.io/codecov/c/github/cycle/active-record?style=flat-square&logo=codecov)](https://app.codecov.io/gh/cycle/active-record)
+[![Documentation](https://img.shields.io/badge/Documentation-blue?style=for-the-badge&logo=gitbook&logoColor=white)](https://cycle-orm.dev/docs/active-record-introduction)
+[![Sponsor](https://img.shields.io/static/v1?style=for-the-badge&label=&message=Sponsor&logo=githubsponsors&logoColor=white&color=%23EA4AAA)](https://github.com/sponsors/cycle)
+
+[![Psalm Level](https://shepherd.dev/github/cycle/active-record/level.svg)](https://shepherd.dev/github/cycle/active-record)
 [![Type Coverage](https://shepherd.dev/github/cycle/active-record/coverage.svg)](https://shepherd.dev/github/cycle/active-record)
-[![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&label=mutation%20score&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fcycle%2Factive-record%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/cycle/active-record/master)
+[![Codecov](https://img.shields.io/codecov/c/github/cycle/active-record/1.x?style=flat-square&logo=codecov)](https://app.codecov.io/gh/cycle/active-record/tree/1.x)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fcycle%2Factive-record%2F1.x)](https://dashboard.stryker-mutator.io/reports/github.com/cycle/active-record/1.x)
 [![MetaStorm plugin](https://img.shields.io/static/v1?label=Meta+Storm&message=annotated&color=008880&style=flat-square&logo=data:image/svg%2bxml;base64,PHN2ZyB3aWR0aD0iMTExIiBoZWlnaHQ9IjExMSIgdmlld0JveD0iMCAwIDExMSAxMTEiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTYwLjQ2MTcgOEwzMC4xNjU0IDguMjQ3OUMyNy4yNDYgOC4yNzE3OSAyNC42NDggMTAuMTA1IDIzLjY0NyAxMi44NDc1TDAuNDMwNTkgNzYuODMxNEMtMS4yNDQ1OSA4MS40MjA4IDIuMTc4MDUgODYuMjcxMyA3LjA2MzUzIDg2LjIzMTNMMzIuMTE5NyA4Ni4wMjYzTDM1LjQxNDcgNzYuOTk5TDkuODczOTEgNzcuMjA4TDMxLjYyNTkgMTcuMjM2Mkw1Ny4xNjY2IDE3LjAyNzNMNjAuNDYxNyA4WiIgZmlsbD0iI0FGQjFCMyIvPjxwYXRoIGQ9Ik00OS40MTQ5IDEwMi45OTlMNzkuNzEyMiAxMDIuOTk5QzgyLjYzMTcgMTAyLjk5OSA4NS4yNDQ2IDEwMS4xODcgODYuMjY4IDk4LjQ1MjlMMTEwLjAxMyAzNC40NTI0QzExMS43MjYgMjkuODc2OCAxMDguMzQzIDI0Ljk5ODUgMTAzLjQ1NyAyNC45OTg1TDc4LjQwMDQgMjQuOTk4NUw3NS4wMzE2IDMzLjk5ODVMMTAwLjU3MyAzMy45OTg1TDc4LjMyNTMgOTMuOTk5TDUyLjc4MzcgOTMuOTk5TDQ5LjQxNDkgMTAyLjk5OVoiIGZpbGw9IiNBRkIxQjMiLz48cGF0aCBkPSJNMjIgNjFMODYgOEw1NyA1MEw4OS45OTk3IDQ5Ljk5OTdMMjYgMTAzTDU1IDYxSDIyWiIgZmlsbD0iI0M3NTQ1MCIvPjwvc3ZnPg==)](https://github.com/xepozz/meta-storm-idea-plugin)
-
 [![Discord](https://img.shields.io/discord/538114875570913290?style=flat-square&logo=discord&labelColor=7289d9&logoColor=white&color=39456d)](https://discord.gg/spiralphp)
-[![Follow on Twitter (X)](https://img.shields.io/badge/-Follow-black?style=flat-square&logo=X)](https://x.com/intent/follow?screen_name=SpiralPHP)
-
-[//]: # ([![Commits since latest release]&#40;https://img.shields.io/github/commits-since/cycle/active-record/latest?style=flat-square&#41;]&#40;https://packagist.org/packages/cycle/active-record&#41;)
 
 </div>
 
-# Active Record Implementation for Cycle ORM
+<br />
 
 This library extends Cycle ORM by integrating the [Active Record pattern](https://en.wikipedia.org/wiki/Active_record_pattern), providing developers with an intuitive, object-centric way to interact with databases.
 
@@ -32,32 +31,26 @@ Unlike Cycle ORM's default Data Mapper pattern, which separates the in-memory ob
 
 This allows for more straightforward and rapid development cycles, particularly for simpler CRUD operations, by enabling direct data manipulation through the object's properties and methods.
 
-<br>
+## Get Started
 
-## Prerequisites
-
-Before you begin, ensure your development environment meets the following requirements:
-
-- **PHP Version:** 8.1 or higher
-- One of the Cycle ORM adapters:
-  - [`spiral/cycle-bridge`](https://github.com/spiral/cycle-bridge) official Cycle ORM adapter for the [Spiral Framework](https://github.com/spiral/framework)
-  - [`yiisoft/yii-cycle`](https://github.com/yiisoft/yii-cycle) — official Cycle ORM adapter for the [Yii 3](https://www.yiiframework.com)
-  - [`wayofdev/laravel-cycle-orm-adapter`](https://github.com/wayofdev/laravel-cycle-orm-adapter) — package managed by [@wayofdev](https://github.com/wayofdev) for the [Laravel](https://laravel.com) 10.x or higher.
-
-<br>
-
-## Installation
-
-The preferred way to install this package is through [Composer](https://getcomposer.org/).
+### Installation
 
 ```bash
 composer require cycle/active-record
 ```
 
-[![PHP Version Require](https://poser.pugx.org/cycle/active-record/require/php?style=flat-square)](https://packagist.org/packages/cycle/active-record)
-[![Latest Stable Version](https://img.shields.io/packagist/v/cycle/active-record?&style=flat-square)](https://packagist.org/packages/cycle/active-record)
+[![PHP](https://img.shields.io/packagist/php-v/cycle/active-record.svg?style=flat-square&logo=php)](https://packagist.org/packages/cycle/active-record)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/cycle/active-record.svg?style=flat-square&logo=packagist)](https://packagist.org/packages/cycle/active-record)
 [![License](https://img.shields.io/packagist/l/cycle/active-record.svg?style=flat-square)](LICENSE.md)
-[![Total Downloads](https://img.shields.io/packagist/dt/cycle/active-record?&style=flat-square)](https://packagist.org/packages/cycle/active-record)
+[![Total Downloads](https://img.shields.io/packagist/dt/cycle/active-record.svg?style=flat-square)](https://packagist.org/packages/cycle/active-record/stats)
+
+### Requirements
+
+- PHP 8.2+
+- One of the Cycle ORM adapters:
+  - [`spiral/cycle-bridge`](https://github.com/spiral/cycle-bridge) official Cycle ORM adapter for the [Spiral Framework](https://github.com/spiral/framework)
+  - [`yiisoft/yii-cycle`](https://github.com/yiisoft/yii-cycle) — official Cycle ORM adapter for the [Yii 3](https://www.yiiframework.com)
+  - [`wayofdev/laravel-cycle-orm-adapter`](https://github.com/wayofdev/laravel-cycle-orm-adapter) — package managed by [@wayofdev](https://github.com/wayofdev) for the [Laravel](https://laravel.com) 10.x or higher.
 
 After package install you need to, optionally, register bootloader / service-provider in your application.
 
@@ -196,15 +189,13 @@ User::transact(function (DatabaseInterface $db, EntityManagerInterface $em) {
 });
 ```
 
-<br>
-
 ## Want to Contribute?
 
 Thank you for considering contributing to the cycle community! We are open to all kinds of contributions. If you want to:
 
 - 🤔 [Suggest a feature](https://github.com/cycle/active-record/issues/new?assignees=&labels=type%3A+enhancement&projects=&template=2-feature-request.yml&title=%5BFeature%5D%3A+)
 - 🐛 [Report an issue](https://github.com/cycle/active-record/issues/new?assignees=&labels=type%3A+documentation%2Ctype%3A+maintenance&projects=&template=1-bug-report.yml&title=%5BBug%5D%3A+)
-- 📖 [Improve documentation](https://github.com/cycle/active-record/issues/new?assignees=&labels=type%3A+documentation%2Ctype%3A+maintenance&projects=&template=4-docs-bug-report.yml&title=%5BDocs%5D%3A+)
+- 📖 [Improve documentation](https://github.com/cycle/active-record/issues/new?assignees=&labels=type%3A+documentation%2Ctype%3A+maintenance&projects=&template=3-docs-bug-report.yml&title=%5BDocs%5D%3A+)
 - 👨‍💻 Contribute to the code
 
 You are more than welcome. Before contributing, kindly check our [contribution guidelines](.github/CONTRIBUTING.md).
