@@ -26,7 +26,7 @@
     "support": {
         "issues": "https://github.com/cycle/active-record/issues",
         "source": "https://github.com/cycle/active-record",
-        "security": "https://github.com/cycle/active-record/blob/master/.github/SECURITY.md"
+        "security": "https://github.com/cycle/active-record/blob/1.x/.github/SECURITY.md"
     },
     "funding": [
         {
