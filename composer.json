@@ -44,10 +44,12 @@
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.9",
+        "buggregator/trap": "^1.20",
         "cycle/entity-behavior": "^1.7.1",
         "illuminate/support": "^12 || ^13",
-        "llm/skills": "^1.8",
+        "llm/skills": "^1.20",
         "rector/rector": "^2.8",
+        "roxblnfk/unpoly": "^1.8",
         "spiral/boot": "^3.18",
         "spiral/cycle-bridge": "^2.13",
         "testo/bridge-infection": "^0.1.9",
