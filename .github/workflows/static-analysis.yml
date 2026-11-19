@@ -2,55 +2,21 @@
 
 on:  # yamllint disable-line rule:truthy
   pull_request:
+  push:
     branches:
-      - '*.*'
-    paths:
-      - 'psalm*'
-      - 'composer.*'
-      - 'src/**'
-      - 'tests/**'
-      - '.php-cs-fixer.dist.php'
+      - 1.x
 
 name: 🔍 Static analysis
 
+permissions:
+  contents: read
+
 jobs:
   psalm:
-    timeout-minutes: 4
-    runs-on: ${{ matrix.os }}
-    concurrency:
-      cancel-in-progress: true
-      group: psalm-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-    strategy:
-      fail-fast: true
-      matrix:
-        os:
-          - ubuntu-latest
-        php-version:
-          - '8.2'
-        dependencies:
-          - locked
-    steps:
-      - name: 📦 Check out the codebase
-        uses: actions/checkout@v5
-
-      - name: 🛠️ Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-version }}
-          extensions: none, ctype, curl, dom, json, mbstring, phar, simplexml, tokenizer, xml, xmlwriter, opcache, pcntl, posix, pdo, fileinfo, sockets
-          ini-values: error_reporting=E_ALL
-          coverage: xdebug
-
-      - name: 🛠️ Setup problem matchers
-        run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
-
-      - name: 🤖 Validate composer.json and composer.lock
-        run: composer validate --ansi
-
-      - name: 📥 Install dependencies with composer
-        uses: ramsey/composer-install@v3
-        with:
-          dependency-versions: "highest"
-
-      - name: 🔍 Run static analysis using vimeo/psalm
-        run: composer psalm:ci
+    uses: spiral/gh-actions/.github/workflows/psalm.yml@master
+    with:
+      os: >-
+        ['ubuntu-latest']
+      php: '["8.4"]'
+      bin-tool: psalm
+      command: composer psalm:ci
