@@ -1,50 +1,44 @@
 ---
 
+name: 🔐 Security analysis
+
 on:  # yamllint disable-line rule:truthy
   pull_request:
-    branches:
-      - '*.*'
   push:
     branches:
-      - '*.*'
+      - 1.x
 
-name: 🔐 Security analysis
+permissions:
+  contents: read
 
 jobs:
   security-analysis:
+    name: Composer audit
     timeout-minutes: 4
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     concurrency:
-      cancel-in-progress: true
+      cancel-in-progress: ${{ github.event_name == 'pull_request' }}
       group: security-analysis-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-    strategy:
-      fail-fast: true
-      matrix:
-        os:
-          - ubuntu-latest
-        php-version:
-          - '8.2'
-        dependencies:
-          - locked
     steps:
       - name: 📦 Check out the codebase
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: 🛠️ Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-version }}
-          extensions: none, ctype, dom, json, mbstring, phar, simplexml, tokenizer, xml, xmlwriter, sockets, pdo, fileinfo
+          php-version: '8.5'
           ini-values: error_reporting=E_ALL
           coverage: none
 
-      - name: 🤖 Validate composer.json and composer.lock
-        run: composer validate --ansi
+      - name: 🤖 Validate composer.json
+        run: composer validate --ansi --strict
 
       - name: 📥 Install dependencies with composer
         uses: ramsey/composer-install@v3
         with:
-          dependency-versions: "highest"
+          dependency-versions: highest
 
       - name: 🐛 Check installed packages for security vulnerability advisories
         run: composer audit --ansi
