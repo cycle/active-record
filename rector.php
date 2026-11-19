@@ -12,7 +12,7 @@ return static function (Config\RectorConfig $rectorConfig): void {
     $rectorConfig->paths([
         __DIR__ . '/src/',
         __DIR__ . '/tests/',
-        __DIR__ . '/.php-cs-fixer.dist.php',
+        __DIR__ . '/vendor-bin/code-style/.php-cs-fixer.dist.php',
         __DIR__ . '/rector.php',
     ]);
 
