@@ -13,13 +13,13 @@
 
 [![Documentation](https://img.shields.io/badge/Documentation-blue?style=for-the-badge&logo=gitbook&logoColor=white)](https://cycle-orm.dev/docs/active-record-introduction)
 [![Sponsor](https://img.shields.io/static/v1?style=for-the-badge&label=&message=Sponsor&logo=githubsponsors&logoColor=white&color=%23EA4AAA)](https://github.com/sponsors/cycle)
+[![Discord](https://img.shields.io/discord/538114875570913290?style=for-the-badge&logo=discord&labelColor=7289d9&logoColor=white&color=39456d)](https://discord.gg/spiralphp)
 
 [![Psalm Level](https://shepherd.dev/github/cycle/active-record/level.svg)](https://shepherd.dev/github/cycle/active-record)
 [![Type Coverage](https://shepherd.dev/github/cycle/active-record/coverage.svg)](https://shepherd.dev/github/cycle/active-record)
 [![Codecov](https://img.shields.io/codecov/c/github/cycle/active-record/1.x?style=flat-square&logo=codecov)](https://app.codecov.io/gh/cycle/active-record/tree/1.x)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fcycle%2Factive-record%2F1.x)](https://dashboard.stryker-mutator.io/reports/github.com/cycle/active-record/1.x)
 [![MetaStorm plugin](https://img.shields.io/static/v1?label=Meta+Storm&message=annotated&color=008880&style=flat-square&logo=data:image/svg%2bxml;base64,PHN2ZyB3aWR0aD0iMTExIiBoZWlnaHQ9IjExMSIgdmlld0JveD0iMCAwIDExMSAxMTEiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTYwLjQ2MTcgOEwzMC4xNjU0IDguMjQ3OUMyNy4yNDYgOC4yNzE3OSAyNC42NDggMTAuMTA1IDIzLjY0NyAxMi44NDc1TDAuNDMwNTkgNzYuODMxNEMtMS4yNDQ1OSA4MS40MjA4IDIuMTc4MDUgODYuMjcxMyA3LjA2MzUzIDg2LjIzMTNMMzIuMTE5NyA4Ni4wMjYzTDM1LjQxNDcgNzYuOTk5TDkuODczOTEgNzcuMjA4TDMxLjYyNTkgMTcuMjM2Mkw1Ny4xNjY2IDE3LjAyNzNMNjAuNDYxNyA4WiIgZmlsbD0iI0FGQjFCMyIvPjxwYXRoIGQ9Ik00OS40MTQ5IDEwMi45OTlMNzkuNzEyMiAxMDIuOTk5QzgyLjYzMTcgMTAyLjk5OSA4NS4yNDQ2IDEwMS4xODcgODYuMjY4IDk4LjQ1MjlMMTEwLjAxMyAzNC40NTI0QzExMS43MjYgMjkuODc2OCAxMDguMzQzIDI0Ljk5ODUgMTAzLjQ1NyAyNC45OTg1TDc4LjQwMDQgMjQuOTk4NUw3NS4wMzE2IDMzLjk5ODVMMTAwLjU3MyAzMy45OTg1TDc4LjMyNTMgOTMuOTk5TDUyLjc4MzcgOTMuOTk5TDQ5LjQxNDkgMTAyLjk5OVoiIGZpbGw9IiNBRkIxQjMiLz48cGF0aCBkPSJNMjIgNjFMODYgOEw1NyA1MEw4OS45OTk3IDQ5Ljk5OTdMMjYgMTAzTDU1IDYxSDIyWiIgZmlsbD0iI0M3NTQ1MCIvPjwvc3ZnPg==)](https://github.com/xepozz/meta-storm-idea-plugin)
-[![Discord](https://img.shields.io/discord/538114875570913290?style=flat-square&logo=discord&labelColor=7289d9&logoColor=white&color=39456d)](https://discord.gg/spiralphp)
 
 </div>
 
