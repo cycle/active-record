@@ -6,10 +6,8 @@ namespace Cycle\Tests\Unit;
 
 use Cycle\ActiveRecord\Bridge\Spiral\Bootloader\ActiveRecordBootloader;
 use Cycle\ActiveRecord\Facade;
-use Cycle\Database\Config\SQLite\MemoryConnectionConfig;
-use Cycle\Database\Config\SQLiteDriverConfig;
 use Cycle\ORM\ORMInterface;
-use Cycle\Tests\Acceptance\Testo\OrmEnvironment;
+use Cycle\Testing\ORM\Memory;
 use Cycle\Tests\Unit\Stub\Container\ConfigurableContainer;
 use Cycle\Transaction\Bridge\Spiral\Bootloader\TransactionBootloader;
 use Spiral\Cycle\Bootloader\CycleOrmBootloader;
@@ -39,7 +37,7 @@ final class ActiveRecordBootloaderTest
 
     public function itBindsTheContainerIntoTheFacade(): void
     {
-        $orm = OrmEnvironment::forDriver(new SQLiteDriverConfig(connection: new MemoryConnectionConfig()));
+        $orm = Memory::orm();
         $container = ConfigurableContainer::returning(ORMInterface::class, $orm);
 
         (new ActiveRecordBootloader())->init($container);

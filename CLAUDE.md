@@ -8,55 +8,47 @@ holds a PSR-11 container that resolves `ORMInterface` and `DatabaseManager`.
 
 ## Testing
 
-Tests run on **[Testo](https://php-testo.github.io)**, not PHPUnit. Do **not** add `phpunit`,
-`mockery`, or `extends TestCase` — they have been removed on purpose.
+Tests run on **[Testo](https://php-testo.github.io)** through the shared `cycle/testing` harness, not
+PHPUnit. Do **not** add `phpunit`, `mockery`, or `extends TestCase` — they have been removed on purpose.
 
-When writing or changing tests, load the `testo-write-tests` skill and follow it. The essentials:
+When writing or changing tests, load the `testo-write-tests` and `cycle-testing` skills and follow them.
+The essentials:
 
 ### Suites & layout
 
-Two suites are declared in `testo.php`:
+`testo.php` builds the suites with `Cycle\Testing\Config`:
 
-- **Unit** — `tests/src/Unit/` (namespace `Cycle\Tests\Unit\`). Driver-agnostic, no database server.
-  Where a SQLite in-memory ORM is needed, build one with `OrmEnvironment::forDriver(...)`.
-- **Acceptance** — only the concrete per-driver classes under `tests/src/Acceptance/Driver/<Driver>/`
-  are discovered. The actual scenarios live in the abstract `Acceptance/Common/ActiveRecordTestCase`
-  and run once per driver. Shared test harness is in `tests/src/Acceptance/Testo/`.
+- **Unit** — `tests/Unit/` (namespace `Cycle\Tests\Unit\`). No database server. Where an ORM or a
+  `DatabaseManager` is only needed as an object, use `Cycle\Testing\ORM\Memory::orm()` /
+  `Cycle\Testing\Database\Memory::manager()`.
+- **Acceptance/<Driver>** — one suite per driver (SQLite, MySQL, Postgres, SQLServer) over
+  `tests/Acceptance/Common/`, plus `tests/Acceptance/<Driver>/` for driver-only tests. The scenarios live
+  in `Acceptance/Common/ActiveRecordTest`; a new scenario is usually a new method there and runs on every
+  driver. Exclude a driver with `#[ExceptDriver]` / `#[OnlyDriver]`.
 
-Mirror the structure: a new driver-bound scenario is usually **a new method on the abstract
-`ActiveRecordTestCase`** — it then runs on every driver automatically.
+The repo-specific environment is `tests/Stub/OrmEnvironment.php`, wired into `testo.php`: it compiles the
+schema of the `tests/Stub/Entity` classes, creates the tables and seeds them **once per suite**, builds
+the ORM with entity behaviours, and binds each test's ORM to the `Facade`. Each test runs inside a
+transaction that is rolled back (`Isolation::Transaction`). `default` is the suite's driver, `secondary`
+is always an in-memory SQLite database.
 
-### `#[Group('driver-*')]` is mandatory for DB-bound tests
+Acceptance tests extend `Cycle\Testing\ORM\OrmTestCase`: `$this->orm`, `$this->database` (`default`),
+`$this->dbal->database('secondary')`, `$this->selectEntity($role, cleanHeap: true)`. The baseline seed is
+two users — `Antony` (id `1`) and `John` (id `2`) — plus their identity rows.
 
-The `DatabasePlugin` (registered on the Acceptance suite) provisions the database **based on the
-driver group**:
-
-- The abstract case carries `#[Group('driver')]`; each concrete class carries `#[Group('driver-sqlite')]`,
-  `driver-mysql`, `driver-pgsql`, or `driver-sqlserver`.
-- For each test the plugin's interceptor resolves the driver from that group, builds the schema/seed
-  **once per driver**, binds a fresh ORM to the `Facade` (via a container `scope`), and wraps the test
-  in a transaction that is **rolled back** afterwards. So a test never recreates tables and never leaks
-  state.
-- A test class with **no** `driver-*` group gets no database — put database-touching tests in the
-  Acceptance suite with the proper group, not in Unit.
-
-Inside a scenario, read the environment back from the Facade through the base helpers:
-`$this->orm()`, `$this->database('default'|'secondary')`, `$this->selectEntity($role, cleanHeap: true)`.
-The baseline seed is two users — `Antony` (id `1`) and `John` (id `2`) — plus their identity rows.
-
-Use `#[WithoutTransaction]` (from `Cycle\Tests\Acceptance\Testo`) only for the rare test that must
-observe the absence of an open transaction. Such a test **must not** mutate committed seed data.
+Use `#[Isolate(Isolation::None)]` only for the rare test that must observe the absence of an open
+transaction. Such a test **must not** mutate committed seed data.
 
 ### Test classes instead of mocks
 
 There is no mocking library. Write small hand-rolled fakes that implement the real interface and
-exercise the behaviour you need — see `tests/src/Unit/Stub/Container/ConfigurableContainer.php`
+exercise the behaviour you need — see `tests/Unit/Stub/Container/ConfigurableContainer.php`
 (a PSR-11 container whose `get()` is a closure) used by `FacadeTest` instead of `createMock(...)`.
 Never mock `final` classes or enums; instantiate the real type.
 
 ### Testo conventions
 
-- Class-level `#[Test]`, `final class`, no base class for the concrete test.
+- Class-level `#[Test]`, `final class`; database tests extend `OrmTestCase` (or `DatabaseTestCase`).
 - Assertions: `Testo\Assert`, argument order **actual, expected** — `Assert::same($actual, $expected)`,
   `Assert::count($collection, 3)`, `Assert::instanceOf($object, Foo::class)`. Typed chains:
   `Assert::int($n)->greaterThan(0)`, `Assert::array($a)->hasCount(5)`.
@@ -64,26 +56,24 @@ Never mock `final` classes or enums; instantiate the real type.
   the throwing call; the method returns `never`. Use a `try/catch` only when you assert state *after*
   the exception (e.g. that a transaction rolled back).
 - Lifecycle: `#[BeforeTest]`/`#[AfterTest]`/`#[BeforeClass]`/`#[AfterClass]` — never `setUp`/`tearDown`.
-- Coverage: `#[Covers(...)]` (repeatable) points at concrete classes; the abstract `ActiveRecordTestCase`
-  declares the set it covers and the concrete driver classes inherit it.
+- Coverage: `#[Covers(...)]` (repeatable) points at concrete classes; the test class declares the set
+  it covers.
 
 ### Commands
 
 ```
-composer test            # full run (all suites)
+composer test            # every suite; a driver whose database is down is skipped
 composer test:unit       # Unit suite
-composer test:no-driver  # everything except driver-bound tests (no DB needed)
-composer test:sqlite     # Acceptance against SQLite (in-memory)
-composer test:mysql      # Acceptance against MySQL  (needs the docker-compose service)
-composer test:pgsql      # Acceptance against PostgreSQL
-composer test:sqlserver  # Acceptance against SQL Server
-composer test:cc         # run with coverage; writes runtime/clover.xml (needs Xdebug/PCOV)
+composer test:sqlite     # SQLite suites (in-memory, no docker)
+composer db:up           # start MySQL, Postgres, SQL Server from the cycle/testing compose file
+composer test:mysql      # MySQL suites (also test:postgres, test:sqlserver)
+composer db:down
+composer test:cc         # SQLite + Unit with coverage; writes runtime/clover.xml (needs Xdebug/PCOV)
 ```
 
-Real databases for the driver suites come from `tests/docker-compose.yml`; connection parameters are
-read from `DB_HOSTNAME` / `DB_PORT` / `DB_USER` / `DB_PASSWORD` / `DB_DATABASE` (see
-`Acceptance/Testo/DatabaseDriver`). Always pass `--json` to `vendor/bin/testo` when you need a
-machine-readable result.
+Connection settings and ports come from `vendor/cycle/testing/resources/docker/.env`; exported `DB_*`
+variables override them (`DB_REQUIRED=1` turns an unreachable database into a failure). Always pass
+`--json` to `vendor/bin/testo` when you need a machine-readable result.
 
 ## Static analysis & style
 

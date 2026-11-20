@@ -15,8 +15,12 @@ use Cycle\ORM\Exception\RunnerException;
 use Cycle\ORM\Heap\HeapInterface;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\SchemaInterface;
+use Cycle\ORM\Select;
 use Cycle\ORM\Select\Repository;
-use Cycle\Tests\Acceptance\Testo\WithoutTransaction;
+use Cycle\Testing\Database\Attribute\Isolate;
+use Cycle\Testing\Database\Driver;
+use Cycle\Testing\Database\Isolation;
+use Cycle\Testing\ORM\OrmTestCase;
 use Cycle\Tests\Stub\Entity\Identity;
 use Cycle\Tests\Stub\Entity\Post;
 use Cycle\Tests\Stub\Entity\User;
@@ -25,24 +29,21 @@ use Cycle\Transaction\Exception\TransactionException;
 use Cycle\Transaction\TransactionMode;
 use Testo\Assert;
 use Testo\Codecov\Covers;
+use Testo\Core\Exception\SkipTest;
 use Testo\Expect;
-use Testo\Filter\Group;
+use Testo\Test;
 
 /**
- * Acceptance scenarios for the ActiveRecord pattern executed against a real database.
- *
- * Abstract: discovered and run only through the concrete per-driver subclasses under
- * `tests/Acceptance/Driver`. Each subclass selects its driver with a `#[Group('driver-*')]`; the
- * {@see \Cycle\Tests\Acceptance\Testo\DatabaseInterceptor} builds the ORM, seeds the data and binds it
- * to the {@see Facade} before every test.
+ * ActiveRecord scenarios against the seeded database of the suite, through the {@see Facade} that
+ * `testo.php` binds to each test's ORM.
  */
-#[Group('driver')]
+#[Test]
 #[Covers(ActiveRecord::class)]
 #[Covers(ActiveRepository::class)]
 #[Covers(ActiveQuery::class)]
 #[Covers(Facade::class)]
 #[Covers(TransactionFacade::class)]
-abstract class ActiveRecordTestCase extends BaseTestCase
+final class ActiveRecordTest extends OrmTestCase
 {
     // region Finding entities
 
@@ -119,6 +120,11 @@ abstract class ActiveRecordTestCase extends BaseTestCase
 
     public function saveOrFailThrowsOnUniqueViolation(): never
     {
+        $this->driver === Driver::SQLite and throw new SkipTest(
+            'The failed insert stays in the statement cache of cycle/database and breaks the next user insert '
+            . 'on SQLite: https://github.com/cycle/database/issues/131',
+        );
+
         // `name` carries a unique index; persisting a duplicate must surface the driver error.
         Expect::exception(\Throwable::class)->withMessageContaining('SQLSTATE');
 
@@ -203,7 +209,7 @@ abstract class ActiveRecordTestCase extends BaseTestCase
         Assert::true($result);
     }
 
-    #[WithoutTransaction]
+    #[Isolate(Isolation::None)]
     public function groupActionsInCurrentModeWithoutTransactionThrows(): never
     {
         Expect::exception(RunnerException::class);
@@ -213,7 +219,7 @@ abstract class ActiveRecordTestCase extends BaseTestCase
         }, TransactionMode::Current);
     }
 
-    #[WithoutTransaction]
+    #[Isolate(Isolation::None)]
     public function groupActionsInStrictModeOutsideTransactionThrows(): never
     {
         Expect::exception(RunnerException::class);
@@ -223,7 +229,7 @@ abstract class ActiveRecordTestCase extends BaseTestCase
         }, TransactionMode::Current);
     }
 
-    #[WithoutTransaction]
+    #[Isolate(Isolation::None)]
     public function groupActionsInIgnoreModeOutsideTransactionSucceeds(): void
     {
         // When outside a transaction, TransactionMode::Ignore (with strict: false) should work fine.
@@ -420,9 +426,9 @@ abstract class ActiveRecordTestCase extends BaseTestCase
         Assert::int($post->id)->greaterThan(0);
 
         // The row physically lives in the `secondary` database...
-        Assert::same($this->database('secondary')->table('post')->count(), 1);
+        Assert::same($this->dbal->database('secondary')->table('post')->count(), 1);
         // ...and not in the default one.
-        Assert::false($this->database()->hasTable('post'));
+        Assert::false($this->database->hasTable('post'));
     }
 
     public function runsIndependentTransactionsPerDatabase(): void
@@ -461,8 +467,8 @@ abstract class ActiveRecordTestCase extends BaseTestCase
 
     public function defaultAndSecondaryUseDistinctDrivers(): void
     {
-        $defaultDriver = $this->database('default')->getDriver(DatabaseInterface::WRITE)->getName();
-        $secondaryDriver = $this->database('secondary')->getDriver(DatabaseInterface::WRITE)->getName();
+        $defaultDriver = $this->dbal->database('default')->getDriver(DatabaseInterface::WRITE)->getName();
+        $secondaryDriver = $this->dbal->database('secondary')->getDriver(DatabaseInterface::WRITE)->getName();
 
         Assert::notSame($defaultDriver, $secondaryDriver);
         Assert::same($secondaryDriver, 'secondary');
@@ -550,4 +556,14 @@ abstract class ActiveRecordTestCase extends BaseTestCase
     }
 
     // endregion
+
+    /**
+     * @param bool $cleanHeap Read from the database rather than return the instance from the heap.
+     */
+    private function selectEntity(string $role, bool $cleanHeap = false): Select
+    {
+        $cleanHeap and $this->orm->getHeap()->clean();
+
+        return new Select($this->orm, $role);
+    }
 }

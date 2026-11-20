@@ -6,12 +6,10 @@ namespace Cycle\Tests\Unit;
 
 use Cycle\ActiveRecord\Exception\ConfigurationException;
 use Cycle\ActiveRecord\Facade;
-use Cycle\Database\Config\SQLite\MemoryConnectionConfig;
-use Cycle\Database\Config\SQLiteDriverConfig;
 use Cycle\Database\DatabaseManager;
 use Cycle\ORM\ORMInterface;
-use Cycle\Tests\Acceptance\Testo\ConnectionPool;
-use Cycle\Tests\Acceptance\Testo\OrmEnvironment;
+use Cycle\Testing\Database\Memory as DatabaseMemory;
+use Cycle\Testing\ORM\Memory;
 use Cycle\Tests\Unit\Stub\Container\ConfigurableContainer;
 use Cycle\Tests\Unit\Stub\Container\ServiceNotFoundException;
 use Testo\Assert;
@@ -108,7 +106,7 @@ final class FacadeTest
 
     public function cachesDatabaseManagerAfterFirstCall(): void
     {
-        $dbal = ConnectionPool::createManager(new SQLiteDriverConfig(connection: new MemoryConnectionConfig()));
+        $dbal = DatabaseMemory::manager();
 
         $container = new ConfigurableContainer(static function (string $id) use ($dbal) {
             return match ($id) {
@@ -134,6 +132,6 @@ final class FacadeTest
 
     private function buildOrm(): ORMInterface
     {
-        return OrmEnvironment::forDriver(new SQLiteDriverConfig(connection: new MemoryConnectionConfig()));
+        return Memory::orm();
     }
 }
