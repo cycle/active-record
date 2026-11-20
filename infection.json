@@ -9,8 +9,8 @@
         ]
     },
     "timeout": 10,
-    "minMsi": 90,
-    "minCoveredMsi": 90,
+    "minMsi": 98,
+    "minCoveredMsi": 98,
     "testFramework": "testo",
     "tmpDir": "runtime",
     "logs": {
