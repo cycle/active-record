@@ -1,6 +1,6 @@
 {
     "require": {
-        "infection/infection": "^0.35",
+        "infection/infection": "^0.35.12",
         "testo/bridge-infection": "^0.1.9"
     },
     "config": {
