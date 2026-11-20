@@ -45,7 +45,7 @@
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.9",
         "buggregator/trap": "^1.20",
-        "cycle/testing": "1.x-dev",
+        "cycle/testing": "^0.1",
         "cycle/entity-behavior": "^1.7.1",
         "illuminate/support": "^12 || ^13",
         "llm/skills": "^1.20",
@@ -63,11 +63,8 @@
     },
     "repositories": [
         {
-            "type": "path",
-            "url": "../../testing",
-            "options": {
-                "symlink": true
-            }
+            "type": "vcs",
+            "url": "https://github.com/cycle/testing"
         }
     ],
     "minimum-stability": "dev",
