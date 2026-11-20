@@ -232,19 +232,19 @@ final class ActiveRecordTest extends OrmTestCase
     #[Isolate(Isolation::None)]
     public function groupActionsInIgnoreModeOutsideTransactionSucceeds(): void
     {
-        // When outside a transaction, TransactionMode::Ignore (with strict: false) should work fine.
-        // The runner will ignore the lack of a transaction.
-        // If mutated to strict: true, this would throw RunnerException because there's no active transaction.
-        $result = ActiveRecord::groupActions(static function () use (&$created, &$deleted): string {
-            // Create and immediately delete an entity to generate commands without leaving side effects
+        # Two separate groups: saving and deleting in one group cancel out and run no command at all.
+        $user = ActiveRecord::groupActions(static function (): User {
             $user = new User('TestUser');
-            $created = $user->save(); // Must succeed without transaction
-            $deleted = $user->delete(); // Must also succeed
-            return 'success';
+            $user->save();
+            return $user;
         }, TransactionMode::Ignore);
-        Assert::same($result, 'success');
-        Assert::true($created);
-        Assert::true($deleted);
+        try {
+            Assert::notNull(User::query()->where('name', 'TestUser')->fetchOne());
+        } finally {
+            ActiveRecord::groupActions(static fn(): bool => $user->delete(), TransactionMode::Ignore);
+        }
+
+        Assert::null(User::query()->where('name', 'TestUser')->fetchOne());
     }
 
     public function deletesMultipleEntitiesInGroupActions(): void
