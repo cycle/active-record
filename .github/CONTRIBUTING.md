@@ -312,15 +312,14 @@ make lint-audit
 
 ## 🦠 Mutation Tests
 
-We use [`infection/infection`](https://github.com/infection/infection) together with [`roave/infection-static-analysis-plugin`](https://github.com/Roave/infection-static-analysis-plugin) to ensure a minimum quality of the tests. Roave plugin is used to publish mutation score results to the [Stryker Dashboard](https://dashboard.stryker-mutator.io/).
+We use [`infection/infection`](https://github.com/infection/infection) with the Testo adapter [`testo/bridge-infection`](https://github.com/php-testo/bridge-infection) to ensure a minimum quality of the tests. CI publishes the mutation score of the `1.x` branch to the [Stryker Dashboard](https://dashboard.stryker-mutator.io/reports/github.com/cycle/active-record/1.x).
 
-Xdebug support is enabled by default when running commands through the `Makefile`:
+Infection runs the Unit and SQLite suites and needs Xdebug or PCOV. Install it once, then run it:
 
 ```bash
-make infect
+composer bin infection install
+composer infect
 ```
-
-to run mutation tests.
 
 <br>
 

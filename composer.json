@@ -53,7 +53,6 @@
         "roxblnfk/unpoly": "^1.8",
         "spiral/boot": "^3.18",
         "spiral/cycle-bridge": "^2.13",
-        "testo/bridge-infection": "^0.1.9",
         "testo/testo": "^0.10.60"
     },
     "suggest": {
@@ -118,13 +117,13 @@
             "Composer\\Config::disableProcessTimeout",
             "@putenv XDEBUG_MODE=coverage",
             "@putenv DB_DRIVERS=sqlite",
-            "infection"
+            "infection --configuration=infection.json --threads=max"
         ],
         "infect:ci": [
             "Composer\\Config::disableProcessTimeout",
             "@putenv XDEBUG_MODE=coverage",
             "@putenv DB_DRIVERS=sqlite",
-            "infection --ansi --configuration=infection.json --logger-github --threads=max --show-mutations=0 --min-msi=50"
+            "infection --ansi --configuration=infection.json --logger-github --threads=max --show-mutations=0"
         ],
         "psalm": "psalm -c vendor-bin/psalm/psalm.xml --show-info=true",
         "psalm:baseline": "psalm -c vendor-bin/psalm/psalm.xml --set-baseline=vendor-bin/psalm/psalm-baseline.xml",
@@ -142,5 +141,9 @@
             "@putenv DB_DRIVERS=sqlite",
             "testo --coverage"
         ]
+    },
+    "scripts-descriptions": {
+        "infect": "Run mutation testing with Infection (install it first: composer bin infection install)",
+        "infect:ci": "Run mutation testing in CI: GitHub annotations and the MSI thresholds"
     }
 }
