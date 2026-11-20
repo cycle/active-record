@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   shellcheck:
-    uses: cycle/gh-actions/.github/workflows/shellcheck.yml@v4.0.0
+    uses: cycle/gh-actions/.github/workflows/shellcheck.yml@v4.2.0
     with:
       os: ubuntu-latest
       severity: warning
