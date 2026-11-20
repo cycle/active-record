@@ -165,10 +165,7 @@ Our project employs [GitHub Actions](https://github.com/features/actions) for co
 | [`security-analysis.yml`](workflows/security-analysis.yml)     | Checks for security issues.                                         |
 | [`shellcheck.yml`](workflows/shellcheck.yml)                   | Checks shell scripts.                                               |
 | [`static-analysis.yml`](workflows/static-analysis.yml)         | Runs `psalm`.                                                       |
-| [`testing.yml`](workflows/testing.yml)                         | Runs coverage, mutation and functional tests against SQLite         |
-| [`testing-mysql.yml`](workflows/testing.yml)                   | Runs functional tests against MySQL                                 |
-| [`testing-pgsql.yml`](workflows/testing.yml)                   | Runs functional tests against PostgreSQL                            |
-| [`testing-sqlserver.yml`](workflows/testing.yml)               | Runs functional tests against SQLServer (MSSQL)                     |
+| [`testing.yml`](workflows/testing.yml)                         | Runs the tests on every driver through the shared Testo workflow.   |
 
 <br>
 
