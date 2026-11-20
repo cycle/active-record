@@ -49,12 +49,13 @@ jobs:
         run: composer validate --ansi --strict
 
       - name: 📥 Install dependencies with composer
+        # TODO(cycle/testing): switch to the released package
         uses: ramsey/composer-install@v3
         with:
           dependency-versions: ${{ matrix.dependencies }}
 
-      - name: 🧪 Run tests (excluding driver-bound groups)
-        run: composer test:no-driver
+      - name: 🧪 Run unit tests
+        run: composer test:unit
 
   code-coverage:
     name: Code coverage
@@ -78,6 +79,7 @@ jobs:
           coverage: xdebug
 
       - name: 📥 Install dependencies with composer
+        # TODO(cycle/testing): switch to the released package
         uses: ramsey/composer-install@v3
         with:
           dependency-versions: highest

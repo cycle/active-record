@@ -121,6 +121,8 @@
     "scripts": {
         "cs:diff": "php-cs-fixer fix --dry-run -v --diff --config=vendor-bin/code-style/.php-cs-fixer.dist.php",
         "cs:fix": "php-cs-fixer fix -v --config=vendor-bin/code-style/.php-cs-fixer.dist.php",
+        "db:down": "docker compose -f vendor/cycle/testing/resources/docker/compose.yaml down -v",
+        "db:up": "docker compose -f vendor/cycle/testing/resources/docker/compose.yaml up -d --wait",
         "infect": [
             "Composer\\Config::disableProcessTimeout",
             "@putenv XDEBUG_MODE=coverage",
@@ -138,14 +140,13 @@
         "refactor:ci": "rector process --config=rector.php --dry-run --ansi",
         "test": "testo",
         "test:unit": "testo --suite=Unit",
-        "test:acceptance": "testo --suite=Acceptance",
-        "test:no-driver": "testo --group=!driver",
-        "test:sqlite": "testo --suite=Acceptance --group=driver-sqlite",
-        "test:mysql": "testo --suite=Acceptance --group=driver-mysql",
-        "test:pgsql": "testo --suite=Acceptance --group=driver-pgsql",
-        "test:sqlserver": "testo --suite=Acceptance --group=driver-sqlserver",
+        "test:sqlite": "testo --suite=Feature/SQLite --suite=Acceptance/SQLite --suite=Regression/SQLite",
+        "test:mysql": "testo --suite=Feature/MySQL --suite=Acceptance/MySQL --suite=Regression/MySQL",
+        "test:postgres": "testo --suite=Feature/Postgres --suite=Acceptance/Postgres --suite=Regression/Postgres",
+        "test:sqlserver": "testo --suite=Feature/SQLServer --suite=Acceptance/SQLServer --suite=Regression/SQLServer",
         "test:cc": [
             "@putenv XDEBUG_MODE=coverage",
+            "@putenv DB_DRIVERS=sqlite",
             "testo --coverage"
         ]
     }

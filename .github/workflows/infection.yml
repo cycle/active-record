@@ -39,6 +39,7 @@ jobs:
           coverage: xdebug
 
       - name: 📥 Install dependencies with composer
+        # TODO(cycle/testing): switch to the released package
         uses: ramsey/composer-install@v3
         with:
           dependency-versions: highest

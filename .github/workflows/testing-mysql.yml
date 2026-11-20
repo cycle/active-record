@@ -33,9 +33,6 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: 🛠️ Start MySQL
-        run: docker compose -f tests/docker-compose.yml up -d cycle-mysql
-
       - name: 🛠️ Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -44,25 +41,15 @@ jobs:
           ini-values: error_reporting=E_ALL
 
       - name: 📥 Install dependencies with composer
+        # TODO(cycle/testing): switch to the released package
         uses: ramsey/composer-install@v3
         with:
           dependency-versions: highest
 
-      - name: ⏳ Wait for MySQL
-        run: |
-          for i in $(seq 1 30); do
-            if docker exec $(docker ps -qf "ancestor=mysql:8.0.37") mysqladmin ping -h 127.0.0.1 --silent; then
-              echo "MySQL is up"; exit 0
-            fi
-            echo "Waiting for MySQL... ($i)"; sleep 2
-          done
-          echo "MySQL did not become ready in time"; exit 1
+      - name: 🛢️ Start MySQL
+        run: composer db:up -- mysql
 
       - name: 🧪 Run acceptance tests (MySQL)
         env:
-          DB_HOSTNAME: 127.0.0.1
-          DB_PORT: 13306
-          DB_USER: root
-          DB_PASSWORD: 'YourStrong!Passw0rd'
-          DB_DATABASE: spiral
+          DB_REQUIRED: 1
         run: composer test:mysql

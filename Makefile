@@ -263,7 +263,7 @@ test-arch: ## Run architecture checks
 .PHONY: test-arch
 
 test-pgsql: ## Run project tests over pgsql database
-	$(APP_COMPOSER) test:pgsql
+	$(APP_COMPOSER) test:postgres
 .PHONY: test-pgsql
 
 test-mysql: ## Run project tests over mysql database
