@@ -10,6 +10,7 @@ use Cycle\ActiveRecord\Internal\TransactionFacade;
 use Cycle\ActiveRecord\Query\ActiveQuery;
 use Cycle\ActiveRecord\Repository\ActiveRepository;
 use Cycle\Database\DatabaseInterface;
+use Cycle\Database\Driver\Driver;
 use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\Exception\RunnerException;
 use Cycle\ORM\Heap\HeapInterface;
@@ -121,7 +122,15 @@ final class ActiveRecordTest extends OrmTestCase
         // `name` carries a unique index; persisting a duplicate must surface the driver error.
         Expect::exception(\Throwable::class)->withMessageContaining('SQLSTATE');
 
-        (new User('John'))->saveOrFail();
+        try {
+            (new User('John'))->saveOrFail();
+        } finally {
+            // cycle/database keeps the failed INSERT ... RETURNING statement in its prepared statement
+            // cache without resetting it, and SQLite rejects its next run with "21 bad parameter or
+            // other API misuse" once the transaction has rolled back.
+            $driver = $this->database->getDriver();
+            $driver instanceof Driver and $driver->clearCache();
+        }
     }
 
     public function saveOrFailPersistsEntityOutsideTransaction(): void
