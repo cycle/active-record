@@ -61,12 +61,6 @@
         "wayofdev/laravel-cycle-orm-adapter": "Laravel adapter for Cycle ORM",
         "yiisoft/yii-cycle": "Yii Cycle ORM integration"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/cycle/testing"
-        }
-    ],
     "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
