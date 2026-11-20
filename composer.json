@@ -123,11 +123,13 @@
         "infect": [
             "Composer\\Config::disableProcessTimeout",
             "@putenv XDEBUG_MODE=coverage",
+            "@putenv DB_DRIVERS=sqlite",
             "infection"
         ],
         "infect:ci": [
             "Composer\\Config::disableProcessTimeout",
             "@putenv XDEBUG_MODE=coverage",
+            "@putenv DB_DRIVERS=sqlite",
             "infection --ansi --configuration=infection.json --logger-github --threads=max --show-mutations=0 --min-msi=50"
         ],
         "psalm": "psalm -c vendor-bin/psalm/psalm.xml --show-info=true",

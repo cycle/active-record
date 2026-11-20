@@ -18,7 +18,6 @@
         ]
     },
     "testFramework": "testo",
-    "testFrameworkOptions": "--suite=Unit --suite=Acceptance/SQLite",
     "tmpDir": "runtime",
     "timeout": 10
 }
