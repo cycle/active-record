@@ -10,7 +10,6 @@ use Cycle\ActiveRecord\Internal\TransactionFacade;
 use Cycle\ActiveRecord\Query\ActiveQuery;
 use Cycle\ActiveRecord\Repository\ActiveRepository;
 use Cycle\Database\DatabaseInterface;
-use Cycle\Database\Driver\Driver;
 use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\Exception\RunnerException;
 use Cycle\ORM\Heap\HeapInterface;
@@ -19,6 +18,7 @@ use Cycle\ORM\SchemaInterface;
 use Cycle\ORM\Select;
 use Cycle\ORM\Select\Repository;
 use Cycle\Testing\Database\Attribute\Isolate;
+use Cycle\Testing\Database\Driver;
 use Cycle\Testing\Database\Isolation;
 use Cycle\Testing\ORM\OrmTestCase;
 use Cycle\Tests\Stub\Entity\Identity;
@@ -29,6 +29,7 @@ use Cycle\Transaction\Exception\TransactionException;
 use Cycle\Transaction\TransactionMode;
 use Testo\Assert;
 use Testo\Codecov\Covers;
+use Testo\Core\Exception\SkipTest;
 use Testo\Expect;
 use Testo\Test;
 
@@ -119,18 +120,15 @@ final class ActiveRecordTest extends OrmTestCase
 
     public function saveOrFailThrowsOnUniqueViolation(): never
     {
+        $this->driver === Driver::SQLite and throw new SkipTest(
+            'The failed insert stays in the statement cache of cycle/database and breaks the next user insert '
+            . 'on SQLite: https://github.com/cycle/database/issues/131',
+        );
+
         // `name` carries a unique index; persisting a duplicate must surface the driver error.
         Expect::exception(\Throwable::class)->withMessageContaining('SQLSTATE');
 
-        try {
-            (new User('John'))->saveOrFail();
-        } finally {
-            // cycle/database keeps the failed INSERT ... RETURNING statement in its prepared statement
-            // cache without resetting it, and SQLite rejects its next run with "21 bad parameter or
-            // other API misuse" once the transaction has rolled back.
-            $driver = $this->database->getDriver();
-            $driver instanceof Driver and $driver->clearCache();
-        }
+        (new User('John'))->saveOrFail();
     }
 
     public function saveOrFailPersistsEntityOutsideTransaction(): void
