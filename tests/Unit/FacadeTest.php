@@ -12,6 +12,8 @@ use Cycle\Testing\Database\Memory as DatabaseMemory;
 use Cycle\Testing\ORM\Memory;
 use Cycle\Tests\Unit\Stub\Container\ConfigurableContainer;
 use Cycle\Tests\Unit\Stub\Container\ServiceNotFoundException;
+use Cycle\Transaction\Internal\TransactionImpl;
+use Cycle\Transaction\Transaction;
 use Testo\Assert;
 use Testo\Codecov\Covers;
 use Testo\Expect;
@@ -128,6 +130,20 @@ final class FacadeTest
         Assert::same($second, $first);
         // Container should not have been called again for DatabaseManager
         Assert::count($container->requested, 1);
+    }
+
+    public function cachesTransactionAfterFirstCall(): void
+    {
+        $transaction = new TransactionImpl($this->buildOrm(), DatabaseMemory::manager());
+        $container = ConfigurableContainer::returning(Transaction::class, $transaction);
+        Facade::setContainer($container);
+
+        $first = Facade::getTransaction();
+        $second = Facade::getTransaction();
+
+        Assert::same($first, $transaction);
+        Assert::same($second, $transaction);
+        Assert::same($container->requested, [Transaction::class]);
     }
 
     private function buildOrm(): ORMInterface
