@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   label:
-    uses: cycle/gh-actions/.github/workflows/apply-labels.yml@v4.0.0
+    uses: cycle/gh-actions/.github/workflows/apply-labels.yml@v4.2.0
     with:
       os: ubuntu-latest
     secrets:
