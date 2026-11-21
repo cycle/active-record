@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.2.1](https://github.com/cycle/active-record/compare/v1.2.0...v1.2.1) (2026-11-21)
+
+
+### Documentation
+
+* describe mutation testing with the Testo adapter in CONTRIBUTING ([e288b4f](https://github.com/cycle/active-record/commit/e288b4f6b84c73b77fbf0fc1e2f65e604d5ccffc))
+* move the Discord badge to the first row ([#55](https://github.com/cycle/active-record/issues/55)) ([8ff67b2](https://github.com/cycle/active-record/commit/8ff67b2e8c635deb5096214ff6f8466a06d6d19f))
+* restructure the README by the cycle template ([#53](https://github.com/cycle/active-record/issues/53)) ([ee6bcd6](https://github.com/cycle/active-record/commit/ee6bcd69e226a79ddc9e5280d04ad02f352c71bc))
+
+
+### Dependencies
+
+* raise dependency minimums and polish the tooling ([#51](https://github.com/cycle/active-record/issues/51)) ([58dc7c6](https://github.com/cycle/active-record/commit/58dc7c6d93680796892f4cf294103f3a3367a9f0))
+* raise the minimum versions of the cycle packages ([#67](https://github.com/cycle/active-record/issues/67)) ([a0c3a84](https://github.com/cycle/active-record/commit/a0c3a84e6b267f49e8fb4ddd7606ffd1053af2db))
+
 ## [1.2.0](https://github.com/cycle/active-record/compare/v1.1.1...v1.2.0) (2026-06-25)
 
 
