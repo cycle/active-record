@@ -36,17 +36,17 @@
     ],
     "require": {
         "php": ">=8.2",
-        "cycle/database": "^2.23",
-        "cycle/orm": "^2.18",
-        "cycle/transaction": "^1.1",
+        "cycle/database": "^2.24",
+        "cycle/orm": "^2.19",
+        "cycle/transaction": "^1.1.1",
         "psr/container": "^2.0.2",
         "yiisoft/injector": "^1.2.2"
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.9",
         "buggregator/trap": "^1.20",
-        "cycle/testing": "^0.1.1",
-        "cycle/entity-behavior": "^1.7.1",
+        "cycle/testing": "^0.1.2",
+        "cycle/entity-behavior": "^1.8",
         "illuminate/support": "^12 || ^13",
         "llm/skills": "^1.20",
         "rector/rector": "^2.8",
