@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/cycle/active-record/compare/v1.2.1...v1.2.2) (2026-11-22)
+
+
+### Documentation
+
+* drop the public issue step from the security policy ([5d8ce4d](https://github.com/cycle/active-record/commit/5d8ce4dd3eadab6f6c41ff6d8c810f06e0e196d1))
+
 ## [1.2.1](https://github.com/cycle/active-record/compare/v1.2.0...v1.2.1) (2026-11-21)
 
 
